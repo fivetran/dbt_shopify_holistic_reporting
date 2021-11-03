@@ -36,12 +36,13 @@ with shopify_customers as (
     full outer join klaviyo_persons 
         on lower(shopify_customers.email) = lower(klaviyo_persons.email)
 
-), surrogate_key as (
+{# ), surrogate_key as (
     select 
         *,
         {{ dbt_utils.surrogate_key(['shopify_customer_id','klaviyo_person_id']) }} as unique_customer_key
 
-    from combine_customer_info
+    from combine_customer_info #}
 
 )
-
+select *
+from combine_customer_info
