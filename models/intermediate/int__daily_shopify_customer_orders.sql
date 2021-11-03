@@ -20,7 +20,7 @@ with orders as (
         -- make organic vs campaign vs flow
 
     from orders
-    group by {{ dbt_utils.group_by(n=7)}}
+    {{ dbt_utils.group_by(n=7)}}
 )
 
 select *
