@@ -1,4 +1,4 @@
-with klaviyo_events as (
+with events as (
 
     select *
     from {{ ref('klaviyo__events') }}
@@ -6,7 +6,7 @@ with klaviyo_events as (
 ), pivot_out_events as (
     
     select 
-        cast( {{ dbt_utils.date_trunc('month', 'occurred_at') }} as date) as date_day
+        cast( {{ dbt_utils.date_trunc('month', 'occurred_at') }} as date) as date_day,
         person_email,
         person_id,
         last_touch_campaign_id,
@@ -34,5 +34,6 @@ with klaviyo_events as (
     {{ dbt_utils.group_by(n=8) }}
 )
 
+-- the grain will be person-flow-campaign-variation-day
 select *
 from pivot_out_events
