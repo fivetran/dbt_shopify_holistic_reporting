@@ -1,7 +1,7 @@
 with shopify_customers as (
 
     select *
-    from {{ ref('shopify__customers') }}
+    from {{ ref('int__shopify_customer_rollup') }}
 
 ), klaviyo_persons as (
 
@@ -12,23 +12,26 @@ with shopify_customers as (
 
     select
         coalesce(shopify_customers.email, klaviyo_persons.email) as email,
-        coalesce(klaviyo_persons.full_name, (shopify_customers.first_name || ' ' || shopify_customers.last_name)) as full_name,
-        shopify_customers.customer_id as shopify_customer_id, -- do some case when's to determine where they came from / if they're in both ?
+        coalesce(klaviyo_persons.full_name, shopify_customers.full_name) as full_name,
+        shopify_customers.customer_ids as shopify_customer_ids, -- do some case when's to determine where they came from / if they're in both ?
         klaviyo_persons.person_id as klaviyo_person_id,
-        coalesce(shopify_customers.phone, klaviyo_persons.phone_number) as phone_number,
-        shopify_customers.account_state as shopify_account_state,
+        coalesce(shopify_customers.phone_numbers, cast(klaviyo_persons.phone_number as {{ dbt_utils.type_string() }})) as phone_number,
+        {# shopify_customers.account_state as shopify_account_state, #} -- need to decide to how to roll this up
 
-        shopify_customers.created_timestamp as shopify_customer_created_at,
+        shopify_customers.first_shopify_account_made_at as shopify_customer_first_created_at,
+        shopify_customers.last_shopify_account_made_at as shopify_customer_last_created_at,
         klaviyo_persons.created_at as klaviyo_person_created_at,
-        shopify_customers.updated_timestamp as shopify_customer_updated_at,
+        shopify_customers.last_updated_at as shopify_customer_last_updated_at,
         klaviyo_persons.updated_at as klaviyo_person_updated_at,
+        {# shopify_customers.shopify_first_order_at, -- in the star macro
+        shopify_customers.shopify_last_order_at, #}
         shopify_customers.is_verified_email as is_shopify_email_verified,
 
         {# shopify_customers.has_accepted_marketing, #}
 
         -- maybe rewrite this macro to be able to prefix with shopify_ and klaviyo_ ?
-        {{ dbt_utils.star(from=ref('shopify__customers'), relation_alias='shopify_customers', except=['email', 'first_name', 'last_name', 'customer_id', 'phone', 
-                                                                                            'account_state', 'created_timestamp', 'updated_timestamp', 'is_verified_email'] ) }},
+        {{ dbt_utils.star(from=ref('int__shopify_customer_rollup'), relation_alias='shopify_customers', except=['email', 'full_name', 'customer_ids', 'phone_numbers', 
+                                                                                            'account_state', 'first_shopify_account_made_at','last_shopify_account_made_at', 'last_updated_at', 'is_verified_email'] ) }},
 
         {{ dbt_utils.star(from=ref('klaviyo__persons'), relation_alias='klaviyo_persons', except=['email', 'full_name', 'created_at', 'person_id', 'phone_number', 'updated_at'] ) }}
 

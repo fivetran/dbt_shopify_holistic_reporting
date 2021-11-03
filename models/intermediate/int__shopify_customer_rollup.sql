@@ -12,7 +12,7 @@ with customers as (
         {{ fivetran_utils.string_agg("cast(customer_id as " ~ dbt_utils.type_string() ~ ")", "', '") }} as customer_ids,
         {{ fivetran_utils.string_agg("distinct phone", "', '") }} as phone_numbers,
 
-        max(first_name || ' ' || last_name) as full_name, -- or should this just be the latest?
+        max(first_name || ' ' || last_name) as full_name, -- or should this just be the latest? or string agg of names?
 
         min(created_timestamp) as first_shopify_account_made_at,
         max(created_timestamp) as last_shopify_account_made_at,
