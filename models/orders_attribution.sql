@@ -60,7 +60,7 @@ with orders as (
 
     select 
         {{ dbt_utils.star(from=ref('shopify__orders')) }},
-
+        last_touch_campaign_id is not null or last_touch_flow_id is not null as is_attributed,
         last_touch_campaign_id,
         last_touch_flow_id,
         variation_id,
@@ -70,7 +70,6 @@ with orders as (
         flow_name,
         case when last_touch_campaign_id is not null then count_interactions_with_campaign else null end as count_interactions_with_campaign, -- will be null if it's associated with a flow
         count_interactions_with_flow, -- will be null if it's associated with a campaign
-        -- todo: should i coalesce the above? 
         event_id,
         event_occurred_at,
         event_type,
