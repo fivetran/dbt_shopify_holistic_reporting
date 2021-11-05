@@ -30,22 +30,20 @@ with shopify_customers as (
         {# shopify_customers.has_accepted_marketing, #}
 
         -- maybe rewrite this macro to be able to prefix with shopify_ and klaviyo_ ?
-        {{ dbt_utils.star(from=ref('int__shopify_customer_rollup'), relation_alias='shopify_customers', except=['email', 'full_name', 'customer_ids', 'phone_numbers', 
-                                                                                            'account_state', 'first_shopify_account_made_at','last_shopify_account_made_at', 'last_updated_at', 'is_verified_email'] ) }},
+        {{ dbt_utils.star(from=ref('int__shopify_customer_rollup'), relation_alias='shopify_customers', prefix='shopify_',
+                                except=['email', 'full_name', 'customer_ids', 'phone_numbers', 'account_state', 'first_shopify_account_made_at','last_shopify_account_made_at', 
+                                        'last_updated_at', 'is_verified_email'] ) 
+        }},
 
-        {{ dbt_utils.star(from=ref('klaviyo__persons'), relation_alias='klaviyo_persons', except=['email', 'full_name', 'created_at', 'person_id', 'phone_number', 'updated_at'] ) }}
+        {{ dbt_utils.star(from=ref('klaviyo__persons'), relation_alias='klaviyo_persons', prefix='klaviyo_',
+                                except=['email', 'full_name', 'created_at', 'person_id', 'phone_number', 'updated_at'] ) 
+        }}
 
     from shopify_customers
     full outer join klaviyo_persons 
         on lower(shopify_customers.email) = lower(klaviyo_persons.email)
 
-{# ), surrogate_key as (
-    select 
-        *,
-        {{ dbt_utils.surrogate_key(['shopify_customer_id','klaviyo_person_id']) }} as unique_customer_key
-
-    from combine_customer_info #}
-
 )
+
 select *
 from combine_customer_info

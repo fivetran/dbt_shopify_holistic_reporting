@@ -13,7 +13,7 @@ with shopify_daily as (
     select 
         coalesce(shopify_daily.date_day, klaviyo_daily.date_day) as date_day
 
-        {{ dbt_utils.star()}}
+        {# {{ dbt_utils.star()}} #}
     from shopify_daily
     full outer join klaviyo_daily
         on lower(shopify_daily.email) = lower(klaviyo_daily.email)
