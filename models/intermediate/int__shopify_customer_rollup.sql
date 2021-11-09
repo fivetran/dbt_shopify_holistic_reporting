@@ -1,9 +1,12 @@
 with customers as (
 
-    select *
+    select 
+        *,
+        row_number() over(partition by email order by created_timestamp desc) as customer_index
+
     from {{ ref('shopify__customers') }}
 
-    where email is not null -- nonsensical to include in this model
+    where email is not null -- nonsensical to include any null emails in  this package
 
 ), aggregate_customers as (
 
@@ -12,7 +15,7 @@ with customers as (
         {{ fivetran_utils.string_agg("cast(customer_id as " ~ dbt_utils.type_string() ~ ")", "', '") }} as customer_ids,
         {{ fivetran_utils.string_agg("distinct phone", "', '") }} as phone_numbers,
 
-        max(first_name || ' ' || last_name) as full_name, -- or should this just be the latest**? or string agg of names?
+        max(case when customer_index = 1 then first_name || ' ' || last_name else null end) as full_name,
 
         min(created_timestamp) as first_shopify_account_made_at,
         max(created_timestamp) as last_shopify_account_made_at,
@@ -31,17 +34,19 @@ with customers as (
 
         -- take true if ever given for boolean fields
         {{ fivetran_utils.max_bool("has_accepted_marketing") }} as has_accepted_marketing,
-        {{ fivetran_utils.max_bool("is_tax_exempt") }} as is_tax_exempt, -- use latest?? every year you have to update your status
-        {{ fivetran_utils.max_bool("is_verified_email") }} as is_verified_email
+        max(case when customer_index = 1 then is_tax_exempt else null end) as is_tax_exempt, -- since this changes every yeat
+        {{ fivetran_utils.max_bool("is_verified_email") }} as is_verified_email,
 
-        {# -- meh? can maybe use window functions to take the latest of these? or agg them? go with latest -> ask maxime
-        default_address_id,
-        account_state? -- either enabled, disabled, or invited? can be different
+        -- other stuff
+        max(case when customer_index = 1 then default_address_id else null end) as default_address_id,
+        max(case when customer_index = 1 then account_state else null end) as account_state
 
-        -- passthrough columns? #}
+        -- passthrough columns?? maybe do max case when -> figure out if we wanna keep this first
+
     from customers 
 
     group by 1
+
 )
 
 select *
