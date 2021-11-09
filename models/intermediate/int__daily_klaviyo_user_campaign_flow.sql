@@ -7,8 +7,7 @@ with events as (
     
     select 
         cast( {{ dbt_utils.date_trunc('day', 'occurred_at') }} as date) as date_day,
-        person_email,
-        person_id,
+        person_email as email,
         last_touch_campaign_id,
         last_touch_flow_id,
         campaign_name,
@@ -33,7 +32,7 @@ with events as (
     {% endfor %}
 
     from events
-    {{ dbt_utils.group_by(n=10) }}
+    {{ dbt_utils.group_by(n=9) }}
 )
 
 -- the grain will be person-flow-campaign-variation-day

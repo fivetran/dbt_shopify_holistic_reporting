@@ -41,6 +41,8 @@ with orders as (
         campaign_name,
         flow_name,
         variation_id,
+        campaign_subject_line,
+        campaign_type,
 
         count(distinct order_id) as total_orders,
         sum(order_adjusted_total) as total_price,
@@ -64,7 +66,7 @@ with orders as (
         -- add refunds/returns, adjustments, fulfilled orders %, discounts
 
     from join_orders
-    {{ dbt_utils.group_by(n=7)}}
+    {{ dbt_utils.group_by(n=9)}}
 )
 
 select *
