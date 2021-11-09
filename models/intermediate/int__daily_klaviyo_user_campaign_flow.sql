@@ -15,7 +15,7 @@ with events as (
         variation_id,
         campaign_subject_line,
         campaign_type,
-        {# source_relation, #}
+        source_relation,
         min(occurred_at) as first_event_at,
         max(occurred_at) as last_event_at
 
@@ -32,7 +32,7 @@ with events as (
     {% endfor %}
 
     from events
-    {{ dbt_utils.group_by(n=9) }}
+    {{ dbt_utils.group_by(n=10) }}
 )
 
 -- the grain will be person-flow-campaign-variation-day

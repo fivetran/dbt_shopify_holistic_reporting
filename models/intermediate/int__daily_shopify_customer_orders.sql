@@ -12,12 +12,13 @@ with orders as (
 
     select 
         order_id,
+        source_relation,
         count(distinct product_id) as count_products,
         count(distinct product_id || '-' || variant_id) as count_product_variants,
         sum(quantity) as sum_quantity
         
     from order_lines
-    group by 1
+    group by 1,2
 
 ), join_orders as (
 
@@ -30,6 +31,7 @@ with orders as (
     from orders 
     left join order_line_metrics
         on orders.order_id = order_line_metrics.order_id
+        and orders.source_relation = order_line_metrics.source_relation
 
 ), daily_order_metrics as (
 
@@ -43,6 +45,7 @@ with orders as (
         variation_id,
         campaign_subject_line,
         campaign_type,
+        source_relation,
 
         count(distinct order_id) as total_orders,
         sum(order_adjusted_total) as total_price,
@@ -66,10 +69,8 @@ with orders as (
         sum(order_adjustment_amount) as total_order_adjustment_amount,
         sum(order_adjustment_tax_amount) as total_order_adjustment_tax_amount
 
-        -- add refunds/returns, adjustments, fulfilled orders %, discounts
-
     from join_orders
-    {{ dbt_utils.group_by(n=9)}}
+    {{ dbt_utils.group_by(n=10)}}
 )
 
 select *

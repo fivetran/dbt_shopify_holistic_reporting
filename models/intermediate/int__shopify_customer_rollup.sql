@@ -12,6 +12,7 @@ with customers as (
 
     select
         email,
+        source_relation,
         {{ fivetran_utils.string_agg("cast(customer_id as " ~ dbt_utils.type_string() ~ ")", "', '") }} as customer_ids,
         {{ fivetran_utils.string_agg("distinct phone", "', '") }} as phone_numbers,
 
@@ -45,7 +46,7 @@ with customers as (
 
     from customers 
 
-    group by 1
+    group by 1,2
 
 )
 
