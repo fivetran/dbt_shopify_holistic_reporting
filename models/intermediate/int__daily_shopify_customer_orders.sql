@@ -61,7 +61,10 @@ with orders as (
 
         sum(count_products) as count_products,
         sum(count_product_variants) as count_product_variants,
-        sum(sum_quantity) as sum_quantity
+        sum(sum_quantity) as sum_quantity,
+
+        sum(order_adjustment_amount) as total_order_adjustment_amount,
+        sum(order_adjustment_tax_amount) as total_order_adjustment_tax_amount
 
         -- add refunds/returns, adjustments, fulfilled orders %, discounts
 
