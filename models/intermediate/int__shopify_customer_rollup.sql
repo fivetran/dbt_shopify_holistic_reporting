@@ -42,7 +42,16 @@ with customers as (
         max(case when customer_index = 1 then default_address_id else null end) as default_address_id,
         max(case when customer_index = 1 then account_state else null end) as account_state
 
-        -- passthrough columns?? maybe do max case when -> figure out if we wanna keep this first
+        -- ok let's get any custom passthrough columns! might want to put all max(Case when)'s in here....
+        {% set cols = adapter.get_columns_in_relation(ref('shopify__customers')) %}
+        {% set except_cols = ['_fivetran_synced', 'email', 'source_relation', 'customer_id', 'phone', 'first_name', 'last_name', 'created_timestamp', 'first_order_timestamp', 'most_recent_order_timestamp',
+                                'updated_timestamp', 'lifetime_total_spent', 'lifetime_total_refunded', 'lifetime_total_amount', 'lifetime_count_orders', 'average_order_value', 'has_accepted_marketing',
+                                'is_tax_exempt', 'is_verified_email', 'default_address_id', 'account_state'] %}
+        {% for col in cols %}
+            {% if col.column|lower not in except_cols %}
+            , max(case when customer_index = 1 then {{ col.column }} else null end) as {{ col.column }}
+            {% endif %}
+        {% endfor %}
 
     from customers 
 
