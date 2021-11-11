@@ -1,0 +1,53 @@
+version: 2
+
+models:
+  - name: int__daily_klaviyo_user_campaign_flow
+  - name: int__daily_shopify_customer_orders
+  - name: int__shopify_customer_rollup
+    description: >
+      Table rolling up shopify customer accounts to the email level. In theory, these should be 1:1, but under certain circumstances
+      (ie bots) one email can be associated with multiple customer_ids.
+    columns:
+      - name: source_relation
+        description: >
+          The source where this data was pulled from. If you are making use of the `union_schemas` variable, this will be the source schema.
+          If you are making use of the `union_databases` variable, this will be the source database. If you are not unioning together multiple
+          sources, this will be an empty string.
+      - name: has_accepted_marketing
+        description: Whether the customer has consented to receive marketing material via email.
+      - name: first_shopify_account_made_at
+        description: The date and time when the customer account first associated with this email was created.
+      - name: last_shopify_account_made_at
+        description: The date and time when the customer account first associated with this email was created.
+      - name: default_address_id
+        description: The default address for the customer. 
+      - name: email
+        description: The unique email address of the customer.
+      - name: full_name
+        description: The customer's full name.
+      - name: customer_ids
+        description: A comma-separated aggregated list of Shopify IDs for the customer.
+      - name: lifetime_count_orders
+        description: The number of orders associated with this customer.
+      - name: phone_numbers
+        description: Comma separated aggregated list of unique phone numbers (E.164 format) for this customer.
+      - name: account_state
+        description: The state of the customer's account with a shop.
+      - name: is_tax_exempt
+        description: Whether the customer is exempt from paying taxes on their order. If true, then taxes won't be applied to an order at checkout. If false, then taxes will be applied at checkout.
+      - name: last_updated_at
+        description: The date and time when the customer information was last updated.
+      - name: is_email_verified
+        description: Whether the customer has verified their email address.
+      - name: first_order_at
+        description: The timestamp the customer completed their first order.
+      - name: last_order_at
+        description: The timestamp the customer completed their most recent order.
+      - name: average_order_value
+        description: The average order value for the customer.
+      - name: lifetime_total_spent
+        description: The total amount of money that the customer has spent on orders across their order history.
+      - name: lifetime_total_refunded
+        description: The total amount of money that the customer has been refunded on orders across their order history.
+      - name: lifetime_total_amount
+        description: The total amount of money (minus refunds) that the customer has spent across their order history.

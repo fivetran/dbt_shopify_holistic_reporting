@@ -18,6 +18,9 @@ This package produces three final output models, and is currently designed to wo
 | [daily_customer_campaign_flow](models/daily_customer_campaign_flow.sql)             | Each record represent a unique customer's daily activity attributed to a campaign or flow in Klaviyo, setting the grain at the customer-day-flow or customer-day-campaign level. Enriched with both Shopify metrics, like the net revenue, taxes paid, and discounts applied, and Klaviyo metrics, such as the counts of each type of interaction between the user and the campaign/flow. |
 | [customer_enhanced](models/customer_enhanced.sql)             | Each record represents a unique individual (based on email) that may exist in Shopify, Klaviyo, or both platforms. Enhanced with information coalesced across platforms, lifetime order metrics, and all-time interactions with email marketing campaigns and flows. |
 
+### Opinionated Decisions we Made
+[placeholder for Decision Log link]
+
 ## Installation Instructions
 Check [dbt Hub](https://hub.getdbt.com/) for the latest installation instructions, or [read the dbt docs](https://docs.getdbt.com/docs/package-management) for more information on installing packages.
 
@@ -28,10 +31,6 @@ packages:
   - package: fivetran/shopify_holistic_reporting
     version: [">=0.1.0", "<0.2.0"]
 ```
-
-## Opinionated Decision Log
-
-put in here? or internal docs
 
 ## Contributions
 

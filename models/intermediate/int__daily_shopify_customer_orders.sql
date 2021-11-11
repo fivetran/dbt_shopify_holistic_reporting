@@ -61,7 +61,7 @@ with orders as (
         sum(refund_total_tax) as total_refund_tax,
 
         sum(case when cancelled_timestamp is not null then 1 else 0 end) as count_cancelled_orders,
-
+        -- maybe add the line items, but we can't use the above logic per se because of partial refunds/cancellations 
         sum(count_products) as count_products,
         sum(count_product_variants) as count_product_variants,
         sum(sum_quantity) as sum_quantity,
