@@ -33,7 +33,8 @@ with orders as (
         events.occurred_at as event_occurred_at,
         events.type as event_type,
         events.integration_name,
-        events.integration_category
+        events.integration_category,
+        events.source_relation as klaviyo_source_relation
 
     from orders 
     left join events on 
@@ -74,7 +75,8 @@ with orders as (
         event_occurred_at,
         event_type,
         integration_name,
-        integration_category
+        integration_category,
+        klaviyo_source_relation
 
     from order_events
     where event_index = 1

@@ -198,6 +198,11 @@ models:
       Similar to the Klaviyo app, the package by default considers the conversion period/lookback window for email events to 
       be 120 hours (5 days) and 24 hours for SMS events. These can be configured through the 
       `klaviyo__email_attribution_lookback` and `klaviyo__sms_attribution_lookback` variables, respectively (in integer-hours).
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - order_id
+            - source_relation
     columns:
       - name: app_id
         description: The ID of the app that created the order.
@@ -359,14 +364,40 @@ models:
       - name: total_shipping_price_set
         description: The total shipping price set to the order.
       - name: last_touch_campaign_id
+        description: The Klaviyo campaign that the order has been attributed to by the package. 
       - name: last_touch_flow_id
+        description: The Klaviyo flow that the order has been attributed to by the package. 
       - name: variation_id
+        description: > 
+          Unique ID of the attributed Klaviyo flow or campaign variation group. 
+          This does not map onto another table. 
       - name: campaign_name
+        description: Name of the attributed Klaviyo campaign.
       - name: campaign_subject_line
+        description: Email subject line of the attributed Klaviyo campaign.
       - name: flow_name
+        description: Name of the attributed Klaviyo flow.
       - name: campaign_type
+        description: Type of Klaviyo campaign that the order is attributed to. 
       - name: event_id
+        description: Unique Klaviyo event id of the interaction the customer had with the campaign or flow.
       - name: event_occurred_at
-      - name: event_type
+        description: Timestamp of when the customer interacted with the attributed campaign/flow.
+      - name: event_type 
+        description: >
+          Type of interaction that the customer had with the campaign or flow. Will be one of the event types specified by the `klaviyo__eligible_attribution_events` variable. 
+          By default, this is just email opens, email clicks, and sms opens.
       - name: integration_name
+        description: Name of the platform that tracked the campaign/flow interaction (either Klaviyo, the API, or another integration).
       - name: integration_category
+        description: Use-case category of the platform that sent the campaign/flow interaction event.
+      - name: source_relation
+        description: >
+          The source where this Shopify data was pulled from. If you are making use of the `union_schemas` variable, this will be the source schema.
+          If you are making use of the `union_databases` variable, this will be the source database. If you are not unioning together multiple
+          sources, this will be an empty string.
+      - name: klaviyo_source_relation
+        description: >
+          The source where Klaviyo campaign/flow data was pulled from. If you are making use of the `union_schemas` variable, this will be the source schema.
+          If you are making use of the `union_databases` variable, this will be the source database. If you are not unioning together multiple
+          sources, this will be an empty string.
