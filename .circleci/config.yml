@@ -23,17 +23,6 @@ jobs:
             mkdir -p ~/.dbt
             cp integration_tests/ci/sample.profiles.yml ~/.dbt/profiles.yml
       - run:
-          name: "Run Tests - Snowflake"
-          command: |
-            . venv/bin/activate
-            echo `pwd`
-            cd integration_tests
-            dbt deps
-            dbt seed --target snowflake --full-refresh
-            dbt run --target snowflake --full-refresh
-            dbt test --target snowflake
-            dbt run --target snowflake
-      - run:
           name: "Run Tests - BigQuery"
           environment:
               GCLOUD_SERVICE_KEY_PATH: "/home/circleci/gcloud-service-key.json"
@@ -69,3 +58,14 @@ jobs:
             dbt run --target spark --full-refresh
             dbt test --target spark
             dbt run --target spark
+      - run:
+          name: "Run Tests - Snowflake"
+          command: |
+            . venv/bin/activate
+            echo `pwd`
+            cd integration_tests
+            dbt deps
+            dbt seed --target snowflake --full-refresh
+            dbt run --target snowflake --full-refresh
+            dbt test --target snowflake
+            dbt run --target snowflake
