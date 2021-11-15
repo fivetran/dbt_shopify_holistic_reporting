@@ -14,7 +14,7 @@ with customers as (
         lower(email) as email,
         source_relation,
         {{ fivetran_utils.string_agg("cast(customer_id as " ~ dbt_utils.type_string() ~ ")", "', '") }} as customer_ids,
-        {{ fivetran_utils.string_agg("distinct phone", "', '") }} as phone_numbers,
+        {{ fivetran_utils.string_agg("distinct cast(phone as " ~ dbt_utils.type_string() ~ ")", "', '") }} as phone_numbers,
 
         max(case when customer_index = 1 then first_name || ' ' || last_name else null end) as full_name,
 
