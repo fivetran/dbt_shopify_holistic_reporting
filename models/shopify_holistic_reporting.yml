@@ -17,11 +17,17 @@ models:
       - dbt_utils.unique_combination_of_columns:
           combination_of_columns:
             - email
-            - source_relation
+            - klaviyo_source_relation
+            - shopify_source_relation
     columns:
-      - name: source_relation
+      - name: shopify_source_relation
         description: >
-          The source where this data was pulled from. If you are making use of the `union_schemas` variable, this will be the source schema.
+          The source where this Shopify data was pulled from. If you are making use of the `union_schemas` variable, this will be the source schema.
+          If you are making use of the `union_databases` variable, this will be the source database. If you are not unioning together multiple
+          sources, this will be an empty string.
+      - name: klaviyo_source_relation
+        description: >
+          The source where this Klaviyo data was pulled from. If you are making use of the `union_schemas` variable, this will be the source schema.
           If you are making use of the `union_databases` variable, this will be the source database. If you are not unioning together multiple
           sources, this will be an empty string.
       - name: shopify_has_accepted_marketing
