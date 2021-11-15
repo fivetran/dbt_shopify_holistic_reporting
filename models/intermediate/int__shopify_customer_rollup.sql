@@ -35,7 +35,7 @@ with customers as (
 
         -- take true if ever given for boolean fields
         {{ fivetran_utils.max_bool("has_accepted_marketing") }} as has_accepted_marketing,
-        max(case when customer_index = 1 then is_tax_exempt else null end) as is_tax_exempt, -- since this changes every yeat
+        {{ fivetran_utils.max_bool("case when customer_index = 1 then is_tax_exempt else null end") }} as is_tax_exempt, -- since this changes every year
         {{ fivetran_utils.max_bool("is_verified_email") }} as is_verified_email,
 
         -- other stuff
