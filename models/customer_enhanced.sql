@@ -35,7 +35,7 @@ with shopify_customers as (
 
     from shopify_customers
     full outer join klaviyo_persons 
-        on lower(shopify_customers.email) = lower(klaviyo_persons.email)
+        on shopify_customers.email = lower(klaviyo_persons.email) -- redshift doesn't like doing 2 lowers here. we lowercase shopify.email in an intermediate model
 
 )
 
