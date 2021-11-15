@@ -26,10 +26,10 @@ with shopify_daily as (
         shopify_daily.source_relation as shopify_source_relation,
         klaviyo_daily.source_relation as klaviyo_source_relation,
         
-        {{ dbt_utils.star(from=ref('int__daily_shopify_customer_orders'), relation_alias='shopify_daily', prefix='shopify_',
+        {{ star(from=ref('int__daily_shopify_customer_orders'), relation_alias='shopify_daily', prefix='shopify_',
                                 except=['date_day', 'email', 'variation_id', 'flow_name', 'campaign_name', 'last_touch_flow_id', 'last_touch_campaign_id']) }},
 
-        {{ dbt_utils.star(from=ref('int__daily_klaviyo_user_campaign_flow'), relation_alias='klaviyo_daily', prefix='klaviyo_',
+        {{ star(from=ref('int__daily_klaviyo_user_campaign_flow'), relation_alias='klaviyo_daily', prefix='klaviyo_',
                                 except=['date_day', 'email', 'variation_id', 'flow_name', 'campaign_name', 'last_touch_flow_id', 'last_touch_campaign_id']) }}
 
     from shopify_daily

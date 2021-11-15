@@ -24,12 +24,12 @@ with shopify_customers as (
         shopify_customers.is_verified_email as is_shopify_email_verified,
 
         -- maybe rewrite this macro to be able to prefix with shopify_ and klaviyo_ ?
-        {{ dbt_utils.star(from=ref('int__shopify_customer_rollup'), relation_alias='shopify_customers', prefix='shopify_',
+        {{ star(from=ref('int__shopify_customer_rollup'), relation_alias='shopify_customers', prefix='shopify_',
                                 except=['email', 'full_name', 'customer_ids', 'phone_numbers', 'first_shopify_account_made_at','last_shopify_account_made_at', 
                                         'last_updated_at', 'is_verified_email'] ) 
         }},
 
-        {{ dbt_utils.star(from=ref('klaviyo__persons'), relation_alias='klaviyo_persons', prefix='klaviyo_',
+        {{ star(from=ref('klaviyo__persons'), relation_alias='klaviyo_persons', prefix='klaviyo_',
                                 except=['email', 'full_name', 'created_at', 'person_id', 'phone_number', 'updated_at'] ) 
         }}
 
