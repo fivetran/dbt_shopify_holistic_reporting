@@ -12,7 +12,7 @@ with shopify_customers as (
 
     select
         coalesce(shopify_customers.email, klaviyo_persons.email) as email,
-        shopify_customers.soruce_relation as shopify_source_relation,
+        shopify_customers.source_relation as shopify_source_relation,
         klaviyo_persons.source_relation as klaviyo_source_relation,
         coalesce(klaviyo_persons.full_name, shopify_customers.full_name) as full_name,
         shopify_customers.customer_ids as shopify_customer_ids, -- do some case when's to determine where they came from / if they're in both ?
