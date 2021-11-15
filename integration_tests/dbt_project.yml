@@ -67,7 +67,7 @@ vars:
       - 'cancelled order'
 dispatch:
   - macro_namespace: dbt_utils
-    search_order: ['spark_utils', 'dbt_utils']
+    search_order: ['shopify_klaviyo_combo','spark_utils', 'dbt_utils']
     
 seeds:
   shopify_klaviyo_combo_integration_tests:
