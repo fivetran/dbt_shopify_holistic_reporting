@@ -1,17 +1,17 @@
-name: 'shopify_klaviyo_combo'
+name: 'shopify_holistic_reporting'
 version: '0.1.0'
 config-version: 2
 
 require-dbt-version: ">=0.20.0"
 
 models:
-  shopify_klaviyo_combo:
+  shopify_holistic_reporting:
     +materialized: table
     +schema: shopify_klaviyo_combo
 
 
 vars:
-  shopify_klaviyo_combo:
+  shopify_holistic_reporting:
     klaviyo__email_attribution_lookback: 120 # in hours - 5 days -> https://help.klaviyo.com/hc/en-us/articles/115005248128#conversion-tracking1
     klaviyo__sms_attribution_lookback: 24 # in hours -> https://help.klaviyo.com/hc/en-us/articles/115005248128#sms-conversion-tracking7
 

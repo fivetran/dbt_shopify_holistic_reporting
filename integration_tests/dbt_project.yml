@@ -1,4 +1,4 @@
-name: 'shopify_klaviyo_combo_integration_tests'
+name: 'shopify_holistic_reporting_integration_tests'
 version: '0.1.0'
 profile: 'integration_tests'
 config-version: 2
@@ -67,10 +67,10 @@ vars:
       - 'cancelled order'
 dispatch:
   - macro_namespace: dbt_utils
-    search_order: ['shopify_klaviyo_combo','spark_utils', 'dbt_utils']
+    search_order: ['shopify_holistic_reporting','spark_utils', 'dbt_utils']
     
 seeds:
-  shopify_klaviyo_combo_integration_tests:
+  shopify_holistic_reporting_integration_tests:
   # shopify
     +quote_columns: "{{ true if target.type in ('redshift', 'postgres') else false }}"
     +column_types:
