@@ -12,6 +12,8 @@ with shopify_customers as (
 
     select
         coalesce(shopify_customers.email, klaviyo_persons.email) as email,
+        shopify_customers.soruce_relation as shopify_source_relation,
+        klaviyo_persons.source_relation as klaviyo_source_relation,
         coalesce(klaviyo_persons.full_name, shopify_customers.full_name) as full_name,
         shopify_customers.customer_ids as shopify_customer_ids, -- do some case when's to determine where they came from / if they're in both ?
         klaviyo_persons.person_id as klaviyo_person_id,
@@ -26,11 +28,11 @@ with shopify_customers as (
         -- maybe rewrite this macro to be able to prefix with shopify_ and klaviyo_ ?
         {{ star(from=ref('int__shopify_customer_rollup'), relation_alias='shopify_customers', prefix='shopify_',
                                 except=['email', 'full_name', 'customer_ids', 'phone_numbers', 'first_shopify_account_made_at','last_shopify_account_made_at', 
-                                        'last_updated_at', 'is_verified_email'] ) 
+                                        'last_updated_at', 'is_verified_email', 'source_relation'] ) 
         }},
 
         {{ star(from=ref('klaviyo__persons'), relation_alias='klaviyo_persons', prefix='klaviyo_',
-                                except=['email', 'full_name', 'created_at', 'person_id', 'phone_number', 'updated_at'] ) 
+                                except=['email', 'full_name', 'created_at', 'person_id', 'phone_number', 'updated_at', 'source_relation'] ) 
         }}
 
     from shopify_customers
