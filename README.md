@@ -1,7 +1,7 @@
 [![Apache License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) ![dbt logo and version](https://img.shields.io/static/v1?logo=dbt&label=dbt-version&message=0.20.x&color=orange)
 # Shopify Holistic Reporting
 
-This package builds off of the Shopify [dbt package](https://github.com/fivetran/dbt_shopify) to weave together your Shopify e-commerce data with insights from marketing connectors. Currently, this package only supports combining Shopify with email and SMS marketing data from [Klaviyo](https://github.com/fivetran/dbt_klaviyo).
+This package builds off of the [Shopify](https://github.com/fivetran/dbt_shopify) dbt package to weave together your Shopify e-commerce data with insights from marketing connectors. Currently, this package only supports combining Shopify with email and SMS marketing data from [Klaviyo](https://github.com/fivetran/dbt_klaviyo).
 
 This dbt package enables you to:
 - Tie e-commerce revenue to your email and SMS marketing via last-touch attribution
@@ -31,6 +31,26 @@ packages:
   - package: fivetran/shopify_holistic_reporting
     version: [">=0.1.0", "<0.2.0"]
 ```
+
+## Changing the Build Schema
+
+By default, this package will build the final models within a schema titled (`<target_schema>` + `_shopify_holistic`) and intermediate models in (`<target_schema>` + `_int_shopify_holistic`) in your target database. If this is not where you would like your modeled Shopify Holistic Reporting data to be written to, add the following configuration to your `dbt_project.yml` file:
+
+```yml
+# dbt_project.yml
+
+...
+models:
+  shopify_holistic_reporting:
+    +schema: my_new_schema_name # leave blank for just the target_schema
+    intermediate:
+      +schema: my_new_schema_name # leave blank for just the target_schema
+```
+
+> Note that if your profile does not have permissions to create schemas in your warehouse, you can set each `+schema` to blank. The package will then write all tables to your pre-existing target schema.
+
+Models from the individual [Shopify](https://github.com/fivetran/dbt_shopify/#changing-the-build-schema) and [Klaviyo](https://github.com/fivetran/dbt_klaviyo/#changing-the-build-schema) packages will be written their respective schemas. 
+
 
 ## Contributions
 
