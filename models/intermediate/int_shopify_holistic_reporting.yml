@@ -125,8 +125,6 @@ models:
         description: Whether the customer is exempt from paying taxes on their order. If true, then taxes won't be applied to an order at checkout. If false, then taxes will be applied at checkout.
       - name: last_updated_at
         description: The date and time when the customer information was last updated.
-      - name: is_email_verified
-        description: Whether the customer has verified their email address.
       - name: first_order_at
         description: The timestamp the customer completed their first order.
       - name: last_order_at
@@ -139,3 +137,5 @@ models:
         description: The total amount of money that the customer has been refunded on orders across their order history.
       - name: lifetime_total_amount
         description: The total amount of money (minus refunds) that the customer has spent across their order history.
+      - name: is_verified_email
+        description: Whether the customer has verified their email address.

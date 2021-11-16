@@ -36,6 +36,8 @@ models:
         description: The date and time when the customer account first associated with this email was created.
       - name: shopify_customer_last_created_at
         description: The date and time when the customer account first associated with this email was created.
+      - name: shopify_customer_last_updated_at
+        description: Timestamp of when the shopify customer was last updated. 
       - name: shopify_default_address_id
         description: The default address for the customer. 
       - name: email
@@ -407,3 +409,7 @@ models:
           The source where Klaviyo campaign/flow data was pulled from. If you are making use of the `union_schemas` variable, this will be the source schema.
           If you are making use of the `union_databases` variable, this will be the source database. If you are not unioning together multiple
           sources, this will be an empty string.
+      - name: count_interactions_with_campaign
+        description: The count of distinct attributable events the customer had with the campaign throughout the attribution window.
+      - name: count_interactions_with_flow
+        description: The count of distinct attributable events the customer had with the flow throughout the attribution window.

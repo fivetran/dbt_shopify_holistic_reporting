@@ -27,10 +27,10 @@ with shopify_daily as (
         klaviyo_daily.source_relation as klaviyo_source_relation, #}
         
         {{ star(from=ref('int__daily_shopify_customer_orders'), relation_alias='shopify_daily', prefix='shopify_',
-                                except=['date_day', 'email', 'variation_id', 'flow_name', 'campaign_name', 'last_touch_flow_id', 'last_touch_campaign_id']) }},
+                                except=['date_day', 'email', 'variation_id', 'flow_name', 'campaign_name', 'last_touch_flow_id', 'last_touch_campaign_id', 'campaign_subject_line', 'campaign_type']) }},
 
         {{ star(from=ref('int__daily_klaviyo_user_campaign_flow'), relation_alias='klaviyo_daily', prefix='klaviyo_',
-                                except=['date_day', 'email', 'variation_id', 'flow_name', 'campaign_name', 'last_touch_flow_id', 'last_touch_campaign_id']) }}
+                                except=['date_day', 'email', 'variation_id', 'flow_name', 'campaign_name', 'last_touch_flow_id', 'last_touch_campaign_id', 'campaign_subject_line', 'campaign_type']) }}
 
     from shopify_daily
     full outer join klaviyo_daily
