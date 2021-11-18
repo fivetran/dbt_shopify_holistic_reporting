@@ -55,7 +55,7 @@ models:
         description: Email subject line of the Klaviyo campaign.
       - name: last_touch_campaign_type
         description: Type of campaign.
-      - name: shopify_source_relation
+      - name: source_relation
         description: >
           The source where this Shopify data was pulled from. If you are making use of the `union_schemas` variable, this will be the source schema.
           If you are making use of the `union_databases` variable, this will be the source database. If you are not unioning together multiple

@@ -45,7 +45,7 @@ with orders as (
         last_touch_variation_id,
         last_touch_campaign_subject_line,
         last_touch_campaign_type,
-        shopify_source_relation,
+        shopify_source_relation as source_relation,
 
         count(distinct order_id) as total_orders,
         sum(order_adjusted_total) as total_price,
