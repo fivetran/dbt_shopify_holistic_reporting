@@ -22,18 +22,16 @@ with orders as (
         orders.*,
         events.last_touch_campaign_id,
         events.last_touch_flow_id,
-
-        -- should i prepend the below with last_touch_ or klaviyo_?
-        events.variation_id,
-        events.campaign_name,
-        events.campaign_subject_line,
-        events.flow_name,
-        events.campaign_type,
-        events.event_id,
-        events.occurred_at as event_occurred_at,
-        events.type as event_type,
-        events.integration_name,
-        events.integration_category,
+        events.variation_id as last_touch_variation_id,
+        events.campaign_name as last_touch_campaign_name,
+        events.campaign_subject_line as last_touch_campaign_subject_line,
+        events.flow_name as last_touch_flow_name,
+        events.campaign_type as last_touch_campaign_type,
+        events.event_id as last_touch_event_id,
+        events.occurred_at as last_touch_event_occurred_at,
+        events.type as last_touch_event_type,
+        events.integration_name as last_touch_integration_name,
+        events.integration_category as last_touch_integration_category,
         events.source_relation as klaviyo_source_relation
 
     from orders 
@@ -48,11 +46,11 @@ with orders as (
 
     select
         *,
-        row_number() over (partition by order_id order by event_occurred_at desc) as event_index,
+        row_number() over (partition by order_id order by last_touch_event_occurred_at desc) as event_index,
 
         -- the order was made after X interactions with campaign/flow
-        count(event_id) over (partition by order_id, last_touch_campaign_id) as count_interactions_with_campaign,
-        count(event_id) over (partition by order_id, last_touch_flow_id) as count_interactions_with_flow
+        count(last_touch_event_id) over (partition by order_id, last_touch_campaign_id) as count_interactions_with_campaign,
+        count(last_touch_event_id) over (partition by order_id, last_touch_flow_id) as count_interactions_with_flow
 
 
     from join_orders_w_events
@@ -60,22 +58,23 @@ with orders as (
 ), last_touches as (
 
     select 
-        {{ dbt_utils.star(from=ref('shopify__orders')) }},
+        {{ dbt_utils.star(from=ref('shopify__orders'), except=['source_relation']) }},
         last_touch_campaign_id is not null or last_touch_flow_id is not null as is_attributed,
         last_touch_campaign_id,
         last_touch_flow_id,
-        variation_id,
-        campaign_name,
-        campaign_subject_line,
-        campaign_type,
-        flow_name,
+        last_touch_variation_id,
+        last_touch_campaign_name,
+        last_touch_campaign_subject_line,
+        last_touch_campaign_type,
+        last_touch_flow_name,
         case when last_touch_campaign_id is not null then count_interactions_with_campaign else null end as count_interactions_with_campaign, -- will be null if it's associated with a flow
         count_interactions_with_flow, -- will be null if it's associated with a campaign
-        event_id,
-        event_occurred_at,
-        event_type,
-        integration_name,
-        integration_category,
+        last_touch_event_id,
+        last_touch_event_occurred_at,
+        last_touch_event_type,
+        last_touch_integration_name,
+        last_touch_integration_category,
+        source_relation as shopify_source_relation,
         klaviyo_source_relation
 
     from order_events

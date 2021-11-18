@@ -1,7 +1,7 @@
 with orders as (
 
     select *
-    from {{ ref('orders_attribution') }}
+    from {{ ref('shopify_holistic_reporting__orders_attribution') }}
 
 ), order_lines as (
 
@@ -31,7 +31,7 @@ with orders as (
     from orders 
     left join order_line_metrics
         on orders.order_id = order_line_metrics.order_id
-        and orders.source_relation = order_line_metrics.source_relation
+        and orders.shopify_source_relation = order_line_metrics.source_relation
 
 ), daily_order_metrics as (
 
@@ -40,12 +40,12 @@ with orders as (
         email,
         last_touch_campaign_id,
         last_touch_flow_id,
-        campaign_name,
-        flow_name,
-        variation_id,
-        campaign_subject_line,
-        campaign_type,
-        source_relation,
+        last_touch_campaign_name,
+        last_touch_flow_name,
+        last_touch_variation_id,
+        last_touch_campaign_subject_line,
+        last_touch_campaign_type,
+        shopify_source_relation,
 
         count(distinct order_id) as total_orders,
         sum(order_adjusted_total) as total_price,
@@ -61,7 +61,6 @@ with orders as (
         sum(refund_total_tax) as total_refund_tax,
 
         sum(case when cancelled_timestamp is not null then 1 else 0 end) as count_cancelled_orders,
-        -- maybe add the line items, but we can't use the above logic per se because of partial refunds/cancellations 
         sum(count_products) as count_products,
         sum(count_product_variants) as count_product_variants,
         sum(sum_quantity) as sum_quantity,

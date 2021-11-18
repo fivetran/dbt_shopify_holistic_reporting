@@ -4,9 +4,9 @@
 This package builds off of the [Shopify](https://github.com/fivetran/dbt_shopify) dbt package to weave together your Shopify e-commerce data with insights from marketing connectors. Currently, this package only supports combining Shopify with email and SMS marketing data from [Klaviyo](https://github.com/fivetran/dbt_klaviyo).
 
 This dbt package enables you to:
-- Tie e-commerce revenue to your email and SMS marketing via last-touch attribution
-- Consolidate customers, their information, and activity from across platforms.
-- Create a rich portrait of how customers are engaging with and responding to specific marketing efforts and easily create personas based on this.
+- Tie e-commerce revenue to your email and SMS marketing via last-touch attribution.
+- Consolidate customers, their information, and activity across platforms.
+- Create a rich portrait of customer personas based on how customers are engaging with and responding to specific marketing efforts.
 
 ## Models
 
@@ -14,12 +14,12 @@ This package produces three final output models, and is currently designed to wo
 
 | **model**                | **description**                                                                                                                                |
 | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| [orders_attribution](models/orders_attribution.sql)             | Each record represents a unique Shopify order, enhanced with a customizable last-touch attribution model associating orders with Klaviyo flows and campaigns that customers interacted with. Includes dimensions like whether it is a new or repeat purchase in Shopify. |
+| [orders_attribution](models/orders_attribution.sql)             | Each record represents a unique Shopify order, enhanced with a customizable last-touch attribution model associating orders with Klaviyo flows and campaigns that customers interacted with. Includes dimensions like whether it is a new or repeat purchase in Shopify. See available customizations [here](https://github.com/fivetran/dbt_klaviyo#attribution-lookback-window). |
 | [daily_customer_campaign_flow](models/daily_customer_campaign_flow.sql)             | Each record represent a unique customer's daily activity attributed to a campaign or flow in Klaviyo, setting the grain at the customer-day-flow or customer-day-campaign level. Enriched with both Shopify metrics, like the net revenue, taxes paid, and discounts applied, and Klaviyo metrics, such as the counts of each type of interaction between the user and the campaign/flow. |
 | [customer_enhanced](models/customer_enhanced.sql)             | Each record represents a unique individual (based on email) that may exist in Shopify, Klaviyo, or both platforms. Enhanced with information coalesced across platforms, lifetime order metrics, and all-time interactions with email marketing campaigns and flows. |
 
 ### Opinionated Decisions we Made
-[placeholder for Decision Log link]
+Refer to the [Decision Log](/DECISIONLOG.md).
 
 ## Installation Instructions
 Check [dbt Hub](https://hub.getdbt.com/) for the latest installation instructions, or [read the dbt docs](https://docs.getdbt.com/docs/package-management) for more information on installing packages.

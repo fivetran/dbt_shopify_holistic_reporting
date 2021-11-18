@@ -6,15 +6,15 @@ config-version: 2
 
 vars:
   shopify_source:
-    customer_source:          "{{ ref('shopify_customer_data') }}"
+    customer_source: "{{ ref('shopify_customer_data') }}"
     order_line_refund_source: "{{ ref('shopify_order_line_refund_data') }}"
-    order_line_source:        "{{ ref('shopify_order_line_data') }}"
-    order_source:             "{{ ref('shopify_order_data') }}"
-    product_source:           "{{ ref('shopify_product_data') }}"
-    order_adjustment_source:  "{{ ref('shopify_order_adjustment_data') }}"
-    product_variant_source:   "{{ ref('shopify_product_variant_data') }}"
-    refund_source:            "{{ ref('shopify_refund_data') }}"
-    transaction_source:       "{{ ref('shopify_transaction_data') }}"
+    order_line_source: "{{ ref('shopify_order_line_data') }}"
+    order_source: "{{ ref('shopify_order_data') }}"
+    product_source: "{{ ref('shopify_product_data') }}"
+    order_adjustment_source: "{{ ref('shopify_order_adjustment_data') }}"
+    product_variant_source: "{{ ref('shopify_product_variant_data') }}"
+    refund_source: "{{ ref('shopify_refund_data') }}"
+    transaction_source: "{{ ref('shopify_transaction_data') }}"
 
   klaviyo_source:
     event_table: "{{ ref('event') }}" 

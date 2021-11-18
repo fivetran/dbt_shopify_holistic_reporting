@@ -10,6 +10,7 @@ models:
     +schema: shopify_holistic
     intermediate:
       +schema: int_shopify_holistic
+      +materialized: view
 
 
 vars:

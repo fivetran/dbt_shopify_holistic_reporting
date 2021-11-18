@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: customer_enhanced
+  - name: shopify_holistic_reporting__customer_enhanced
     description: >
       Table consolidating customers and their information and activity metrics from across all platforms. A full outer join is performed in order to union 
       together users who may not exist in both sources, and personal information is coalesced to consolidate as much information as possible. Includes any custom 
@@ -117,7 +117,7 @@ models:
       - name: klaviyo_last_flow_touch_at
         description: Timestamp of when the user last interacted with a flow.
 
-  - name: daily_customer_campaign_flow
+  - name: shopify_holistic_reporting__daily_customer_campaign_flow
     description: >
       Table that aggregates Shopify and Klaviyo metrics to the day-customer-campaign or day-customer-flow grain (but note that if a user interacts 
       with 2 different variations of a flow/campaign somehow, they will have 2 records).  Also note that non-attributed (to Klaviyo at least)
@@ -129,6 +129,16 @@ models:
       These columns will be prefixed with `count_` and `sum_revenue_`.
 
       Note that 0-activity days will not appear. 
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - date_day
+            - email
+            - klaviyo_source_relation
+            - shopify_source_relation
+            - campaign_id
+            - flow_id
+            - variation_id
     columns:
       - name: date_day
         description: Day on which the customer performed these activities. 
@@ -195,7 +205,7 @@ models:
       - name: shopify_total_order_adjustment_tax_amount
         description: The total amount of taxes applied to adjustments made to the customer's orders.
 
-  - name: orders_attribution
+  - name: shopify_holistic_reporting__orders_attribution
     description: >
       Table of Shopify orders, enriched with a last-touch attribution model associating orders (as conversions) to campaigns or flows in Klaviyo. 
 
@@ -210,7 +220,7 @@ models:
       - dbt_utils.unique_combination_of_columns:
           combination_of_columns:
             - order_id
-            - source_relation
+            - shopify_source_relation
     columns:
       - name: app_id
         description: The ID of the app that created the order.
@@ -375,31 +385,31 @@ models:
         description: The Klaviyo campaign that the order has been attributed to by the package. 
       - name: last_touch_flow_id
         description: The Klaviyo flow that the order has been attributed to by the package. 
-      - name: variation_id
+      - name: last_touch_variation_id
         description: > 
           Unique ID of the attributed Klaviyo flow or campaign variation group. 
           This does not map onto another table. 
-      - name: campaign_name
+      - name: last_touch_campaign_name
         description: Name of the attributed Klaviyo campaign.
-      - name: campaign_subject_line
+      - name: last_touch_campaign_subject_line
         description: Email subject line of the attributed Klaviyo campaign.
-      - name: flow_name
+      - name: last_touch_flow_name
         description: Name of the attributed Klaviyo flow.
-      - name: campaign_type
+      - name: last_touch_campaign_type
         description: Type of Klaviyo campaign that the order is attributed to. 
-      - name: event_id
+      - name: last_touch_event_id
         description: Unique Klaviyo event id of the interaction the customer had with the campaign or flow.
-      - name: event_occurred_at
+      - name: last_touch_event_occurred_at
         description: Timestamp of when the customer interacted with the attributed campaign/flow.
-      - name: event_type 
+      - name: last_touch_event_type 
         description: >
           Type of interaction that the customer had with the campaign or flow. Will be one of the event types specified by the `klaviyo__eligible_attribution_events` variable. 
           By default, this is just email opens, email clicks, and sms opens.
-      - name: integration_name
+      - name: last_touch_integration_name
         description: Name of the platform that tracked the campaign/flow interaction (either Klaviyo, the API, or another integration).
-      - name: integration_category
+      - name: last_touch_integration_category
         description: Use-case category of the platform that sent the campaign/flow interaction event.
-      - name: source_relation
+      - name: shopify_source_relation
         description: >
           The source where this Shopify data was pulled from. If you are making use of the `union_schemas` variable, this will be the source schema.
           If you are making use of the `union_databases` variable, this will be the source database. If you are not unioning together multiple

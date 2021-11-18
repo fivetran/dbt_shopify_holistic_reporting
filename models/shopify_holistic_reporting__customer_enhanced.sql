@@ -1,7 +1,7 @@
 with shopify_customers as (
 
     select *
-    from {{ ref('int__shopify_customer_rollup') }}
+    from {{ ref('int_shopify_holistic_reporting__shopify_customer_rollup') }}
 
 ), klaviyo_persons as (
 
@@ -12,10 +12,9 @@ with shopify_customers as (
 
     select
         coalesce(shopify_customers.email, klaviyo_persons.email) as email,
-        shopify_customers.source_relation as shopify_source_relation,
-        klaviyo_persons.source_relation as klaviyo_source_relation,
+
         coalesce(klaviyo_persons.full_name, shopify_customers.full_name) as full_name,
-        shopify_customers.customer_ids as shopify_customer_ids, -- do some case when's to determine where they came from / if they're in both ?
+        shopify_customers.customer_ids as shopify_customer_ids,
         klaviyo_persons.person_id as klaviyo_person_id,
         coalesce(shopify_customers.phone_numbers, cast(klaviyo_persons.phone_number as {{ dbt_utils.type_string() }})) as phone_number,
         shopify_customers.first_shopify_account_made_at as shopify_customer_first_created_at,
@@ -25,14 +24,13 @@ with shopify_customers as (
         klaviyo_persons.updated_at as klaviyo_person_updated_at,
         shopify_customers.is_verified_email as is_shopify_email_verified,
 
-        -- maybe rewrite this macro to be able to prefix with shopify_ and klaviyo_ ?
-        {{ star(from=ref('int__shopify_customer_rollup'), relation_alias='shopify_customers', prefix='shopify_',
+        {{ star(from=ref('int_shopify_holistic_reporting__shopify_customer_rollup'), relation_alias='shopify_customers', prefix='shopify_',
                                 except=['email', 'full_name', 'customer_ids', 'phone_numbers', 'first_shopify_account_made_at','last_shopify_account_made_at', 
-                                        'last_updated_at', 'is_verified_email', 'source_relation'] ) 
+                                        'last_updated_at', 'is_verified_email'] ) 
         }},
 
         {{ star(from=ref('klaviyo__persons'), relation_alias='klaviyo_persons', prefix='klaviyo_',
-                                except=['email', 'full_name', 'created_at', 'person_id', 'phone_number', 'updated_at', 'source_relation'] ) 
+                                except=['email', 'full_name', 'created_at', 'person_id', 'phone_number', 'updated_at'] ) 
         }}
 
     from shopify_customers

@@ -43,19 +43,19 @@ models:
         description: Foreign key referencing the CAMPAIGN attributed with these metrics (by the package's attribution model).
       - name: last_touch_flow_id
         description: Foreign key referencing the FLOW attributed with these metrics (by the package's attribution model).
-      - name: campaign_name
+      - name: last_touch_campaign_name
         description: Name of the attributed campaign. If not specified, this will default to the subject of the campaign.
-      - name: flow_name
+      - name: last_touch_flow_name
         description: Name of the attributed flow. 
-      - name: variation_id
+      - name: last_touch_variation_id
         description: > 
           Unique ID of the attributed flow or campaign variation group. 
           This does not map onto another table. 
-      - name: campaign_subject_line
+      - name: last_touch_campaign_subject_line
         description: Email subject line of the Klaviyo campaign.
-      - name: campaign_type
+      - name: last_touch_campaign_type
         description: Type of campaign.
-      - name: source_relation
+      - name: shopify_source_relation
         description: >
           The source where this Shopify data was pulled from. If you are making use of the `union_schemas` variable, this will be the source schema.
           If you are making use of the `union_databases` variable, this will be the source database. If you are not unioning together multiple
