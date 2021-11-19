@@ -6,7 +6,7 @@ with shopify_customers as (
 ), klaviyo_persons as (
 
     select *
-    from {{ ref('klaviyo__persons') }}
+    from {{ ref('int_shopify_holistic_reporting__klaviyo_person_rollup') }}
 
 ), combine_customer_info as (
 
@@ -15,13 +15,14 @@ with shopify_customers as (
 
         coalesce(klaviyo_persons.full_name, shopify_customers.full_name) as full_name,
         shopify_customers.customer_ids as shopify_customer_ids,
-        klaviyo_persons.person_id as klaviyo_person_id,
-        coalesce(shopify_customers.phone_numbers, cast(klaviyo_persons.phone_number as {{ dbt_utils.type_string() }})) as phone_number,
+        klaviyo_persons.person_ids as klaviyo_person_ids,
+        coalesce(shopify_customers.phone_numbers, klaviyo_persons.phone_numbers) as phone_number,
         shopify_customers.first_shopify_account_made_at as shopify_customer_first_created_at,
         shopify_customers.last_shopify_account_made_at as shopify_customer_last_created_at,
-        klaviyo_persons.created_at as klaviyo_person_created_at,
+        klaviyo_persons.first_klaviyo_account_made_at as klaviyo_person_first_created_at,
+        klaviyo_persons.last_klaviyo_account_made_at as klaviyo_person_last_created_at,
         shopify_customers.last_updated_at as shopify_customer_last_updated_at,
-        klaviyo_persons.updated_at as klaviyo_person_updated_at,
+        klaviyo_persons.last_updated_at as klaviyo_person_last_updated_at,
         shopify_customers.is_verified_email as is_shopify_email_verified,
 
         {{ star(from=ref('int_shopify_holistic_reporting__shopify_customer_rollup'), relation_alias='shopify_customers', prefix='shopify_',
@@ -29,8 +30,8 @@ with shopify_customers as (
                                         'last_updated_at', 'is_verified_email'] ) 
         }},
 
-        {{ star(from=ref('klaviyo__persons'), relation_alias='klaviyo_persons', prefix='klaviyo_',
-                                except=['email', 'full_name', 'created_at', 'person_id', 'phone_number', 'updated_at'] ) 
+        {{ star(from=ref('int_shopify_holistic_reporting__klaviyo_person_rollup'), relation_alias='klaviyo_persons', prefix='klaviyo_',
+                                except=['email', 'full_name', 'first_klaviyo_account_made_at', 'last_klaviyo_account_made_at', 'person_ids', 'phone_numbers', 'last_updated_at'] ) 
         }}
 
     from shopify_customers
