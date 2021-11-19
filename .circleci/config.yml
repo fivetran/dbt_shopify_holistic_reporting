@@ -54,20 +54,6 @@ jobs:
             dbt run --vars '{shopify__using_order_line_refund: false}' --target redshift --full-refresh
             dbt run --vars '{shopify__using_refund: false}' --target redshift --full-refresh
       - run:
-          name: "Run Tests - Spark"
-          command: |
-            . venv/bin/activate
-            echo `pwd`
-            cd integration_tests
-            dbt deps
-            dbt seed --target spark --full-refresh
-            dbt run --target spark --full-refresh
-            dbt test --target spark
-            dbt run --target spark
-            dbt run --vars '{shopify__using_order_adjustment: false}' --target spark --full-refresh
-            dbt run --vars '{shopify__using_order_line_refund: false}' --target spark --full-refresh
-            dbt run --vars '{shopify__using_refund: false}' --target spark --full-refresh
-      - run:
           name: "Run Tests - Snowflake"
           command: |
             . venv/bin/activate
@@ -81,3 +67,17 @@ jobs:
             dbt run --vars '{shopify__using_order_adjustment: false}' --target snowflake --full-refresh
             dbt run --vars '{shopify__using_order_line_refund: false}' --target snowflake --full-refresh
             dbt run --vars '{shopify__using_refund: false}' --target snowflake --full-refresh
+      - run:
+          name: "Run Tests - Spark"
+          command: |
+            . venv/bin/activate
+            echo `pwd`
+            cd integration_tests
+            dbt deps
+            dbt seed --target spark --full-refresh
+            dbt run --target spark --full-refresh
+            dbt test --target spark
+            dbt run --target spark
+            dbt run --vars '{shopify__using_order_adjustment: false}' --target spark --full-refresh
+            dbt run --vars '{shopify__using_order_line_refund: false}' --target spark --full-refresh
+            dbt run --vars '{shopify__using_refund: false}' --target spark --full-refresh

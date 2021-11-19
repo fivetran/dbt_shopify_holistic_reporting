@@ -1,8 +1,25 @@
--- TODO: make this incremental!
+{{
+    config(
+        materialized='incremental',
+        unique_key='unique_order_key',
+        partition_by={
+            "field": "created_timestamp",
+            "data_type": "timestamp"
+        } if target.type == 'bigquery' else none,
+        incremental_strategy = 'merge',
+        file_format = 'delta'
+    )
+}}
+
 with orders as (
 
     select *
     from {{ ref('shopify__orders') }}
+
+    -- just grab new orders
+    {% if is_incremental() %}
+        where created_timestamp >= (select max(created_timestamp) from {{ this }})
+    {% endif %}
 
 ), events as (
 
@@ -14,6 +31,11 @@ with orders as (
         coalesce(last_touch_campaign_id, last_touch_flow_id) is not null
     {% if var('klaviyo__eligible_attribution_events') != [] %}
         and lower(type) in {{ "('" ~ (var('klaviyo__eligible_attribution_events') | join("', '")) ~ "')" }}
+    {% endif %}
+
+    -- only grab the events for users who are in the new increment of orders
+    {% if is_incremental() %}
+        and lower(person_email) in (select distinct lower(email) from orders)
     {% endif %}
 
 ), join_orders_w_events as (
@@ -75,7 +97,8 @@ with orders as (
         last_touch_integration_name,
         last_touch_integration_category,
         source_relation as shopify_source_relation,
-        klaviyo_source_relation
+        klaviyo_source_relation,
+        {{ dbt_utils.surrogate_key(['order_id', 'source_relation']) }} as unique_order_key
 
     from order_events
     where event_index = 1

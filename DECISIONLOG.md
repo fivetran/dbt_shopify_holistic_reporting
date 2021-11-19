@@ -1,4 +1,4 @@
-# Decision Log
+# Decision Log (notes/draft)
 
 In creating this package, which is meant for a wide range of use cases, we had to take opinionated stances on a few different questions we came across during development. We've consolidated significant choices we made here, and will continue to update as the package evolves. 
 
