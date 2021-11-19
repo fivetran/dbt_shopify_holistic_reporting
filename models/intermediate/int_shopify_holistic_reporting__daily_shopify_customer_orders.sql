@@ -57,16 +57,22 @@ with orders as (
         sum(total_discounts) as total_discounts,
         sum(total_tax) as total_tax,
         sum(shipping_cost) as total_shipping_cost,
+
+        {% if fivetran_utils.enabled_vars(vars=["shopify__using_order_line_refund", "shopify__using_refund"]) %}
         sum(refund_subtotal) as total_refund_subtotal,
         sum(refund_total_tax) as total_refund_tax,
+        {% endif %}
 
         sum(case when cancelled_timestamp is not null then 1 else 0 end) as count_cancelled_orders,
         sum(count_products) as count_products,
         sum(count_product_variants) as count_product_variants,
-        sum(sum_quantity) as sum_quantity,
+        sum(sum_quantity) as sum_quantity
 
-        sum(order_adjustment_amount) as total_order_adjustment_amount,
-        sum(order_adjustment_tax_amount) as total_order_adjustment_tax_amount
+        {% if var('shopify__using_order_adjustment', true) %}
+        , sum(order_adjustment_amount) as total_order_adjustment_amount
+        , sum(order_adjustment_tax_amount) as total_order_adjustment_tax_amount
+        {% endif %}
+        
 
     from join_orders
     {{ dbt_utils.group_by(n=10)}}
