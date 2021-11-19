@@ -15,7 +15,7 @@ This package produces three final output models, and is currently designed to wo
 | **model**                | **description**                                                                                                                                |
 | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | [orders_attribution](models/orders_attribution.sql)             | Each record represents a unique Shopify order, enhanced with a customizable last-touch attribution model associating orders with Klaviyo flows and campaigns that customers interacted with. Includes dimensions like whether it is a new or repeat purchase in Shopify. See available customizations [here](https://github.com/fivetran/dbt_klaviyo#attribution-lookback-window). |
-| [daily_customer_campaign_flow](models/daily_customer_campaign_flow.sql)             | Each record represent a unique customer's daily activity attributed to a campaign or flow in Klaviyo, setting the grain at the customer-day-flow or customer-day-campaign level. Enriched with both Shopify metrics, like the net revenue, taxes paid, and discounts applied, and Klaviyo metrics, such as the counts of each type of interaction between the user and the campaign/flow. |
+| [daily_customer_campaign_flow](models/daily_customer_campaign_flow.sql)             | Each record represent a unique customer's daily activity attributed to a campaign or flow in Klaviyo. The grain is set at the customer-day-flow/campaign level. This model is enriched with both Shopify and Klaviyo metrics, such as the net revenue, taxes paid, discounts applied, and the counts of each type of interaction between the user and the campaign/flow. |
 | [customer_enhanced](models/customer_enhanced.sql)             | Each record represents a unique individual (based on email) that may exist in Shopify, Klaviyo, or both platforms. Enhanced with information coalesced across platforms, lifetime order metrics, and all-time interactions with email marketing campaigns and flows. |
 
 ### Opinionated Decisions we Made
@@ -30,6 +30,23 @@ Include in your `packages.yml`
 packages:
   - package: fivetran/shopify_holistic_reporting
     version: [">=0.1.0", "<0.2.0"]
+```
+
+## Unioning Multiple Shopify or Klaviyo Connectors
+If you have multiple Shopify and/or Klaviyo connectors in Fivetran and would like to use this package on all of them simultaneously, we have provided functionality to do so. The package will union all of the data together and pass the unioned table into the transformations. You will be able to see which source it came from in the `source_relation` column of each model. To use this functionality, you will need to set either (**note that you cannot use both**) the `union_schemas` or `union_databases` variables for each type of connector. Note that Shopify and Klaviyo refer the same names for the variables, so you will need to properly namespace them within the `klaviyo_source` and `shopify_source` packages to use this functionality for both sources:
+
+```yml
+# dbt_project.yml
+...
+config-version: 2
+vars:
+  klaviyo_source:
+    union_schemas: ['klaviyo_usa','klaviyo_canada'] # use this if the data is in different schemas/datasets of the same database/project
+    union_databases: ['klaviyo_usa','klaviyo_canada'] # use this if the data is in different databases/projects but uses the same schema name
+
+  shopify_source:
+    union_schemas: ['shopify_usa','shopify_canada'] # use this if the data is in different schemas/datasets of the same database/project
+    union_databases: ['shopify_usa','shopify_canada'] # use this if the data is in different databases/projects but uses the same schema name
 ```
 
 ## Changing the Build Schema

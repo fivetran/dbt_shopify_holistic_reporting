@@ -216,6 +216,8 @@ models:
       Similar to the Klaviyo app, the package by default considers the conversion period/lookback window for email events to 
       be 120 hours (5 days) and 24 hours for SMS events. These can be configured through the 
       `klaviyo__email_attribution_lookback` and `klaviyo__sms_attribution_lookback` variables, respectively (in integer-hours).
+
+      Refer to the Klaviyo package [README](https://github.com/fivetran/dbt_klaviyo#attribution-lookback-window) for more details.
     tests:
       - dbt_utils.unique_combination_of_columns:
           combination_of_columns:
