@@ -22,9 +22,12 @@
         {%- endif %}
     {%- endfor %}
 
+    {% set prefix_cased = prefix | upper if target.type == 'snowflake' else prefix %}
+    {% set suffix_cased = suffix | upper if target.type == 'snowflake' else suffix %}
+
     {%- for col in include_cols %}
 
-        {%- if relation_alias %}{{ relation_alias }}.{% else %}{%- endif -%}{{ adapter.quote(col)|trim }} as {{ adapter.quote(prefix ~ col ~ suffix)|trim }}
+        {%- if relation_alias %}{{ relation_alias }}.{% else %}{%- endif -%}{{ adapter.quote(col)|trim }} as {{ adapter.quote(prefix_cased ~ col ~ suffix_cased)|trim }}
         {%- if not loop.last %},{{ '\n  ' }}{% endif %}
 
     {%- endfor -%}
