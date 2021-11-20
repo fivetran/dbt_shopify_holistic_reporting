@@ -5,5 +5,9 @@ packages:
     revision: feature/accommodate-combo
     warn-unpinned: false
 
-  - package: fivetran/klaviyo
-    version: [">=0.3.0", "<0.4.0"]
+  - git: https://github.com/fivetran/dbt_klaviyo.git
+    revision: feature/accommodate-combo
+    warn-unpinned: false
+
+  # - package: fivetran/klaviyo
+  #   version: [">=0.3.0", "<0.4.0"]
