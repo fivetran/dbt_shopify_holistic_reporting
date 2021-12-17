@@ -1,13 +1,8 @@
 packages:
-  # - package: fivetran/shopify
-  #   version: [">=0.5.0", "<0.6.0"]
   - git: https://github.com/fivetran/dbt_shopify.git
-    revision: feature/accommodate-combo
+    revision: MagicBot_6efd99fd6d ##dbt v1 PR branch
     warn-unpinned: false
 
   - git: https://github.com/fivetran/dbt_klaviyo.git
-    revision: feature/accommodate-combo
+    revision: MagicBot_0ce7397b76 ##dbt v1 PR branch
     warn-unpinned: false
-
-  # - package: fivetran/klaviyo
-  #   version: [">=0.3.0", "<0.4.0"]

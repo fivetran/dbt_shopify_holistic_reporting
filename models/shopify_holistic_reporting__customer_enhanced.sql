@@ -25,12 +25,12 @@ with shopify_customers as (
         klaviyo_persons.last_updated_at as klaviyo_person_last_updated_at,
         shopify_customers.is_verified_email as is_shopify_email_verified,
 
-        {{ star(from=ref('int_shopify_holistic_reporting__shopify_customer_rollup'), relation_alias='shopify_customers', prefix='shopify_',
+        {{ dbt_utils.star(from=ref('int_shopify_holistic_reporting__shopify_customer_rollup'), relation_alias='shopify_customers', prefix='shopify_',
                                 except=['email', 'full_name', 'customer_ids', 'phone_numbers', 'first_shopify_account_made_at','last_shopify_account_made_at', 
                                         'last_updated_at', 'is_verified_email'] ) 
         }},
 
-        {{ star(from=ref('int_shopify_holistic_reporting__klaviyo_person_rollup'), relation_alias='klaviyo_persons', prefix='klaviyo_',
+        {{ dbt_utils.star(from=ref('int_shopify_holistic_reporting__klaviyo_person_rollup'), relation_alias='klaviyo_persons', prefix='klaviyo_',
                                 except=['email', 'full_name', 'first_klaviyo_account_made_at', 'last_klaviyo_account_made_at', 'person_ids', 'phone_numbers', 'last_updated_at'] ) 
         }}
 
