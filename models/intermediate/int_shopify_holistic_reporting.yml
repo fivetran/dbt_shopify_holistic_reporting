@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: int__daily_klaviyo_user_campaign_flow
+  - name: int_shopify_holistic_reporting__daily_klaviyo_user_campaign_flow
     columns:
       - name: date_day
         description: Day on which the customer performed these activities. 
@@ -33,7 +33,7 @@ models:
           If you are making use of the `union_databases` variable, this will be the source database. If you are not unioning together multiple
           sources, this will be an empty string.
 
-  - name: int__daily_shopify_customer_orders
+  - name: int_shopify_holistic_reporting__daily_shopify_customer_orders
     columns:
       - name: date_day
         description: Day on which the customer performed these activities. 
@@ -91,7 +91,7 @@ models:
       - name: total_order_adjustment_tax_amount
         description: The total amount of taxes applied to adjustments made to the customer's orders.
 
-  - name: int__shopify_customer_rollup
+  - name: int_shopify_holistic_reporting__shopify_customer_rollup
     description: >
       Table rolling up shopify customer accounts to the email level. In theory, these should be 1:1, but under certain circumstances
       (ie bots) one email can be associated with multiple customer_ids.
