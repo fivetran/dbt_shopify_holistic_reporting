@@ -117,7 +117,7 @@ models:
       - name: klaviyo_last_flow_touch_at
         description: Timestamp of when the user last interacted with a flow.
 
-  - name: shopify_holistic_reporting__daily_customer_campaign_flow
+  - name: shopify_holistic_reporting__daily_customer_metrics
     description: >
       Table that aggregates Shopify and Klaviyo metrics to the day-customer-campaign or day-customer-flow grain (but note that if a user interacts 
       with 2 different variations of a flow/campaign somehow, they will have 2 records).  Also note that non-attributed (to Klaviyo at least)
