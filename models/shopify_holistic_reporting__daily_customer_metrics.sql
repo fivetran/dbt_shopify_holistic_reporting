@@ -6,7 +6,7 @@ with shopify_daily as (
 ), klaviyo_daily as (
 
     select *
-    from {{ ref('int__daily_klaviyo_user_campaign_flow') }}
+    from {{ ref('int__daily_klaviyo_user_metrics') }}
 
 ), combine_histories as (
 
@@ -27,7 +27,7 @@ with shopify_daily as (
                                 except=['source_relation','date_day', 'email', 'last_touch_variation_id', 'last_touch_flow_name', 'last_touch_campaign_name', 'last_touch_flow_id', 'last_touch_campaign_id', 'last_touch_campaign_subject_line', 'last_touch_campaign_type']) }},
         shopify_daily.source_relation as shopify_source_relation,
 
-        {{ dbt_utils.star(from=ref('int__daily_klaviyo_user_campaign_flow'), relation_alias='klaviyo_daily', prefix='klaviyo_',
+        {{ dbt_utils.star(from=ref('int__daily_klaviyo_user_metrics'), relation_alias='klaviyo_daily', prefix='klaviyo_',
                                 except=['source_relation','date_day', 'email', 'variation_id', 'flow_name', 'campaign_name', 'last_touch_flow_id', 'last_touch_campaign_id', 'campaign_subject_line', 'campaign_type']) }},
         klaviyo_daily.source_relation as klaviyo_source_relation
 

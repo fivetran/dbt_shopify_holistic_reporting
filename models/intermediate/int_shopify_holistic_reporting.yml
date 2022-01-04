@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: int__daily_klaviyo_user_campaign_flow
+  - name: int__daily_klaviyo_user_metrics
     columns:
       - name: date_day
         description: Day on which the customer performed these activities. 
