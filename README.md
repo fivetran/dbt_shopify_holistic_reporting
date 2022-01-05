@@ -1,7 +1,7 @@
 [![Apache License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 # Shopify Holistic Reporting
 
-This package builds off of the [Shopify](https://github.com/fivetran/dbt_shopify) dbt package to weave together your Shopify e-commerce data with insights from marketing connectors. Currently, this package only supports combining Shopify with email and SMS marketing data from [Klaviyo](https://github.com/fivetran/dbt_klaviyo).
+This package builds off of the [Shopify dbt package](https://github.com/fivetran/dbt_shopify) to weave together your Shopify e-commerce data with insights from marketing connectors. Currently, this package only supports combining Shopify with email and SMS marketing data from Fivetran's [Klaviyo dbt package](https://github.com/fivetran/dbt_klaviyo).
 
 This dbt package enables you to:
 - Tie e-commerce revenue to your email and SMS marketing via last-touch attribution.
@@ -32,7 +32,13 @@ packages:
     version: [">=0.1.0", "<0.2.0"]
 ```
 
-## Unioning Multiple Shopify or Klaviyo Connectors
+## Configurations
+
+See connector-specific configurations in their individual dbt package READMEs:
+- [Shopify](https://github.com/fivetran/dbt_shopify)
+- [Klaviyo](https://github.com/fivetran/dbt_klaviyo)
+
+### Unioning Multiple Shopify or Klaviyo Connectors
 If you have multiple Shopify and/or Klaviyo connectors in Fivetran and would like to use this package on all of them simultaneously, we have provided functionality to do so. The package will union all of the data together and pass the unioned table into the transformations. You will be able to see which source it came from in the `source_relation` column of each model. To use this functionality, you will need to set either (**note that you cannot use both**) the `union_schemas` or `union_databases` variables for each type of connector. Note that Shopify and Klaviyo refer the same names for the variables, so you will need to properly namespace them within the `klaviyo_source` and `shopify_source` packages to use this functionality for both sources:
 
 ```yml
@@ -49,7 +55,7 @@ vars:
     union_databases: ['shopify_usa','shopify_canada'] # use this if the data is in different databases/projects but uses the same schema name
 ```
 
-## Changing the Build Schema
+### Changing the Build Schema
 
 By default, this package will build the final models within a schema titled (`<target_schema>` + `_shopify_holistic`) and intermediate models in (`<target_schema>` + `_int_shopify_holistic`) in your target database. If this is not where you would like your modeled Shopify Holistic Reporting data to be written to, add the following configuration to your `dbt_project.yml` file:
 
