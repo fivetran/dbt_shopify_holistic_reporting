@@ -10,7 +10,7 @@ models:
     +schema: shopify_holistic
     intermediate:
       +schema: int_shopify_holistic
-      +materialized: view # can't be ephemeral due to the use of dbt_utils.star()
+      +materialized: table # can't be ephemeral due to the use of dbt_utils.star()
 
 
 vars:
