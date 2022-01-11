@@ -8,6 +8,8 @@ This dbt package enables you to:
 - Consolidate customers, their information, and activity across platforms.
 - Create a rich portrait of customer personas based on how customers are engaging with and responding to specific marketing efforts.
 
+Check out our [blog post](https://www.fivetran.com/blog/gain-faster-insights-from-shopify-and-klaviyo-data) for further discussion on how the package can accelerate your business analysis. 
+
 ## Models
 
 This package produces three final output models, and is currently designed to work simultaneously with our [Shopify](https://github.com/fivetran/dbt_shopify) and [Klaviyo](https://github.com/fivetran/dbt_klaviyo) dbt packages. Dependencies on these packages are declared in this package's `packages.yml` file, so they will automatically download when you run `dbt deps`. The primary outputs of this package are described below. Intermediate models are used to create these output models, and are not documented here.
@@ -19,7 +21,7 @@ This package produces three final output models, and is currently designed to wo
 | [shopify_holistic_reporting__customer_enhanced](models/shopify_holistic_reporting__customer_enhanced.sql)             | Each record represents a unique individual (based on email) that may exist in Shopify, Klaviyo, or both platforms. Enhanced with information coalesced across platforms, lifetime order metrics, and all-time interactions with email marketing campaigns and flows. |
 
 ### Opinionated Modelling Decisions
-Refer to the [Decision Log](/DECISIONLOG.md).
+If you would like a deeper explanation of the logic used by default in the dbt package you may reference the [DECISIONLOG](/DECISIONLOG.md).
 
 ## Installation Instructions
 Check [dbt Hub](https://hub.getdbt.com/) for the latest installation instructions, or [read the dbt docs](https://docs.getdbt.com/docs/package-management) for more information on installing packages.
