@@ -1,3 +1,11 @@
+# dbt_shopify_holistic_reporting v0.1.1
+## Bug Fixes
+Incorporate the try_cast macro from fivetran_utils to ensure that the numeric_value field in int__daily_klaviyo_user_metrics is the same data type as '0'. ([#6](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/6))
+
+## Contributors
+- [@MisterClean](https://github.com/MisterClean) ([#6](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/6))
+
+
 # dbt_shopify_holistic_reporting v0.1.0
 
 The original release! This package currently models Shopify and Klaviyo data to achieve the following:
