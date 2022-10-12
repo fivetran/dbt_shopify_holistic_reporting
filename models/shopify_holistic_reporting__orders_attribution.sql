@@ -16,9 +16,9 @@ with orders as (
     select *
     from {{ ref('shopify__orders') }}
 
-    -- just grab new orders
+    -- just grab new + newly updated orders
     {% if is_incremental() %}
-        where created_timestamp >= (select max(created_timestamp) from {{ this }})
+        where updated_timestamp >= (select max(updated_timestamp) from {{ this }})
     {% endif %}
 
 ), events as (

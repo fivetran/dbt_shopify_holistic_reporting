@@ -218,6 +218,8 @@ models:
       `klaviyo__email_attribution_lookback` and `klaviyo__sms_attribution_lookback` variables, respectively (in integer-hours).
 
       Refer to the Klaviyo package [README](https://github.com/fivetran/dbt_klaviyo#attribution-lookback-window) for more details.
+
+      Materialized incrementally by default.
     tests:
       - dbt_utils.unique_combination_of_columns:
           combination_of_columns:
