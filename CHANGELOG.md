@@ -1,6 +1,8 @@
-# dbt_shopify_holistic_reporting v0.1.2
+# dbt_shopify_holistic_reporting v0.2.0
 ## Bug Fixes
-- Adjusts the incremental logic in the `shopify_holistic_reporting__orders_attribution` model. Previously, on incremental runs, this model transformed only newly-_created_ orders, comparing each order's `created_timestamp` to the `max(created_timestamp)` in the model. Now, the model will also transform newly-_updated_ orders and use `updated_timestamp` instead of `created_timestamp` to determine if an order should be included in an incremental run.
+- Adjusts the incremental logic in the `shopify_holistic_reporting__orders_attribution` model. Previously, on incremental runs, this model transformed only newly-_created_ orders, comparing each order's `created_timestamp` to the `max(created_timestamp)` in the model. Now, the model will also transform newly-_updated_ orders and use `updated_timestamp` instead of `created_timestamp` to determine if an order should be included in an incremental run ([#9](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/9)).
+
+This is a 🚨 Breaking Change 🚨 as **you will need to run a full refresh**.
 
 # dbt_shopify_holistic_reporting v0.1.1
 ## Bug Fixes
