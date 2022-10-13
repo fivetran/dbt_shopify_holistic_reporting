@@ -4,6 +4,9 @@
 
 This is a 🚨 Breaking Change 🚨 as **you will need to run a full refresh**.
 
+## Under the Hood
+- Ensures that the incremental strategy used by postgres adapters in the `shopify_holistic_reporting__orders_attribution` model is `delete+insert` ([#9](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/9)).
+
 # dbt_shopify_holistic_reporting v0.1.1
 ## Bug Fixes
 Incorporate the try_cast macro from fivetran_utils to ensure that the numeric_value field in int__daily_klaviyo_user_metrics is the same data type as '0'. ([#6](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/6))
