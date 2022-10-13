@@ -6,7 +6,7 @@
             "field": "created_timestamp",
             "data_type": "timestamp"
         } if target.type == 'bigquery' else none,
-        incremental_strategy = 'merge',
+        incremental_strategy = 'merge' if target.type not in ('postgres', 'redshift') else 'delete+insert',
         file_format = 'delta'
     )
 }}
@@ -16,9 +16,9 @@ with orders as (
     select *
     from {{ ref('shopify__orders') }}
 
-    -- just grab new orders
+    -- just grab new + newly updated orders
     {% if is_incremental() %}
-        where created_timestamp >= (select max(created_timestamp) from {{ this }})
+        where updated_timestamp >= (select max(updated_timestamp) from {{ this }})
     {% endif %}
 
 ), events as (
