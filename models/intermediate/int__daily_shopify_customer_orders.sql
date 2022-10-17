@@ -36,7 +36,7 @@ with orders as (
 ), daily_order_metrics as (
 
     select
-        cast( {{ dbt_utils.date_trunc('day', 'created_timestamp') }} as date) as date_day,
+        cast( {{ dbt.date_trunc('day', 'created_timestamp') }} as date) as date_day,
         email,
         last_touch_campaign_id,
         last_touch_flow_id,

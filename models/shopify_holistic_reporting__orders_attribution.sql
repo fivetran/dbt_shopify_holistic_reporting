@@ -59,7 +59,7 @@ with orders as (
     from orders 
     left join events on 
         lower(orders.email) = lower(events.person_email)
-        and {{ dbt_utils.datediff('events.occurred_at', 'orders.created_timestamp', 'hour') }} <= (
+        and {{ dbt.datediff('events.occurred_at', 'orders.created_timestamp', 'hour') }} <= (
             case when events.type like '%sms%' then {{ var('klaviyo__sms_attribution_lookback') }}
             else {{ var('klaviyo__email_attribution_lookback') }} end)
         and orders.created_timestamp > events.occurred_at
@@ -98,7 +98,7 @@ with orders as (
         last_touch_integration_category,
         source_relation as shopify_source_relation,
         klaviyo_source_relation,
-        {{ dbt_utils.surrogate_key(['order_id', 'source_relation']) }} as unique_order_key
+        {{ dbt_utils.generate_surrogate_key(['order_id', 'source_relation']) }} as unique_order_key
 
     from order_events
     where event_index = 1
