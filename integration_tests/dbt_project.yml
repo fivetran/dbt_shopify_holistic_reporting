@@ -144,7 +144,7 @@ seeds:
       +enabled: "{{ true if target.type != 'snowflake' else false }}"
       +quote_columns: "{{ true if target.type == 'redshift' else false }}"
       +column_types:
-        trigger: "{{ 'string' if target.type in  ('bigquery', 'spark') else 'varchar' }}"
+        trigger: "{{ 'string' if target.type in  ('bigquery', 'spark', 'databricks') else 'varchar' }}"
     flow_snowflake:
       +enabled: "{{ true if target.type == 'snowflake' else false }}"
     event:

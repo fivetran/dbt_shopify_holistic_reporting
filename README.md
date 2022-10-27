@@ -92,6 +92,12 @@ This dbt package is dependent on the following dbt packages. Please be aware tha
 > IMPORTANT: If you have any of these dependent packages in your own `packages.yml` file, we highly recommend that you remove them from your root `packages.yml` to avoid package version conflicts.
 ```yml
 packages:
+    - package: fivetran/shopify
+      version: [">=0.7.0", "<0.8.0"]
+
+    - package: fivetran/klaviyo
+      version: [">=0.5.0", "<0.6.0"]
+
     - package: fivetran/fivetran_utils
       version: [">=0.4.0", "<0.5.0"]
 
