@@ -1,4 +1,15 @@
-[![Apache License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+<p align="center">
+    <a alt="License"
+        href="https://github.com/fivetran/dbt_netsuite_source/blob/main/LICENSE">
+        <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" /></a>
+    <a alt="dbt-core">
+        <img src="https://img.shields.io/badge/dbt_Core™_version->=1.3.0_<2.0.0-orange.svg" /></a>
+    <a alt="Maintained?">
+        <img src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" /></a>
+    <a alt="PRs">
+        <img src="https://img.shields.io/badge/Contributions-welcome-blueviolet" /></a>
+</p>
+
 # Shopify Holistic Reporting
 
 This package builds off of the [Shopify dbt package](https://github.com/fivetran/dbt_shopify) to weave together your Shopify e-commerce data with insights from marketing connectors. Currently, this package supports combining Shopify with email and SMS marketing data from Fivetran's [Klaviyo dbt package](https://github.com/fivetran/dbt_klaviyo).
@@ -31,7 +42,7 @@ Include in your `packages.yml`
 ```yaml
 packages:
   - package: fivetran/shopify_holistic_reporting
-    version: [">=0.1.0", "<0.2.0"]
+    version: [">=0.3.0", "<0.4.0"]
 ```
 
 ## Configurations
@@ -75,6 +86,18 @@ models:
 > Note that if your profile does not have permissions to create schemas in your warehouse, you can set each `+schema` to blank. The package will then write all tables to your pre-existing target schema.
 
 Models from the individual [Shopify](https://github.com/fivetran/dbt_shopify/#changing-the-build-schema) and [Klaviyo](https://github.com/fivetran/dbt_klaviyo/#changing-the-build-schema) packages will be written their respective schemas. 
+
+# 🔍 Does this package have dependencies?
+This dbt package is dependent on the following dbt packages. Please be aware that these dependencies are installed by default within this package. For more information on the following packages, refer to the [dbt hub](https://hub.getdbt.com/) site.
+> IMPORTANT: If you have any of these dependent packages in your own `packages.yml` file, we highly recommend that you remove them from your root `packages.yml` to avoid package version conflicts.
+```yml
+packages:
+    - package: fivetran/fivetran_utils
+      version: [">=0.4.0", "<0.5.0"]
+
+    - package: dbt-labs/dbt_utils
+      version: [">=1.0.0", "<2.0.0"]
+```
 
 
 ## Contributions

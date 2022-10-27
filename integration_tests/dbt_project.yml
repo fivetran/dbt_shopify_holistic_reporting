@@ -1,5 +1,5 @@
 name: 'shopify_holistic_reporting_integration_tests'
-version: '0.2.0'
+version: '0.3.0'
 profile: 'integration_tests'
 config-version: 2
 
@@ -65,9 +65,10 @@ vars:
       - 'Ordered Product'
       - 'checkout started'
       - 'cancelled order'
+
 dispatch:
   - macro_namespace: dbt_utils
-    search_order: ['shopify_holistic_reporting','!!!!!!! REPLACE 'spark' WITH 'spark','databricks' OR EQUIV !!!!!!!_utils', 'dbt_utils']
+    search_order: ['shopify_holistic_reporting', 'spark_utils', 'dbt_utils']
     
 seeds:
   shopify_holistic_reporting_integration_tests:
@@ -138,15 +139,15 @@ seeds:
     # klaviyo
     person:
       +column_types:
-        phone_number: "{{ 'string' if target.type in ('bigquery', '!!!!!!! REPLACE 'spark' WITH 'spark','databricks' OR EQUIV !!!!!!!') else 'varchar' }}"
+        phone_number: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
     flow:
       +enabled: "{{ true if target.type != 'snowflake' else false }}"
       +quote_columns: "{{ true if target.type == 'redshift' else false }}"
       +column_types:
-        trigger: "{{ 'string' if target.type in ('bigquery', '!!!!!!! REPLACE 'spark' WITH 'spark','databricks' OR EQUIV !!!!!!!') else 'varchar' }}"
+        trigger: "{{ 'string' if target.type in  ('bigquery', 'spark', 'databricks') else 'varchar' }}"
     flow_snowflake:
       +enabled: "{{ true if target.type == 'snowflake' else false }}"
     event:
       +column_types:
-        flow_id: "{{ 'string' if target.type in ('bigquery', '!!!!!!! REPLACE 'spark' WITH 'spark','databricks' OR EQUIV !!!!!!!') else 'varchar' }}"
-        campaign_id: "{{ 'string' if target.type in ('bigquery', '!!!!!!! REPLACE 'spark' WITH 'spark','databricks' OR EQUIV !!!!!!!') else 'varchar' }}"
+        flow_id: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
+        campaign_id: "{{ 'string' if target.type in  ('bigquery', 'spark', 'databricks') else 'varchar' }}"
