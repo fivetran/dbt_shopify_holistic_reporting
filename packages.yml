@@ -1,6 +1,15 @@
 packages:
-- package: fivetran/shopify
-  version: [">=0.7.0", "<0.8.0"]
+# - package: fivetran/shopify
+#   version: [">=0.7.0", "<0.8.0"]
 
-- package: fivetran/klaviyo
-  version: [">=0.5.0", "<0.6.0"]
+# - package: fivetran/klaviyo
+#   version: [">=0.5.0", "<0.6.0"]
+
+# IMPORTANT: MAKE SURE TO REVERT BACK BEFORE MERGING
+- git: https://github.com/fivetran/dbt_shopify.git
+  revision: MagicBot/dbt-utils-cross-db-migration
+  warn-unpinned: false
+
+- git: https://github.com/fivetran/dbt_klaviyo.git
+  revision: MagicBot/dbt-utils-cross-db-migration
+  warn-unpinned: false
