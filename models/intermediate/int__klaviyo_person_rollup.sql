@@ -13,7 +13,7 @@ with persons as (
         lower(email) as email,
         source_relation,
         {{ fivetran_utils.string_agg("person_id", "', '") }} as person_ids,
-        {{ fivetran_utils.string_agg("distinct cast(phone_number as " ~ dbt_utils.type_string() ~ ")", "', '") }} as phone_numbers,
+        {{ fivetran_utils.string_agg("distinct cast(phone_number as " ~ dbt.type_string() ~ ")", "', '") }} as phone_numbers,
         max( case when person_index = 1 then full_name else null end) as full_name,
         
         min(created_at) as first_klaviyo_account_made_at,

@@ -6,7 +6,7 @@ with events as (
 ), pivot_out_events as (
     
     select 
-        cast( {{ dbt_utils.date_trunc('day', 'occurred_at') }} as date) as date_day,
+        cast( {{ dbt.date_trunc('day', 'occurred_at') }} as date) as date_day,
         person_email as email,
         last_touch_campaign_id,
         last_touch_flow_id,
