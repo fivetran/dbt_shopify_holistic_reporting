@@ -1,8 +1,8 @@
 # dbt_shopify_holistic_reporting v0.3.1
- includes the following updates:
+[PR #13](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/13) includes the following updates:
  - Update documentation to reflect current standards
  - Update package dependency versions for Shopify and Klaviyo
- 
+
 
 # dbt_shopify_holistic_reporting v0.3.0
 
