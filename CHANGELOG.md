@@ -1,3 +1,9 @@
+# dbt_shopify_holistic_reporting v0.3.1
+ includes the following updates:
+ - Update documentation to reflect current standards
+ - Update package dependency versions for Shopify and Klaviyo
+ 
+
 # dbt_shopify_holistic_reporting v0.3.0
 
 ## 🚨 Breaking Changes 🚨:
