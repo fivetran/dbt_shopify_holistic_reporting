@@ -5,6 +5,8 @@ config-version: 2
 
 
 vars:
+  shopify_union_schemas: ['shopify_holistic_reporting_integration_tests']
+  klaviyo_union_schemas: ['shopify_holistic_reporting_integration_tests']
   shopify_source:
     customer_source: "{{ ref('shopify_customer_data') }}"
     order_line_refund_source: "{{ ref('shopify_order_line_refund_data') }}"
