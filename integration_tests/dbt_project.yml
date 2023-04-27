@@ -83,6 +83,7 @@ seeds:
         _fivetran_synced: timestamp
         id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         default_address_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
+        accepts_marketing: boolean
     shopify_order_data:
       +column_types:
         created_at: timestamp
@@ -151,3 +152,5 @@ seeds:
       +column_types:
         flow_id: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
         campaign_id: "{{ 'string' if target.type in  ('bigquery', 'spark', 'databricks') else 'varchar' }}"
+        datetime: timestamp
+        timestamp: timestamp
