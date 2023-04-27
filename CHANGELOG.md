@@ -1,3 +1,12 @@
+# dbt_shopify_holistic_reporting v0.3.1
+
+## Bug Fixes:
+PR #something includes the following changes:
+- Adds flow, campaign, and variation to the join between shopify and klaviyo data in `shopify_holistic_reporting__daily_customer_metrics`. These fields are part of the grain of this model and could cause fanout if not included as arguments in the `full outer join`.
+
+## Contributors
+- [@jmussitsch](https://github.com/jmussitsch) ([#14](https://github.com/fivetran/dbt_shopify_holistic_reporting/issues/14))
+
 # dbt_shopify_holistic_reporting v0.3.0
 
 ## 🚨 Breaking Changes 🚨:
