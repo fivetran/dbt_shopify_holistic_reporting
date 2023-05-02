@@ -5,8 +5,8 @@ config-version: 2
 
 
 vars:
-  shopify_union_schemas: ['shopify_holistic_reporting_integration_tests']
-  klaviyo_union_schemas: ['shopify_holistic_reporting_integration_tests']
+  shopify_schema: 'shopify_holistic_reporting_integration_tests'
+  klaviyo_schema: 'shopify_holistic_reporting_integration_tests'
   shopify_source:
     customer_source: "{{ ref('shopify_customer_data') }}"
     order_line_refund_source: "{{ ref('shopify_order_line_refund_data') }}"
@@ -16,7 +16,7 @@ vars:
     order_adjustment_source: "{{ ref('shopify_order_adjustment_data') }}"
     product_variant_source: "{{ ref('shopify_product_variant_data') }}"
     refund_source: "{{ ref('shopify_refund_data') }}"
-    transaction_source: "{{ ref('shopify_transaction_data') }}"
+    # transaction_source: "{{ ref('shopify_transaction_data') }}"
 
   klaviyo_source:
     event_table: "{{ ref('event') }}" 
@@ -128,7 +128,7 @@ seeds:
         id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         product_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         inventory_item_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
-    shopify_transaction_data:
+    transaction:
       +column_types:
         id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         order_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
