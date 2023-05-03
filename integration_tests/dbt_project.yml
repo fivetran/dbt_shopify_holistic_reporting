@@ -8,9 +8,12 @@ clean-targets:         # directories to be removed by `dbt clean`
   - "dbt_packages"
   - "dbt_modules"
 
+quoting:
+  identifier: "{{ target.type == 'snowflake' }}"
+
 vars:
   shopify_source:
-    shopify_schema: 'shopify_holistic_reporting_integration_tests'
+    shopify_schema: 'shopify_holistic_reporting_integration_tests_1'
     # customer_source: "{{ ref('customer') }}"
     # order_line_refund_source: "{{ ref('order_line_refund') }}"
     # order_line_source: "{{ ref('order_line') }}"
@@ -22,7 +25,7 @@ vars:
     # transaction_source: "{{ ref('transaction') }}"
     
   klaviyo_source:
-    klaviyo_schema: 'shopify_holistic_reporting_integration_tests'
+    klaviyo_schema: 'shopify_holistic_reporting_integration_tests_1'
     event_table: "{{ ref('event') }}" 
     campaign: "{{ ref('campaign') }}" 
     flow: "{{ fivetran_utils.snowflake_seed_data('flow') }}" 
