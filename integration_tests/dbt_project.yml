@@ -3,22 +3,26 @@ version: '0.3.1'
 profile: 'integration_tests'
 config-version: 2
 
+clean-targets:         # directories to be removed by `dbt clean`
+  - "target"
+  - "dbt_packages"
+  - "dbt_modules"
 
 vars:
-  shopify_schema: 'shopify_holistic_reporting_integration_tests'
-  klaviyo_schema: 'shopify_holistic_reporting_integration_tests'
   shopify_source:
-    customer_source: "{{ ref('shopify_customer_data') }}"
-    order_line_refund_source: "{{ ref('shopify_order_line_refund_data') }}"
-    order_line_source: "{{ ref('shopify_order_line_data') }}"
-    order_source: "{{ ref('shopify_order_data') }}"
-    product_source: "{{ ref('shopify_product_data') }}"
-    order_adjustment_source: "{{ ref('shopify_order_adjustment_data') }}"
-    product_variant_source: "{{ ref('shopify_product_variant_data') }}"
-    refund_source: "{{ ref('shopify_refund_data') }}"
-    # transaction_source: "{{ ref('shopify_transaction_data') }}"
-
+    shopify_schema: 'shopify_holistic_reporting_integration_tests'
+    # customer_source: "{{ ref('customer') }}"
+    # order_line_refund_source: "{{ ref('order_line_refund') }}"
+    # order_line_source: "{{ ref('order_line') }}"
+    # order_source: "{{ ref('order') }}"
+    # product_source: "{{ ref('product') }}"
+    # order_adjustment_source: "{{ ref('order_adjustment') }}"
+    # product_variant_source: "{{ ref('product_variant') }}"
+    # refund_source: "{{ ref('refund') }}"
+    # transaction_source: "{{ ref('transaction') }}"
+    
   klaviyo_source:
+    klaviyo_schema: 'shopify_holistic_reporting_integration_tests'
     event_table: "{{ ref('event') }}" 
     campaign: "{{ ref('campaign') }}" 
     flow: "{{ fivetran_utils.snowflake_seed_data('flow') }}" 
@@ -78,7 +82,8 @@ seeds:
     +quote_columns: "{{ true if target.type in ('redshift', 'postgres') else false }}"
     +column_types:
       _fivetran_synced: timestamp
-    shopify_customer_data:
+    customer:
+      +tags: shopify
       +column_types:
         created_at: timestamp
         updated_at: timestamp
@@ -86,7 +91,8 @@ seeds:
         id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         default_address_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         accepts_marketing: boolean
-    shopify_order_data:
+    order:
+      +tags: shopify
       +column_types:
         created_at: timestamp
         updated_at: timestamp
@@ -97,62 +103,79 @@ seeds:
         customer_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         location_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         user_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
-    shopify_order_line_data:
+    order_line:
+      +tags: shopify
       +column_types:
         _fivetran_synced: timestamp
         order_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         product_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         variant_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
-    shopify_order_line_refund_data:
+    order_line_refund:
+      +tags: shopify
       +column_types:
         _fivetran_synced: timestamp
         id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         location_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         refund_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         order_line_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
-    shopify_product_data:
+    product:
+      +tags: shopify
       +column_types:
         created_at: timestamp
         updated_at: timestamp
         published_at: timestamp
         _fivetran_synced: timestamp
         id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
-    shopify_order_adjustment_data:
+    order_adjustment:
+      +tags: shopify
       +column_types:
         id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         order_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         refund_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
-    shopify_product_variant_data:
+    product_variant:
+      +tags: shopify
       +column_types:
         id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         product_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         inventory_item_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
     transaction:
+      +tags: shopify
       +column_types:
         id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         order_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         refund_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         receipt: "{{ 'varchar(100)' if target.name in ('redshift', 'postgres') else 'string' }}"
-    shopify_refund_data:
+    refund:
+      +tags: shopify
       +column_types:
         id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         order_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         user_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
     # klaviyo
     person:
+      +tags: klaviyo
       +column_types:
         phone_number: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
     flow:
+      +tags: klaviyo
       +enabled: "{{ true if target.type != 'snowflake' else false }}"
       +quote_columns: "{{ true if target.type == 'redshift' else false }}"
       +column_types:
         trigger: "{{ 'string' if target.type in  ('bigquery', 'spark', 'databricks') else 'varchar' }}"
     flow_snowflake:
+      +tags: klaviyo
       +enabled: "{{ true if target.type == 'snowflake' else false }}"
     event:
+      +tags: klaviyo
       +column_types:
         flow_id: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
         campaign_id: "{{ 'string' if target.type in  ('bigquery', 'spark', 'databricks') else 'varchar' }}"
         datetime: timestamp
         timestamp: timestamp
+    integration:
+      +tags: klaviyo
+    metric:
+      +tags: klaviyo
+    campaign:
+      +tags: klaviyo
