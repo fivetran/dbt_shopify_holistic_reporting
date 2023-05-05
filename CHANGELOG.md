@@ -1,3 +1,8 @@
+# dbt_shopify_holistic_reporting v0.4.0
+
+- points to new verion of Shopify package which has breaking changes ([v0.8.0 release notes](https://github.com/fivetran/dbt_shopify/releases/tag/v0.8.0))
+  - shop
+
 # dbt_shopify_holistic_reporting v0.3.1
 
 ## Bug Fixes:

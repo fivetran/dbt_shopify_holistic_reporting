@@ -56,7 +56,7 @@ If you have multiple Shopify and/or Klaviyo connectors in Fivetran and would lik
 
 ```yml
 # dbt_project.yml
-...
+
 config-version: 2
 vars:
   klaviyo_source:
@@ -75,7 +75,6 @@ By default, this package will build the final models within a schema titled (`<t
 ```yml
 # dbt_project.yml
 
-...
 models:
   shopify_holistic_reporting:
     +schema: my_new_schema_name # leave blank for just the target_schema
@@ -93,7 +92,7 @@ This dbt package is dependent on the following dbt packages. Please be aware tha
 ```yml
 packages:
     - package: fivetran/shopify
-      version: [">=0.7.0", "<0.8.0"]
+      version: [">=0.8.0", "<0.9.0"]
 
     - package: fivetran/shopify_source
       version: [">=0.7.0", "<0.8.0"]
