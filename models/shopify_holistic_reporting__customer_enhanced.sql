@@ -26,14 +26,16 @@ with shopify_customers as (
         shopify_customers.first_order_timestamp as first_order_at,
         shopify_customers.most_recent_order_timestamp as last_order_at,
 
-        {{ dbt_utils.star(from=ref('shopify__customer_emails'), relation_alias='shopify_customers', prefix='shopify_',
-                                except=['email', 'full_name', 'customer_ids', 'phone_numbers', 'first_account_created_at','last_account_created_at', 
+        {{ dbt_utils.star(from=ref('shopify__customer_emails'), relation_alias='shopify_customers', prefix='shopify_', quote_identifiers=false,
+                                except=['source_relation', 'email', 'full_name', 'customer_ids', 'phone_numbers', 'first_account_created_at','last_account_created_at', 
                                         'updated_timestamp', 'is_verified_email'] ) 
         }},
+        shopify_customers.source_relation as shopify_source_relation,
 
-        {{ dbt_utils.star(from=ref('int__klaviyo_person_rollup'), relation_alias='klaviyo_persons', prefix='klaviyo_',
-                                except=['email', 'full_name', 'first_klaviyo_account_made_at', 'last_klaviyo_account_made_at', 'person_ids', 'phone_numbers', 'last_updated_at'] ) 
+        {{ dbt_utils.star(from=ref('int__klaviyo_person_rollup'), relation_alias='klaviyo_persons', prefix='klaviyo_', quote_identifiers=false,
+                                except=['source_relation', 'email', 'full_name', 'first_klaviyo_account_made_at', 'last_klaviyo_account_made_at', 'person_ids', 'phone_numbers', 'last_updated_at'] ) 
         }}
+        klaviyo_persons.source_relation as klaviyo_source_relation
 
     from shopify_customers
     full outer join klaviyo_persons 
