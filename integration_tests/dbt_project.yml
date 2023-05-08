@@ -10,7 +10,7 @@ clean-targets:         # directories to be removed by `dbt clean`
 
 vars:
   shopify_source:
-    shopify_schema: 'shopify_holistic_reporting_integration_tests_1'
+    shopify_union_schemas: ['shopify_holistic_reporting_integration_tests_1']
     shopify_customer_identifier:          "shopify_customer_data"
     shopify_order_line_refund_identifier: "shopify_order_line_refund_data"
     shopify_order_line_identifier:        "shopify_order_line_data"
@@ -47,7 +47,7 @@ vars:
     shopify_abandoned_checkout_shipping_line_identifier: "shopify_abandoned_checkout_shipping_line_data"
     
   klaviyo_source:
-    klaviyo_schema: 'shopify_holistic_reporting_integration_tests_1'
+    klaviyo_union_schemas: ['shopify_holistic_reporting_integration_tests_1']
     klaviyo_campaign_identifier: "campaign"
     klaviyo_event_identifier: "event"
     klaviyo_flow_identifier: "flow"
