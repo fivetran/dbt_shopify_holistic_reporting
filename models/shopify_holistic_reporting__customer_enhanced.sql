@@ -34,7 +34,7 @@ with shopify_customers as (
 
         {{ dbt_utils.star(from=ref('int__klaviyo_person_rollup'), relation_alias='klaviyo_persons', prefix='klaviyo_', quote_identifiers=false,
                                 except=['source_relation', 'email', 'full_name', 'first_klaviyo_account_made_at', 'last_klaviyo_account_made_at', 'person_ids', 'phone_numbers', 'last_updated_at'] ) 
-        }}
+        }},
         klaviyo_persons.source_relation as klaviyo_source_relation
 
     from shopify_customers
