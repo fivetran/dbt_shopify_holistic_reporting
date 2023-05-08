@@ -10,9 +10,11 @@
         <img src="https://img.shields.io/badge/Contributions-welcome-blueviolet" /></a>
 </p>
 
-# Shopify Holistic Reporting
+# Shopify Holistic Reporting dbt Package ([Docs](https://fivetran.github.io/dbt_shopify_holistic_reporting/))
 
+# 📣 What does this dbt package do?
 This package builds off of the [Shopify dbt package](https://github.com/fivetran/dbt_shopify) to weave together your Shopify e-commerce data with insights from marketing connectors. Currently, this package supports combining Shopify with email and SMS marketing data from Fivetran's [Klaviyo dbt package](https://github.com/fivetran/dbt_klaviyo).
+> Wanna see Shopify combined with another connector? Please make create a [Feature Request](https://github.com/fivetran/dbt_shopify_holistic_reporting/issues/new?assignees=&labels=enhancement&template=feature-request.yml&title=%5BFeature%5D+%3Ctitle%3E)! 
 
 This dbt package enables you to:
 - Tie e-commerce revenue to your email and SMS marketing via last-touch attribution.
@@ -21,15 +23,14 @@ This dbt package enables you to:
 
 Check out our [blog post](https://www.fivetran.com/blog/gain-faster-insights-from-shopify-and-klaviyo-data) for further discussion on how the package can accelerate your business analysis. 
 
-## Models
-
-This package produces three final output models, and is currently designed to work simultaneously with our [Shopify](https://github.com/fivetran/dbt_shopify) and [Klaviyo](https://github.com/fivetran/dbt_klaviyo) dbt packages. Dependencies on these packages are declared in this package's `packages.yml` file, so they will automatically download when you run `dbt deps`. The primary outputs of this package are described below. Intermediate models are used to create these output models, and are not documented here.
+The following table provides a detailed list of all models materialized within this package (see [Shopify](https://github.com/fivetran/dbt_shopify#-what-does-this-dbt-package-do) and [Klaviyo](https://github.com/fivetran/dbt_klaviyo#-what-does-this-dbt-package-do) for the upstream models these are built off of). 
+> TIP: See more details about these models in the package's [dbt docs site](https://fivetran.github.io/dbt_shopify/#!/overview/shopify_holistic_reporting).
 
 | **model**                | **description**                                                                                                                                |
 | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| [shopify_holistic_reporting__orders_attribution](https://github.com/fivetran/dbt_shopify_holistic_reporting/blob/main/models/shopify_holistic_reporting__orders_attribution.sql)             | Each record represents a unique Shopify order, enhanced with a customizable last-touch attribution model associating orders with Klaviyo flows and campaigns that customers interacted with. Includes dimensions like whether it is a new or repeat purchase in Shopify. See available customizations [here](https://github.com/fivetran/dbt_klaviyo#attribution-lookback-window). Materialized incrementally by default. |
-| [shopify_holistic_reporting__daily_customer_metrics](https://github.com/fivetran/dbt_shopify_holistic_reporting/blob/main/models/shopify_holistic_reporting__daily_customer_metrics.sql)             | Each record represent a unique customer's daily activity attributed to a campaign or flow in Klaviyo. The grain is set at the customer-day-flow/campaign level. This model is enriched with both Shopify and Klaviyo metrics, such as the net revenue, taxes paid, discounts applied, and the counts of each type of interaction between the user and the campaign/flow. |
-| [shopify_holistic_reporting__customer_enhanced](https://github.com/fivetran/dbt_shopify_holistic_reporting/blob/main/models/shopify_holistic_reporting__customer_enhanced.sql)             | Each record represents a unique individual (based on email) that may exist in Shopify, Klaviyo, or both platforms. Enhanced with information coalesced across platforms, lifetime order metrics, and all-time interactions with email marketing campaigns and flows. |
+| [shopify_holistic_reporting__orders_attribution](https://fivetran.github.io/dbt_shopify_holistic_reporting/#!/model/model.shopify_holistic_reporting.shopify_holistic_reporting__orders_attribution)             | Each record represents a unique Shopify order, enhanced with a customizable last-touch attribution model associating orders with Klaviyo flows and campaigns that customers interacted with. Includes dimensions like whether it is a new or repeat purchase in Shopify. See available customizations [here](https://github.com/fivetran/dbt_klaviyo#attribution-lookback-window). Materialized incrementally by default. |
+| [shopify_holistic_reporting__daily_customer_metrics](https://fivetran.github.io/dbt_shopify_holistic_reporting/#!/model/model.shopify_holistic_reporting.shopify_holistic_reporting__daily_customer_metrics)             | Each record represent a unique customer's daily activity attributed to a campaign or flow in Klaviyo. The grain is set at the customer-day-flow/campaign level. This model is enriched with both Shopify and Klaviyo metrics, such as the net revenue, taxes paid, discounts applied, and the counts of each type of interaction between the user and the campaign/flow. |
+| [shopify_holistic_reporting__customer_enhanced](https://fivetran.github.io/dbt_shopify_holistic_reporting/#!/model/model.shopify_holistic_reporting.shopify_holistic_reporting__customer_enhanced)             | Each record represents a unique individual (based on email) that may exist in Shopify, Klaviyo, or both platforms. Enhanced with information coalesced across platforms, lifetime order metrics, and all-time interactions with email marketing campaigns and flows. |
 
 ### Opinionated Modelling Decisions
 If you would like a deeper explanation of the logic used by default in the dbt package you may reference the [DECISIONLOG](https://github.com/fivetran/dbt_shopify_holistic_reporting/blob/main//DECISIONLOG.md).

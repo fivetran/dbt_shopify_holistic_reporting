@@ -10,50 +10,50 @@ clean-targets:         # directories to be removed by `dbt clean`
 
 vars:
   shopify_source:
-    shopify_union_schemas: ['shopify_holistic_reporting_integration_tests_1']
-    shopify_customer_identifier:          "shopify_customer_data"
-    shopify_order_line_refund_identifier: "shopify_order_line_refund_data"
-    shopify_order_line_identifier:        "shopify_order_line_data"
-    shopify_order_identifier:             "shopify_order_data"
-    shopify_product_identifier:           "shopify_product_data"
-    shopify_order_adjustment_identifier:  "shopify_order_adjustment_data"
-    shopify_product_variant_identifier:   "shopify_product_variant_data"
-    shopify_refund_identifier:            "shopify_refund_data"
-    shopify_transaction_identifier:       "shopify_transaction_data"
-    shopify_abandoned_checkout_identifier: "shopify_abandoned_checkout_data"
-    shopify_collection_product_identifier: "shopify_collection_product_data"
-    shopify_collection_identifier: "shopify_collection_data"
-    shopify_customer_tag_identifier: "shopify_customer_tag_data"
-    shopify_discount_code_identifier: "shopify_discount_code_data"
-    shopify_fulfillment_identifier: "shopify_fulfillment_data"
-    shopify_fulfillment_event_identifier: "shopify_fulfillment_event_data"
-    shopify_inventory_item_identifier: "shopify_inventory_item_data"
-    shopify_inventory_level_identifier: "shopify_inventory_level_data"
-    shopify_location_identifier: "shopify_location_data"
-    shopify_metafield_identifier: "shopify_metafield_data"
-    shopify_order_note_attribute_identifier: "shopify_order_note_attribute_data"
-    shopify_order_shipping_line_identifier: "shopify_order_shipping_line_data"
-    shopify_order_shipping_tax_line_identifier: "shopify_order_shipping_tax_line_data"
-    shopify_order_tag_identifier: "shopify_order_tag_data"
-    shopify_order_url_tag_identifier: "shopify_order_url_tag_data"
-    shopify_price_rule_identifier: "shopify_price_rule_data"
-    shopify_product_image_identifier: "shopify_product_image_data"
-    shopify_product_tag_identifier: "shopify_product_tag_data"
-    shopify_shop_identifier: "shopify_shop_data"
-    shopify_tax_line_identifier: "shopify_tax_line_data"
-    shopify_tender_transaction_identifier: "shopify_tender_transaction_data"
-    shopify_abandoned_checkout_discount_code_identifier: "shopify_abandoned_checkout_discount_code_data"
-    shopify_order_discount_code_identifier: "shopify_order_discount_code_data"
-    shopify_abandoned_checkout_shipping_line_identifier: "shopify_abandoned_checkout_shipping_line_data"
+    shopify_schema: 'shopify_holistic_reporting_integration_tests_1'
+    # shopify_customer_identifier:          "customer"
+    # shopify_order_line_refund_identifier: "order_line_refund"
+    # shopify_order_line_identifier:        "order_line"
+    shopify_order_identifier:             'order_table' # reserved keyword in snowflake
+    # shopify_product_identifier:           "product"
+    # shopify_order_adjustment_identifier:  "order_adjustment"
+    # shopify_product_variant_identifier:   "product_variant"
+    # shopify_refund_identifier:            "refund"
+    # shopify_transaction_identifier:       "transaction"
+    # shopify_abandoned_checkout_identifier: "abandoned_checkout"
+    # shopify_collection_product_identifier: "collection_product"
+    # shopify_collection_identifier: "collection"
+    # shopify_customer_tag_identifier: "customer_tag"
+    # shopify_discount_code_identifier: "discount_code"
+    # shopify_fulfillment_identifier: "fulfillment"
+    # shopify_fulfillment_event_identifier: "fulfillment_event"
+    # shopify_inventory_item_identifier: "inventory_item"
+    # shopify_inventory_level_identifier: "inventory_level"
+    # shopify_location_identifier: "location"
+    # shopify_metafield_identifier: "metafield"
+    # shopify_order_note_attribute_identifier: "order_note_attribute"
+    # shopify_order_shipping_line_identifier: "order_shipping_line"
+    # shopify_order_shipping_tax_line_identifier: "order_shipping_tax_line"
+    # shopify_order_tag_identifier: "order_tag"
+    # shopify_order_url_tag_identifier: "order_url_tag"
+    # shopify_price_rule_identifier: "price_rule"
+    # shopify_product_image_identifier: "product_image"
+    # shopify_product_tag_identifier: "product_tag"
+    # shopify_shop_identifier: "shop"
+    # shopify_tax_line_identifier: "tax_line"
+    # shopify_tender_transaction_identifier: "tender_transaction"
+    # shopify_abandoned_checkout_discount_code_identifier: "abandoned_checkout_discount_code"
+    # shopify_order_discount_code_identifier: "order_discount_code"
+    # shopify_abandoned_checkout_shipping_line_identifier: "abandoned_checkout_shipping_line"
     
   klaviyo_source:
-    klaviyo_union_schemas: ['shopify_holistic_reporting_integration_tests_1']
-    klaviyo_campaign_identifier: "campaign"
-    klaviyo_event_identifier: "event"
-    klaviyo_flow_identifier: "flow"
-    klaviyo_integration_identifier: "integration"
-    klaviyo_person_identifier: "person"
-    klaviyo_metric_identifier: "metric"
+    klaviyo_schema: 'shopify_holistic_reporting_integration_tests_1'
+    # klaviyo_campaign_identifier: "campaign"
+    # klaviyo_event_identifier: "event"
+    # klaviyo_flow_identifier: "flow"
+    # klaviyo_integration_identifier: "integration"
+    # klaviyo_person_identifier: "person"
+    # klaviyo_metric_identifier: "metric"
     klaviyo__event_pass_through_columns: []
     klaviyo__person_pass_through_columns: []
 
@@ -101,13 +101,18 @@ dispatch:
   - macro_namespace: dbt_utils
     search_order: ['shopify_holistic_reporting', 'spark_utils', 'dbt_utils']
     
+# quoting:
+#   database: "{{ target.type == 'snowflake' }}"
+#   schema: "{{ target.type == 'snowflake' }}"
+#   identifier: "{{ target.type == 'snowflake' }}"
+
 seeds:
   shopify_holistic_reporting_integration_tests:
   # shopify
     +quote_columns: "{{ true if target.type in ('redshift', 'postgres') else false }}"
     +column_types:
       _fivetran_synced: timestamp
-    shopify_customer_data:
+    customer:
       +column_types:
         created_at: timestamp
         updated_at: timestamp
@@ -115,7 +120,7 @@ seeds:
         id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         default_address_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         email: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
-    shopify_order_data:
+    order:
       +column_types:
         created_at: timestamp
         updated_at: timestamp
@@ -126,54 +131,55 @@ seeds:
         customer_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         location_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         user_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
-    shopify_order_line_data:
+      +alias: order_table
+    order_line:
       +column_types:
         _fivetran_synced: timestamp
         order_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         product_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         variant_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
-    shopify_order_line_refund_data:
+    order_line_refund:
       +column_types:
         _fivetran_synced: timestamp
         id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         location_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         refund_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         order_line_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
-    shopify_product_data:
+    product:
       +column_types:
         created_at: timestamp
         updated_at: timestamp
         published_at: timestamp
         _fivetran_synced: timestamp
         id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
-    shopify_order_adjustment_data:
+    order_adjustment:
       +column_types:
         id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         order_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         refund_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
-    shopify_product_variant_data:
+    product_variant:
       +column_types:
         id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         product_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         inventory_item_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
-    shopify_transaction_data:
+    transaction:
       +column_types:
         id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         order_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         refund_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         receipt: "{{ 'varchar(100)' if target.name in ('redshift', 'postgres') else 'string' }}"
-    shopify_refund_data:
+    refund:
       +column_types:
         id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         order_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         user_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
-    shopify_abandoned_checkout_discount_code_data:
+    abandoned_checkout_discount_code:
       +column_types:
         amount: float
         created_at: timestamp
         updated_at: timestamp
-    shopify_abandoned_checkout_data:
+    abandoned_checkout:
       +column_types:
         total_line_items_price: float
         billing_address_phone: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
@@ -182,52 +188,52 @@ seeds:
         created_at: timestamp
         updated_at: timestamp
         _fivetran_deleted: boolean
-    shopify_discount_code_data:
+    discount_code:
       +column_types:
         usage_count: float
-    shopify_order_discount_code_data:
+    order_discount_code:
       +column_types:
         amount: float
-    shopify_order_shipping_tax_line_data:
+    order_shipping_tax_line:
       +column_types:
         price: float
-    shopify_order_shipping_line_data:
+    order_shipping_line:
       +column_types:
         discounted_price: float
         price: float
-    shopify_price_rule_data:
+    price_rule:
       +column_types:
         prerequisite_subtotal_range: float
         value: float
-    shopify_collection_data:
+    collection:
       +column_types:
         disjunctive: boolean
         published_at: timestamp
         updated_at: timestamp
         title: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
-    shopify_metafield_data:
+    metafield:
       +column_types:
         value_type: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
         type: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
-    shopify_shop_data:
+    shop:
       +column_types:
         taxes_included: boolean
         google_apps_login_enabled: boolean
         county_taxes: boolean
-    shopify_inventory_level_data:
+    inventory_level:
       +column_types:
         updated_at: timestamp
-    shopify_inventory_item_data:
+    inventory_item:
       +column_types:
         updated_at: timestamp
         created_at: timestamp
-    shopify_abandoned_checkout_shipping_line_data:
+    abandoned_checkout_shipping_line:
       +column_types:
         markup: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
         price: float
         original_shop_markup: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
         original_shop_price: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
-    shopify_tax_line_data:
+    tax_line:
       +column_types:
         price: float
         rate: float
