@@ -96,7 +96,7 @@ packages:
       version: [">=0.8.0", "<0.9.0"]
 
     - package: fivetran/shopify_source
-      version: [">=0.7.0", "<0.8.0"]
+      version: [">=0.8.0", "<0.9.0"]
 
     - package: fivetran/klaviyo
       version: [">=0.5.0", "<0.6.0"]
