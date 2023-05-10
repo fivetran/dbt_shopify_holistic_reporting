@@ -23,11 +23,11 @@ with shopify_customers as (
         shopify_customers.updated_timestamp as shopify_customer_last_updated_at,
         klaviyo_persons.last_updated_at as klaviyo_person_last_updated_at,
         shopify_customers.is_verified_email as is_shopify_email_verified,
-        shopify_customers.first_order_timestamp as first_order_at,
-        shopify_customers.most_recent_order_timestamp as last_order_at,
+        shopify_customers.first_order_timestamp as shopify_first_order_at,
+        shopify_customers.most_recent_order_timestamp as shopify_last_order_at,
 
         {{ dbt_utils.star(from=ref('shopify__customer_emails'), relation_alias='shopify_customers', prefix='shopify_', quote_identifiers=false,
-                                except=['source_relation', 'email', 'full_name', 'customer_ids', 'phone_numbers', 'first_account_created_at','last_account_created_at', 
+                                except=['source_relation', 'email', 'full_name', 'customer_ids', 'phone_numbers', 'first_account_created_at','last_account_created_at', 'last_updated_at',
                                         'updated_timestamp', 'is_verified_email'] ) 
         }},
         shopify_customers.source_relation as shopify_source_relation,
