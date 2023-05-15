@@ -42,8 +42,9 @@ Include in your `packages.yml`
 ```yaml
 packages:
   - package: fivetran/shopify_holistic_reporting
-    version: [">=0.3.0", "<0.4.0"]
+    version: [">=0.3.0", "<0.4.0"] # we recommend using ranges to capture non-breaking changes automatically
 ```
+Do NOT include the Shopify or Klaviyo packages in this file. This package will automatically install them.
 
 ## Configurations
 
