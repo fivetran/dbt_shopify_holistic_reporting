@@ -11,49 +11,10 @@ clean-targets:         # directories to be removed by `dbt clean`
 vars:
   shopify_source:
     shopify_schema: 'shopify_holistic_reporting_integration_tests_1'
-    # shopify_customer_identifier:          "customer"
-    # shopify_order_line_refund_identifier: "order_line_refund"
-    # shopify_order_line_identifier:        "order_line"
     shopify_order_identifier:             'order_table' # reserved keyword in snowflake
-    # shopify_product_identifier:           "product"
-    # shopify_order_adjustment_identifier:  "order_adjustment"
-    # shopify_product_variant_identifier:   "product_variant"
-    # shopify_refund_identifier:            "refund"
-    # shopify_transaction_identifier:       "transaction"
-    # shopify_abandoned_checkout_identifier: "abandoned_checkout"
-    # shopify_collection_product_identifier: "collection_product"
-    # shopify_collection_identifier: "collection"
-    # shopify_customer_tag_identifier: "customer_tag"
-    # shopify_discount_code_identifier: "discount_code"
-    # shopify_fulfillment_identifier: "fulfillment"
-    # shopify_fulfillment_event_identifier: "fulfillment_event"
-    # shopify_inventory_item_identifier: "inventory_item"
-    # shopify_inventory_level_identifier: "inventory_level"
-    # shopify_location_identifier: "location"
-    # shopify_metafield_identifier: "metafield"
-    # shopify_order_note_attribute_identifier: "order_note_attribute"
-    # shopify_order_shipping_line_identifier: "order_shipping_line"
-    # shopify_order_shipping_tax_line_identifier: "order_shipping_tax_line"
-    # shopify_order_tag_identifier: "order_tag"
-    # shopify_order_url_tag_identifier: "order_url_tag"
-    # shopify_price_rule_identifier: "price_rule"
-    # shopify_product_image_identifier: "product_image"
-    # shopify_product_tag_identifier: "product_tag"
-    # shopify_shop_identifier: "shop"
-    # shopify_tax_line_identifier: "tax_line"
-    # shopify_tender_transaction_identifier: "tender_transaction"
-    # shopify_abandoned_checkout_discount_code_identifier: "abandoned_checkout_discount_code"
-    # shopify_order_discount_code_identifier: "order_discount_code"
-    # shopify_abandoned_checkout_shipping_line_identifier: "abandoned_checkout_shipping_line"
     
   klaviyo_source:
     klaviyo_schema: 'shopify_holistic_reporting_integration_tests_1'
-    # klaviyo_campaign_identifier: "campaign"
-    # klaviyo_event_identifier: "event"
-    # klaviyo_flow_identifier: "flow"
-    # klaviyo_integration_identifier: "integration"
-    # klaviyo_person_identifier: "person"
-    # klaviyo_metric_identifier: "metric"
     klaviyo__event_pass_through_columns: []
     klaviyo__person_pass_through_columns: []
 
@@ -100,11 +61,6 @@ vars:
 dispatch:
   - macro_namespace: dbt_utils
     search_order: ['shopify_holistic_reporting', 'spark_utils', 'dbt_utils']
-    
-# quoting:
-#   database: "{{ target.type == 'snowflake' }}"
-#   schema: "{{ target.type == 'snowflake' }}"
-#   identifier: "{{ target.type == 'snowflake' }}"
 
 seeds:
   shopify_holistic_reporting_integration_tests:
