@@ -3,21 +3,21 @@
 [PR #16](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/16) includes the following changes:
 
 ## 🚨 Breaking Changes 🚨:
-- The package now points to v0.8.1 of the `shopify` [package](https://github.com/fivetran/dbt_shopify). 
+- The package now points [to v0.8.1 of the `shopify` package](https://github.com/fivetran/dbt_shopify/releases/tag/v0.8.1). 
   - See Shopify's [CHANGELOG](https://github.com/fivetran/dbt_shopify/blob/main/CHANGELOG.md) notes for details, as many fields, tables, and features were introduced (or deprecated) in [v0.8.0](https://github.com/fivetran/dbt_shopify/blob/main/CHANGELOG.md#dbt_shopify-v080) of Shopify.
 
 ## Bug Fixes:
 - Adds flow, campaign, and variation to the join between shopify and klaviyo data in `shopify_holistic_reporting__daily_customer_metrics`. These fields are part of the grain of this model and could cause fanout if not included as arguments in the `full outer join`.
 
 ## Under the Hood:
-- Updates our README for easier navigation and consistency with other packages.
+- [Updates our README](https://github.com/fivetran/dbt_shopify/blob/main/README.md) for easier navigation and consistency with other packages.
 
 ## Contributors
 - [@jmussitsch](https://github.com/jmussitsch) ([#14](https://github.com/fivetran/dbt_shopify_holistic_reporting/issues/14))
 
 ## Related Releases
-- https://github.com/fivetran/dbt_shopify/releases/tag/v0.8.0
-- https://github.com/fivetran/dbt_shopify/releases/tag/v0.8.1
+- [dbt_shopify v0.8.0](https://github.com/fivetran/dbt_shopify/releases/tag/v0.8.0)
+- [dbt_shopify v0.8.1](https://github.com/fivetran/dbt_shopify/releases/tag/v0.8.1)
 
 # dbt_shopify_holistic_reporting v0.3.0
 
