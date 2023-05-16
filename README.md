@@ -23,7 +23,7 @@ This dbt package enables you to:
 
 Check out our [blog post](https://www.fivetran.com/blog/gain-faster-insights-from-shopify-and-klaviyo-data) for further discussion on how the package can accelerate your business analysis. 
 
-<!--section="shopify_holistic_reporoting_transformation_model"-->
+<!--section="shopify_holistic_reporting_transformation_model"-->
 The following table provides a detailed list of all models materialized within this package (see [Shopify](https://github.com/fivetran/dbt_shopify#-what-does-this-dbt-package-do) and [Klaviyo](https://github.com/fivetran/dbt_klaviyo#-what-does-this-dbt-package-do) for the upstream models these are built off of). 
 > TIP: See more details about these models in the package's [dbt docs site](https://fivetran.github.io/dbt_shopify/#!/overview/shopify_holistic_reporting).
 
