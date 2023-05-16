@@ -15,7 +15,7 @@
 ## Contributors
 - [@jmussitsch](https://github.com/jmussitsch) ([#14](https://github.com/fivetran/dbt_shopify_holistic_reporting/issues/14))
 
-## Related Releases
+## Related-Package Releases
 - [dbt_shopify v0.8.0](https://github.com/fivetran/dbt_shopify/releases/tag/v0.8.0)
 - [dbt_shopify v0.8.1](https://github.com/fivetran/dbt_shopify/releases/tag/v0.8.1)
 
