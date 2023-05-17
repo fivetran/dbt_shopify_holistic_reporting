@@ -1,9 +1,5 @@
 packages:
-# - package: fivetran/shopify
-#   version: [">=0.8.0", "<0.9.0"]
-- git: https://github.com/fivetran/dbt_shopify.git
-  revision: bug/aggregate-only-distinct-customer-ids
-  warn-unpinned: false
-# - local: ../Shopify/dbt_shopify
+- package: fivetran/shopify
+  version: [">=0.8.0", "<0.9.0"]
 - package: fivetran/klaviyo
   version: [">=0.5.0", "<0.6.0"]
