@@ -35,6 +35,9 @@ with shopify_daily as (
     full outer join klaviyo_daily
         on lower(shopify_daily.email) = lower(klaviyo_daily.email)
         and shopify_daily.date_day = klaviyo_daily.date_day
+        and coalesce(shopify_daily.last_touch_campaign_id, '') = coalesce(klaviyo_daily.last_touch_campaign_id, '')
+        and coalesce(shopify_daily.last_touch_flow_id, '') = coalesce(klaviyo_daily.last_touch_flow_id, '')
+        and coalesce(shopify_daily.last_touch_variation_id, '') = coalesce(klaviyo_daily.variation_id, '')
 )
 
 select *
