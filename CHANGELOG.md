@@ -11,6 +11,8 @@
 
 ## Under the Hood:
 - [Updates our README](https://github.com/fivetran/dbt_shopify/blob/main/README.md) for easier navigation and consistency with other packages.
+- Incorporates the new `fivetran_utils.drop_schemas_automation` macro into the end of each Buildkite integration test job. ([#15](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/15))
+- Updates the pull request [templates](/.github). ([#15](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/15))
 
 ## Contributors
 - [@jmussitsch](https://github.com/jmussitsch) ([#14](https://github.com/fivetran/dbt_shopify_holistic_reporting/issues/14))
