@@ -1,31 +1,23 @@
 name: 'shopify_holistic_reporting_integration_tests'
-version: '0.3.0'
+version: '0.4.0'
 profile: 'integration_tests'
 config-version: 2
 
+clean-targets:         # directories to be removed by `dbt clean`
+  - "target"
+  - "dbt_packages"
+  - "dbt_modules"
 
 vars:
   shopify_source:
-    customer_source: "{{ ref('shopify_customer_data') }}"
-    order_line_refund_source: "{{ ref('shopify_order_line_refund_data') }}"
-    order_line_source: "{{ ref('shopify_order_line_data') }}"
-    order_source: "{{ ref('shopify_order_data') }}"
-    product_source: "{{ ref('shopify_product_data') }}"
-    order_adjustment_source: "{{ ref('shopify_order_adjustment_data') }}"
-    product_variant_source: "{{ ref('shopify_product_variant_data') }}"
-    refund_source: "{{ ref('shopify_refund_data') }}"
-    transaction_source: "{{ ref('shopify_transaction_data') }}"
-
+    shopify_schema: 'shopify_holistic_reporting_integration_tests_1'
+    shopify_order_identifier:             'order_table' # reserved keyword in snowflake
+    
   klaviyo_source:
-    event_table: "{{ ref('event') }}" 
-    campaign: "{{ ref('campaign') }}" 
-    flow: "{{ fivetran_utils.snowflake_seed_data('flow') }}" 
-    integration: "{{ ref('integration') }}" 
-    person: "{{ ref('person') }}" 
-    metric: "{{ ref('metric') }}" 
+    klaviyo_schema: 'shopify_holistic_reporting_integration_tests_1'
     klaviyo__event_pass_through_columns: []
     klaviyo__person_pass_through_columns: []
-  
+
   klaviyo:
     klaviyo__eligible_attribution_events: # default in klaviyo -> https://help.klaviyo.com/hc/en-us/articles/115005248128 
       - 'opened email'
@@ -69,21 +61,22 @@ vars:
 dispatch:
   - macro_namespace: dbt_utils
     search_order: ['shopify_holistic_reporting', 'spark_utils', 'dbt_utils']
-    
+
 seeds:
   shopify_holistic_reporting_integration_tests:
   # shopify
     +quote_columns: "{{ true if target.type in ('redshift', 'postgres') else false }}"
     +column_types:
       _fivetran_synced: timestamp
-    shopify_customer_data:
+    customer:
       +column_types:
         created_at: timestamp
         updated_at: timestamp
         _fivetran_synced: timestamp
         id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         default_address_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
-    shopify_order_data:
+        email: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
+    order:
       +column_types:
         created_at: timestamp
         updated_at: timestamp
@@ -94,60 +87,136 @@ seeds:
         customer_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         location_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         user_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
-    shopify_order_line_data:
+      +alias: order_table
+    order_line:
       +column_types:
         _fivetran_synced: timestamp
         order_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         product_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         variant_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
-    shopify_order_line_refund_data:
+    order_line_refund:
       +column_types:
         _fivetran_synced: timestamp
         id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         location_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         refund_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         order_line_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
-    shopify_product_data:
+    product:
       +column_types:
         created_at: timestamp
         updated_at: timestamp
         published_at: timestamp
         _fivetran_synced: timestamp
         id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
-    shopify_order_adjustment_data:
+    order_adjustment:
       +column_types:
         id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         order_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         refund_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
-    shopify_product_variant_data:
+    product_variant:
       +column_types:
         id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         product_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         inventory_item_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
-    shopify_transaction_data:
+    transaction:
       +column_types:
         id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         order_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         refund_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         receipt: "{{ 'varchar(100)' if target.name in ('redshift', 'postgres') else 'string' }}"
-    shopify_refund_data:
+    refund:
       +column_types:
         id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         order_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         user_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
+    abandoned_checkout_discount_code:
+      +column_types:
+        amount: float
+        created_at: timestamp
+        updated_at: timestamp
+    abandoned_checkout:
+      +column_types:
+        total_line_items_price: float
+        billing_address_phone: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
+        shipping_address_phone: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
+        closed_at: timestamp
+        created_at: timestamp
+        updated_at: timestamp
+        _fivetran_deleted: boolean
+    discount_code:
+      +column_types:
+        usage_count: float
+    order_discount_code:
+      +column_types:
+        amount: float
+    order_shipping_tax_line:
+      +column_types:
+        price: float
+    order_shipping_line:
+      +column_types:
+        discounted_price: float
+        price: float
+    price_rule:
+      +column_types:
+        prerequisite_subtotal_range: float
+        value: float
+    collection:
+      +column_types:
+        disjunctive: boolean
+        published_at: timestamp
+        updated_at: timestamp
+        title: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
+    metafield:
+      +column_types:
+        value_type: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
+        type: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
+    shop:
+      +column_types:
+        taxes_included: boolean
+        google_apps_login_enabled: boolean
+        county_taxes: boolean
+    inventory_level:
+      +column_types:
+        updated_at: timestamp
+    inventory_item:
+      +column_types:
+        updated_at: timestamp
+        created_at: timestamp
+    abandoned_checkout_shipping_line:
+      +column_types:
+        markup: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
+        price: float
+        original_shop_markup: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
+        original_shop_price: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
+    tax_line:
+      +column_types:
+        price: float
+        rate: float
     # klaviyo
     person:
+      +tags: klaviyo
       +column_types:
         phone_number: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
     flow:
+      +tags: klaviyo
       +enabled: "{{ true if target.type != 'snowflake' else false }}"
       +quote_columns: "{{ true if target.type == 'redshift' else false }}"
       +column_types:
         trigger: "{{ 'string' if target.type in  ('bigquery', 'spark', 'databricks') else 'varchar' }}"
     flow_snowflake:
+      +tags: klaviyo
       +enabled: "{{ true if target.type == 'snowflake' else false }}"
     event:
+      +tags: klaviyo
       +column_types:
         flow_id: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
         campaign_id: "{{ 'string' if target.type in  ('bigquery', 'spark', 'databricks') else 'varchar' }}"
+        datetime: timestamp
+        timestamp: timestamp
+    integration:
+      +tags: klaviyo
+    metric:
+      +tags: klaviyo
+    campaign:
+      +tags: klaviyo
