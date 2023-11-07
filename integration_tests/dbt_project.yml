@@ -194,29 +194,22 @@ seeds:
         price: float
         rate: float
     # klaviyo
-    person:
+    klaviyo_person:
       +tags: klaviyo
       +column_types:
         phone_number: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
-    flow:
+    klaviyo_flow:
       +tags: klaviyo
       +enabled: "{{ true if target.type != 'snowflake' else false }}"
       +quote_columns: "{{ true if target.type == 'redshift' else false }}"
-      +column_types:
-        trigger: "{{ 'string' if target.type in  ('bigquery', 'spark', 'databricks') else 'varchar' }}"
-    flow_snowflake:
-      +tags: klaviyo
-      +enabled: "{{ true if target.type == 'snowflake' else false }}"
-    event:
+    klaviyo_event:
       +tags: klaviyo
       +column_types:
         flow_id: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
         campaign_id: "{{ 'string' if target.type in  ('bigquery', 'spark', 'databricks') else 'varchar' }}"
         datetime: timestamp
         timestamp: timestamp
-    integration:
+    klaviyo_metric:
       +tags: klaviyo
-    metric:
-      +tags: klaviyo
-    campaign:
+    klaviyo_campaign:
       +tags: klaviyo
