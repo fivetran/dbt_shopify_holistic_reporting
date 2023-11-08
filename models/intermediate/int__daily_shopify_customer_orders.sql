@@ -16,7 +16,9 @@ with orders as (
         count(distinct product_id) as count_products,
         count(distinct product_id || '-' || variant_id) as count_product_variants,
         sum(quantity) as sum_quantity,
-        sum(subtotal) as sum_subtotal
+        sum(price) as sum_price,
+        sum(pre_tax_price) as sum_pre_tax_price,
+        sum(total_discount) as sum_total_discount
         
     from order_lines
     group by 1,2
@@ -28,7 +30,9 @@ with orders as (
         order_line_metrics.count_products,
         order_line_metrics.count_product_variants,
         order_line_metrics.sum_quantity,
-        order_line_metrics.sum_subtotal
+        order_line_metrics.sum_price,
+        order_line_metrics.sum_pre_tax_price,
+        order_line_metrics.sum_total_discount
 
     from orders 
     left join order_line_metrics
@@ -69,7 +73,9 @@ with orders as (
         sum(count_products) as count_products,
         sum(count_product_variants) as count_product_variants,
         sum(sum_quantity) as sum_quantity,
-        sum(sum_subtotal) as sum_subtotal
+        sum(sum_price) as sum_price,
+        sum(sum_pre_tax_price) as sum_pre_tax_price,
+        sum(sum_total_discount) as sum_total_discount
 
         {% if var('shopify__using_order_adjustment', true) %}
         , sum(order_adjustment_amount) as total_order_adjustment_amount
