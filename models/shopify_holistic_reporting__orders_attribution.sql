@@ -52,6 +52,7 @@ with orders as (
         events.event_id as last_touch_event_id,
         events.occurred_at as last_touch_event_occurred_at,
         events.type as last_touch_event_type,
+        events.integration_id as last_touch_integration_id,
         events.integration_name as last_touch_integration_name,
         events.integration_category as last_touch_integration_category,
         events.source_relation as klaviyo_source_relation

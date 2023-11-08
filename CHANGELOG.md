@@ -1,4 +1,22 @@
 # dbt_shopify_holistic_reporting v0.5.0
+[PR #18](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/18) includes the following changes:
+
+## 🚨 Breaking Changes 🚨:
+
+- This package now points to the following ranges of the upstream packages:
+
+```
+- package: fivetran/shopify
+  version: [">=0.10.0", "<0.11.0"]
+- package: fivetran/klaviyo
+  version: [">=0.7.0", "<0.8.0"]
+```
+
+For more information on the changes in the underlying upstream pacakges, refer to the changelogs for [Shopify](https://github.com/fivetran/dbt_shopify/compare/v0.8.1...v0.10.0) and [Klaviyo](https://github.com/fivetran/dbt_klaviyo/compare/v0.5.0...v0.7.1). 
+
+## 
+
+## Under the Hood:
 
 # dbt_shopify_holistic_reporting v0.4.0
 

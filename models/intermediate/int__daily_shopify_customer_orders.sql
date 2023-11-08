@@ -15,7 +15,8 @@ with orders as (
         source_relation,
         count(distinct product_id) as count_products,
         count(distinct product_id || '-' || variant_id) as count_product_variants,
-        sum(quantity) as sum_quantity
+        sum(quantity) as sum_quantity,
+        sum(subtotal) as sum_subtotal
         
     from order_lines
     group by 1,2
@@ -26,7 +27,8 @@ with orders as (
         orders.*,
         order_line_metrics.count_products,
         order_line_metrics.count_product_variants,
-        order_line_metrics.sum_quantity
+        order_line_metrics.sum_quantity,
+        order_line_metrics.sum_subtotal
 
     from orders 
     left join order_line_metrics
@@ -66,7 +68,8 @@ with orders as (
         sum(case when cancelled_timestamp is not null then 1 else 0 end) as count_cancelled_orders,
         sum(count_products) as count_products,
         sum(count_product_variants) as count_product_variants,
-        sum(sum_quantity) as sum_quantity
+        sum(sum_quantity) as sum_quantity,
+        sum(sum_subtotal) as sum_subtotal,
 
         {% if var('shopify__using_order_adjustment', true) %}
         , sum(order_adjustment_amount) as total_order_adjustment_amount
