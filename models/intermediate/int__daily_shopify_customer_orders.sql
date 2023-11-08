@@ -69,7 +69,7 @@ with orders as (
         sum(count_products) as count_products,
         sum(count_product_variants) as count_product_variants,
         sum(sum_quantity) as sum_quantity,
-        sum(sum_subtotal) as sum_subtotal,
+        sum(sum_subtotal) as sum_subtotal
 
         {% if var('shopify__using_order_adjustment', true) %}
         , sum(order_adjustment_amount) as total_order_adjustment_amount
