@@ -198,7 +198,7 @@ seeds:
     klaviyo_person:
       +tags: klaviyo
       +column_types:
-        phone_number: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
+        phone_number: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar(100)' }}"
     klaviyo_flow:
       +tags: klaviyo
       +enabled: "{{ true if target.type != 'snowflake' else false }}"
