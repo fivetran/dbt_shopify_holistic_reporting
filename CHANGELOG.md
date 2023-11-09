@@ -15,10 +15,10 @@
 For more information on the changes in the underlying upstream pacakges, refer to the changelogs for [Shopify](https://github.com/fivetran/dbt_shopify/compare/v0.8.1...v0.10.0) and [Klaviyo](https://github.com/fivetran/dbt_klaviyo/compare/v0.5.0...v0.7.1). 
 
 ## Additions
-- Adds field `sum_subtotal` to `int__daily_shopify_customer_orders`
 - Adds field `last_touch_integration_id` to `shopify_holistic_reporting__orders_attribution`
 
 ## Under the Hood:
+- Replace seed files with the new ones from the respective upstream packages.
 - Renamed all Klaviyo seed files so that they start with prefix `klaviyo` in order to differentiate which seed files come from Shopify versus Klaviyo.
 - Removed the flow_snowflake seed file now that `trigger` has been removed from the Klaviyo flow object and as such will not cause run errors in Snowflake.
 - Populate the order_line_refund seed file as it was empty previously.
