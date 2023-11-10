@@ -18,6 +18,11 @@ vars:
     klaviyo_schema: 'shopify_holistic_reporting_integration_tests_2'
     klaviyo__event_pass_through_columns: []
     klaviyo__person_pass_through_columns: []
+    klaviyo_campaign_identifier: "klaviyo_campaign"
+    klaviyo_event_identifier: "klaviyo_event"
+    klaviyo_flow_identifier: "klaviyo_flow"
+    klaviyo_person_identifier: "klaviyo_person"
+    klaviyo_metric_identifier: "klaviyo_metric"
 
   klaviyo:
     klaviyo__eligible_attribution_events: # default in klaviyo -> https://help.klaviyo.com/hc/en-us/articles/115005248128 
