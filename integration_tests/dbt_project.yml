@@ -203,7 +203,7 @@ seeds:
     klaviyo_person:
       +tags: klaviyo
       +column_types:
-        PHONE_NUMBER: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
+        phone_number: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
     klaviyo_flow:
       +tags: klaviyo
       +enabled: "{{ true if target.type != 'snowflake' else false }}"
@@ -211,10 +211,10 @@ seeds:
     klaviyo_event:
       +tags: klaviyo
       +column_types:
-        FLOW_ID: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
-        CAMPAIGN_ID: "{{ 'string' if target.type in  ('bigquery', 'spark', 'databricks') else 'varchar' }}"
-        DATETIME: timestamp
-        TIMESTAMP: timestamp
+        flow_id: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
+        campaign_id: "{{ 'string' if target.type in  ('bigquery', 'spark', 'databricks') else 'varchar' }}"
+        datetime: timestamp
+        timestamp: timestamp
     klaviyo_metric:
       +tags: klaviyo
     klaviyo_campaign:
