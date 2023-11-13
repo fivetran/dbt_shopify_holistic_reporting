@@ -3,7 +3,7 @@
 
 ## 🚨 Breaking Changes 🚨:
 
-- This package now points to the following ranges of the upstream packages:
+- This package now points to the following ranges of the upstream packages. We recommend a `dbt run --full-refresh` to capture all the latest data within incremental models.
 
 ```
 - package: fivetran/shopify
