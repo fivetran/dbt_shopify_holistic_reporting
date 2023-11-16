@@ -1,5 +1,5 @@
 name: 'shopify_holistic_reporting_integration_tests'
-version: '0.4.0'
+version: '0.5.0'
 profile: 'integration_tests'
 config-version: 2
 
@@ -10,13 +10,19 @@ clean-targets:         # directories to be removed by `dbt clean`
 
 vars:
   shopify_source:
-    shopify_schema: 'shopify_holistic_reporting_integration_tests_1'
+    shopify_using_fulfillment_event: true
+    shopify_schema: 'shopify_holistic_reporting_integration_tests_3'
     shopify_order_identifier:             'order_table' # reserved keyword in snowflake
-    
+
   klaviyo_source:
-    klaviyo_schema: 'shopify_holistic_reporting_integration_tests_1'
+    klaviyo_schema: 'shopify_holistic_reporting_integration_tests_3'
     klaviyo__event_pass_through_columns: []
     klaviyo__person_pass_through_columns: []
+    klaviyo_campaign_identifier: "klaviyo_campaign"
+    klaviyo_event_identifier: "klaviyo_event"
+    klaviyo_flow_identifier: "klaviyo_flow"
+    klaviyo_person_identifier: "klaviyo_person"
+    klaviyo_metric_identifier: "klaviyo_metric"
 
   klaviyo:
     klaviyo__eligible_attribution_events: # default in klaviyo -> https://help.klaviyo.com/hc/en-us/articles/115005248128 
@@ -194,29 +200,22 @@ seeds:
         price: float
         rate: float
     # klaviyo
-    person:
+    klaviyo_person:
       +tags: klaviyo
       +column_types:
         phone_number: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
-    flow:
+    klaviyo_flow:
       +tags: klaviyo
       +enabled: "{{ true if target.type != 'snowflake' else false }}"
       +quote_columns: "{{ true if target.type == 'redshift' else false }}"
-      +column_types:
-        trigger: "{{ 'string' if target.type in  ('bigquery', 'spark', 'databricks') else 'varchar' }}"
-    flow_snowflake:
-      +tags: klaviyo
-      +enabled: "{{ true if target.type == 'snowflake' else false }}"
-    event:
+    klaviyo_event:
       +tags: klaviyo
       +column_types:
         flow_id: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
         campaign_id: "{{ 'string' if target.type in  ('bigquery', 'spark', 'databricks') else 'varchar' }}"
         datetime: timestamp
         timestamp: timestamp
-    integration:
+    klaviyo_metric:
       +tags: klaviyo
-    metric:
-      +tags: klaviyo
-    campaign:
+    klaviyo_campaign:
       +tags: klaviyo
