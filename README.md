@@ -130,10 +130,10 @@ This dbt package is dependent on the following dbt packages. Please be aware tha
 ```yml
 packages:
     - package: fivetran/shopify
-      version: [">=0.10.0", "<0.11.0"]
+      version: [">=0.11.0", "<0.14.0"]
 
     - package: fivetran/shopify_source
-      version: [">=0.10.0", "<0.11.0"]
+      version: [">=0.11.0", "<0.13.0"]
 
     - package: fivetran/klaviyo
       version: [">=0.7.0", "<0.8.0"]
