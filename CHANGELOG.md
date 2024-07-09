@@ -1,3 +1,6 @@
+# dbt_shopify_holistic_reporting v0.6.0
+Updating the underlying Shopify package version range from [">=0.10.0", "<0.11.0"] to [">=0.11.0", "<0.14.0"] to account the breaking change introduced to the Shopify package to v0.13.0.
+
 # dbt_shopify_holistic_reporting v0.5.0
 [PR #18](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/18) includes the following changes:
 
