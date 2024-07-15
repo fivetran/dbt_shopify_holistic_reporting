@@ -4,6 +4,9 @@
 ## Dependency Updates
 Updates the underlying Shopify package version range from [">=0.10.0", "<0.11.0"] to [">=0.11.0", "<0.14.0"] to account for breaking changes introduced to the Shopify package up to v0.14.0. This wider range will accommodate previous versions while support an upcoming release to Shopify, which will not have breaking changes for this package.
    - Additionally, please note that the wider range for the Shopify dbt package also updates the underlying Shopify Source dependency range from versions [">=0.10.0", "<0.11.0"] to  [">=0.11.0", "<0.13.0"].
+  
+## Under The Hood
+- Included auto-releaser GitHub Actions workflow to automate future releases.
    
 # dbt_shopify_holistic_reporting v0.5.0
 [PR #18](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/18) includes the following changes:
