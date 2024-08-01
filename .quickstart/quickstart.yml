@@ -1,0 +1,27 @@
+dbt_versions: '>=1.3.0 <2.0.0'
+
+multi_connector_config:
+    klaviyo:
+       database_key: klaviyo_database
+       union_schema_key: klaviyo_union_schemas
+    shopify:
+       database_key: shopify_database
+       union_schema_key: shopify_union_schemas
+
+table_variables:
+  shopify_using_fulfillment_event:
+    - fulfillment_event
+
+destination_configurations:
+  databricks:
+    dispatch:
+      - macro_namespace: dbt_utils
+        search_order:
+          - spark_utils
+          - dbt_utils
+
+public_models: [
+   "shopify_holistic_reporting__orders_attribution",
+   "shopify_holistic_reporting__daily_customer_metrics",
+   "shopify_holistic_reporting__customer_enhanced"
+]
