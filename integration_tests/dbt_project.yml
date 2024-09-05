@@ -1,5 +1,5 @@
 name: 'shopify_holistic_reporting_integration_tests'
-version: '0.6.0'
+version: '0.7.0'
 profile: 'integration_tests'
 config-version: 2
 
@@ -11,58 +11,19 @@ clean-targets:         # directories to be removed by `dbt clean`
 vars:
   shopify_source:
     shopify_using_fulfillment_event: true
-    shopify_schema: 'shopify_holistic_reporting_integration_tests_3'
-    shopify_order_identifier:             'order_table' # reserved keyword in snowflake
+    shopify_schema: 'shopify_holistic_reporting_integration_tests_12'
+    shopify_order_identifier: 'order_table' # reserved keyword in snowflake
 
   klaviyo_source:
-    klaviyo_schema: 'shopify_holistic_reporting_integration_tests_3'
-    klaviyo__event_pass_through_columns: []
-    klaviyo__person_pass_through_columns: []
+    klaviyo_schema: 'shopify_holistic_reporting_integration_tests_12'
     klaviyo_campaign_identifier: "klaviyo_campaign"
     klaviyo_event_identifier: "klaviyo_event"
     klaviyo_flow_identifier: "klaviyo_flow"
     klaviyo_person_identifier: "klaviyo_person"
     klaviyo_metric_identifier: "klaviyo_metric"
 
-  klaviyo:
-    klaviyo__eligible_attribution_events: # default in klaviyo -> https://help.klaviyo.com/hc/en-us/articles/115005248128 
-      - 'opened email'
-      - 'clicked email'
-      - 'clicked sms'
-
-    klaviyo__count_metrics: 
-      - 'Active on Site' # default API metrics
-      - 'Viewed Product'
-      - 'Ordered Product' # default Shopify metrics
-      - 'Placed Order'
-      - 'Refunded Order' # note: klaviyo only tracks FULL refunds (not partial)
-      - 'Cancelled Order'
-      - 'Fulfilled Order'
-      - 'Received Email' # default email and sms conversion metrics in Klaviyo
-      - 'Clicked Email'
-      - 'Opened Email'
-      - 'Bounced Email'
-      - 'Marked Email as Spam'
-      - 'Dropped Email'
-      - 'Subscribed to List'
-      - 'Unsubscribed to List'
-      - 'Unsubscribed'
-      - 'Updated Email Preferences'
-      - 'Subscribed to Back in Stock'
-      - 'Merged Profile'
-      - 'Received SMS'
-      - 'Clicked SMS'
-      - 'Consented to Receive SMS'
-      - 'Sent SMS'
-      - 'Unsubscribed from SMS'
-      - 'Failed to Deliver SMS'
-
-    klaviyo__sum_revenue_metrics:
-      - 'Refunded Order'
-      - 'Placed Order'
-      - 'Ordered Product'
-      - 'checkout started'
-      - 'cancelled order'
+models:
+  +schema: "shopify_holistic_reporting_{{ var('directed_schema','dev') }}"
 
 dispatch:
   - macro_namespace: dbt_utils
