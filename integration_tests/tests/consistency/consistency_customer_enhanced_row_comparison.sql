@@ -5,12 +5,12 @@
 
 with prod as (
     select *
-    from {{ target.schema }}_shopify_holistic_reporting_prod.shopify_holistic_reporting__customer_enhanced
+    from {{ target.schema }}_combo_reporting_prod.shopify_holistic_reporting__customer_enhanced
 ),
 
 dev as (
     select *
-    from {{ target.schema }}_shopify_holistic_reporting_dev.shopify_holistic_reporting__customer_enhanced
+    from {{ target.schema }}_combo_reporting_dev.shopify_holistic_reporting__customer_enhanced
 ),
 
 prod_not_in_dev as (
