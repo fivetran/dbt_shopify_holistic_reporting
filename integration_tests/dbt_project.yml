@@ -11,11 +11,11 @@ clean-targets:         # directories to be removed by `dbt clean`
 vars:
   shopify_source:
     shopify_using_fulfillment_event: true
-    shopify_schema: 'shopify_holistic_reporting_integration_tests_12'
+    shopify_schema: 'shopify_combo_integration_tests_12'
     shopify_order_identifier: 'order_table' # reserved keyword in snowflake
 
   klaviyo_source:
-    klaviyo_schema: 'shopify_holistic_reporting_integration_tests_12'
+    klaviyo_schema: 'shopify_combo_integration_tests_12'
     klaviyo_campaign_identifier: "klaviyo_campaign"
     klaviyo_event_identifier: "klaviyo_event"
     klaviyo_flow_identifier: "klaviyo_flow"
