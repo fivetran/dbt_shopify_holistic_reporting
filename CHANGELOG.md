@@ -1,6 +1,6 @@
 # dbt_shopify_holistic_reporting v0.7.0
 
-[PR #22](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/22) includes the following changes:
+[PR #26](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/26) includes the following changes:
 
 ## Upstream Klaviyo Breaking Changes (Full refresh required after upgrading)
 - Upstream incremental models within the dbt_klaviyo package running on BigQuery have had the `partition_by` logic adjusted to include a granularity of a month. This change only impacts BigQuery warehouses and was applied to avoid the common `too many partitions` error some users have experienced when partitioning by day. Therefore, adjusting the partition to a month granularity will decrease the number of partitions created and allow for more performant querying and incremental loads. Refer to the [v0.8.0 dbt_klaviyo release notes](https://github.com/fivetran/dbt_klaviyo/releases/tag/v0.7.2) for more details. This change was applied to the following models:
