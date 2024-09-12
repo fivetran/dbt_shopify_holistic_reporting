@@ -2,10 +2,6 @@
     config(
         materialized='incremental',
         unique_key='unique_order_key',
-        partition_by={
-            "field": "created_timestamp",
-            "data_type": "timestamp"
-        } if target.type == 'bigquery' else none,
         incremental_strategy = 'merge' if target.type not in ('postgres', 'redshift') else 'delete+insert',
         file_format = 'delta'
     )
