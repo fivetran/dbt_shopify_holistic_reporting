@@ -1,3 +1,20 @@
+# dbt_shopify_holistic_reporting v0.7.0
+
+[PR #26](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/26) includes the following changes:
+
+## Upstream Klaviyo and Shopify Holistic Reporting Breaking Changes (Full refresh required after upgrading)
+- Upstream and immediate incremental models within the dbt_klaviyo and dbt_shopify_holistic_reporting packages running on BigQuery have had the `partition_by` logic removed. This change affects only BigQuery warehouses and resolves the `too many partitions` error that some users encountered. The partitioning was also deemed unnecessary for the aforementioned models and their downstream references, offering no performance benefit. By removing it, we eliminate both the error risk and an unneeded configuration. Refer to the [v0.8.0 dbt_klaviyo release notes](https://github.com/fivetran/dbt_klaviyo/releases/tag/v0.8.0) for more details regarding the upstream changes. This change applies to the following models:
+  - `int_klaviyo__event_attribution`
+  - `klaviyo__events`
+  - `shopify_holistic_reporting__orders_attribution`
+
+## Under the Hood
+- Added consistency validation tests for the following models:
+  - `shopify_holistic_reporting__customer_enhanced`
+  - `shopify_holistic_reporting__daily_customer_metrics`
+  - `shopify_holistic_reporting__orders_attribution`
+- Cleaned up unnecessary variable configuration within the `integration_tests/dbt_project.yml` file.
+
 # dbt_shopify_holistic_reporting v0.6.0
 [PR #21](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/21) includes the following changes:
 
