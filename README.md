@@ -32,8 +32,9 @@ The following table provides a detailed list of all tables materialized within t
 | [shopify_holistic_reporting__orders_attribution](https://fivetran.github.io/dbt_shopify_holistic_reporting/#!/model/model.shopify_holistic_reporting.shopify_holistic_reporting__orders_attribution)             | Each record represents a unique Shopify order, enhanced with a customizable last-touch attribution model associating orders with Klaviyo flows and campaigns that customers interacted with. Includes dimensions like whether it is a new or repeat purchase in Shopify. See available customizations [here](https://github.com/fivetran/dbt_klaviyo#attribution-lookback-window). Materialized incrementally by default. |
 | [shopify_holistic_reporting__daily_customer_metrics](https://fivetran.github.io/dbt_shopify_holistic_reporting/#!/model/model.shopify_holistic_reporting.shopify_holistic_reporting__daily_customer_metrics)             | Each record represent a unique customer's daily activity attributed to a campaign or flow in Klaviyo. The grain is set at the customer-day-flow/campaign level. This table is enriched with both Shopify and Klaviyo metrics, such as the net revenue, taxes paid, discounts applied, and the counts of each type of interaction between the user and the campaign/flow. |
 | [shopify_holistic_reporting__customer_enhanced](https://fivetran.github.io/dbt_shopify_holistic_reporting/#!/model/model.shopify_holistic_reporting.shopify_holistic_reporting__customer_enhanced)             | Each record represents a unique individual (based on email) that may exist in Shopify, Klaviyo, or both platforms. Enhanced with information coalesced across platforms, lifetime order metrics, and all-time interactions with email marketing campaigns and flows. |
+
 ### Materialized Models
-Each Quickstart transformation job run materializes 6 models if all components of this data model are enabled. This count includes all staging, intermediate, and final models materialized as `view`, `table`, or `incremental`.
+Each Quickstart transformation job run materializes 113 models if all components of this data model are enabled. This count includes all staging, intermediate, and final models materialized as `view`, `table`, or `incremental`.
 <!--section-end-->
 
 
@@ -65,7 +66,7 @@ dispatch:
 ```
 
 ### Step 3: Define database and schema variables
-#### Single Shopify and/or Klaviyo connector
+#### Single Shopify and/or Klaviyo connection
 By default, this package runs using your target destination and the `shopify` and `klaviyo` schemas. If this is not where your Shopify and Klaviyo source data is, respectively (for example, they might be `shopify_fivetran` and `klaviyo_fivetran`), add the following configuration to your root `dbt_project.yml` file:
 
 ```yml
