@@ -34,7 +34,12 @@ The following table provides a detailed list of all tables materialized within t
 | [shopify_holistic_reporting__customer_enhanced](https://fivetran.github.io/dbt_shopify_holistic_reporting/#!/model/model.shopify_holistic_reporting.shopify_holistic_reporting__customer_enhanced)             | Each record represents a unique individual (based on email) that may exist in Shopify, Klaviyo, or both platforms. Enhanced with information coalesced across platforms, lifetime order metrics, and all-time interactions with email marketing campaigns and flows. |
 
 ### Materialized Models
-Each Quickstart transformation job run materializes 113 models if all components of this data model are enabled. This count includes all staging, intermediate, and final models materialized as `view`, `table`, or `incremental`.
+Each Quickstart transformation job run materializes 113 models if all components of this data model are enabled. This count includes all staging, intermediate, and final models materialized as `view`, `table`, or `incremental`:
+| **Connector** | **Model Count** |
+| ------------- | --------------- |
+| Shopify Holistic Reporting | 6 |
+| [Shopify](https://github.com/fivetran/dbt_shopify) | 89 |
+| [klaviyo](https://github.com/fivetran/dbt_klaviyo) | 18 |
 <!--section-end-->
 
 
