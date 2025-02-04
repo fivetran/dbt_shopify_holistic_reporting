@@ -13,7 +13,7 @@
 # Shopify Holistic Reporting dbt Package ([Docs](https://fivetran.github.io/dbt_shopify_holistic_reporting/))
 
 ## What does this dbt package do?
-This package builds off of the [Shopify dbt package](https://github.com/fivetran/dbt_shopify) to weave together your Shopify e-commerce data with insights from marketing connectors. Currently, this package supports combining Shopify with email and SMS marketing data from Fivetran's [Klaviyo dbt package](https://github.com/fivetran/dbt_klaviyo).
+This package builds off of the [Shopify dbt package](https://github.com/fivetran/dbt_shopify) to weave together your Shopify e-commerce data with insights from marketing connections. Currently, this package supports combining Shopify with email and SMS marketing data from Fivetran's [Klaviyo dbt package](https://github.com/fivetran/dbt_klaviyo).
 > Wanna see Shopify combined with another connector? Please make create a [Feature Request](https://github.com/fivetran/dbt_shopify_holistic_reporting/issues/new?assignees=&labels=enhancement&template=feature-request.yml&title=%5BFeature%5D+%3Ctitle%3E).
 
 This dbt package enables you to:
@@ -32,6 +32,14 @@ The following table provides a detailed list of all tables materialized within t
 | [shopify_holistic_reporting__orders_attribution](https://fivetran.github.io/dbt_shopify_holistic_reporting/#!/model/model.shopify_holistic_reporting.shopify_holistic_reporting__orders_attribution)             | Each record represents a unique Shopify order, enhanced with a customizable last-touch attribution model associating orders with Klaviyo flows and campaigns that customers interacted with. Includes dimensions like whether it is a new or repeat purchase in Shopify. See available customizations [here](https://github.com/fivetran/dbt_klaviyo#attribution-lookback-window). Materialized incrementally by default. |
 | [shopify_holistic_reporting__daily_customer_metrics](https://fivetran.github.io/dbt_shopify_holistic_reporting/#!/model/model.shopify_holistic_reporting.shopify_holistic_reporting__daily_customer_metrics)             | Each record represent a unique customer's daily activity attributed to a campaign or flow in Klaviyo. The grain is set at the customer-day-flow/campaign level. This table is enriched with both Shopify and Klaviyo metrics, such as the net revenue, taxes paid, discounts applied, and the counts of each type of interaction between the user and the campaign/flow. |
 | [shopify_holistic_reporting__customer_enhanced](https://fivetran.github.io/dbt_shopify_holistic_reporting/#!/model/model.shopify_holistic_reporting.shopify_holistic_reporting__customer_enhanced)             | Each record represents a unique individual (based on email) that may exist in Shopify, Klaviyo, or both platforms. Enhanced with information coalesced across platforms, lifetime order metrics, and all-time interactions with email marketing campaigns and flows. |
+
+### Materialized Models
+Each Quickstart transformation job run materializes 113 models if all components of this data model are enabled. This count includes all staging, intermediate, and final models materialized as `view`, `table`, or `incremental`:
+| **Connector** | **Model Count** |
+| ------------- | --------------- |
+| Shopify Holistic Reporting | 6 |
+| [Shopify](https://github.com/fivetran/dbt_shopify) | 89 |
+| [klaviyo](https://github.com/fivetran/dbt_klaviyo) | 18 |
 <!--section-end-->
 
 
@@ -40,7 +48,7 @@ The following table provides a detailed list of all tables materialized within t
 ### Step 1: Prerequisites
 To use this dbt package, you must have the following:
 
-- At least one Fivetran Shopify connector syncing data into your destination.
+- At least one Fivetran Shopify connection syncing data into your destination.
 - A **BigQuery**, **Snowflake**, **Redshift**, **Databricks**, or **PostgreSQL** destination.
 
 ### Step 2: Install the package
@@ -63,7 +71,7 @@ dispatch:
 ```
 
 ### Step 3: Define database and schema variables
-#### Single Shopify and/or Klaviyo connector
+#### Single Shopify and/or Klaviyo connection
 By default, this package runs using your target destination and the `shopify` and `klaviyo` schemas. If this is not where your Shopify and Klaviyo source data is, respectively (for example, they might be `shopify_fivetran` and `klaviyo_fivetran`), add the following configuration to your root `dbt_project.yml` file:
 
 ```yml
@@ -75,8 +83,8 @@ vars:
     shopify_database: your_database_name
     shopify_schema: your_schema_name
 ```
-#### Union multiple Shopify and/or Klaviyo connectors
-If you have multiple Shopify and/or Klaviyo connectors in Fivetran and would like to use this package on all of them simultaneously, we have provided functionality to do so. The package will union all of the data together and pass the unioned table into the transformations. You will be able to see which source it came from in the `source_relation` column of each model. To use this functionality, you will need to set either the `shopify_union_schemas`/`klaviyo_union_schemas` OR `shopify_union_databases`/`klaviyo_union_databases` variables (cannot do both) in your root `dbt_project.yml` file:
+#### Union multiple Shopify and/or Klaviyo connections
+If you have multiple Shopify and/or Klaviyo connections in Fivetran and would like to use this package on all of them simultaneously, we have provided functionality to do so. The package will union all of the data together and pass the unioned table into the transformations. You will be able to see which source it came from in the `source_relation` column of each model. To use this functionality, you will need to set either the `shopify_union_schemas`/`klaviyo_union_schemas` OR `shopify_union_databases`/`klaviyo_union_databases` variables (cannot do both) in your root `dbt_project.yml` file:
 
 ```yml
 # dbt_project.yml
