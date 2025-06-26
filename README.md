@@ -1,4 +1,6 @@
-<p align="center">
+# Shopify Holistic Reporting dbt Package ([Docs](https://fivetran.github.io/dbt_shopify_holistic_reporting/))
+
+<p align="left">
     <a alt="License"
         href="https://github.com/fivetran/dbt_shopify_holistic_reporting/blob/main/LICENSE">
         <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" /></a>
@@ -9,8 +11,6 @@
     <a alt="PRs">
         <img src="https://img.shields.io/badge/Contributions-welcome-blueviolet" /></a>
 </p>
-
-# Shopify Holistic Reporting dbt Package ([Docs](https://fivetran.github.io/dbt_shopify_holistic_reporting/))
 
 ## What does this dbt package do?
 This package builds off of the [Shopify dbt package](https://github.com/fivetran/dbt_shopify) to weave together your Shopify e-commerce data with insights from marketing connections. Currently, this package supports combining Shopify with email and SMS marketing data from Fivetran's [Klaviyo dbt package](https://github.com/fivetran/dbt_klaviyo).
@@ -57,7 +57,7 @@ Include the following shopify_holistic_reporting package version in your `packag
 ```yml
 packages:
   - package: fivetran/shopify_holistic_reporting
-    version: [">=0.7.0", "<0.8.0"] # we recommend using ranges to capture non-breaking changes automatically
+    version: [">=0.8.0", "<0.9.0"] # we recommend using ranges to capture non-breaking changes automatically
 ```
 
 Do **NOT** include the `shopify`, `shopify_source`, `klaviyo`, or `klaviyo_source` packages in this file. The combo package itself has a dependency on these and will install the transformation and source packages as well.
@@ -144,10 +144,10 @@ packages:
       version: [">=0.11.0", "<0.13.0"]
 
     - package: fivetran/klaviyo
-      version: [">=0.8.0", "<0.9.0"]
+      version: [">=0.9.0", "<0.10.0"]
 
     - package: fivetran/klaviyo_source
-      version: [">=0.7.0", "<0.8.0"]
+      version: [">=0.8.0", "<0.9.0"]
 
     - package: fivetran/fivetran_utils
       version: [">=0.4.0", "<0.5.0"]

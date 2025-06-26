@@ -1,5 +1,5 @@
 name: 'shopify_holistic_reporting_integration_tests'
-version: '0.7.0'
+version: '0.8.0'
 profile: 'integration_tests'
 config-version: 2
 
@@ -180,3 +180,6 @@ seeds:
       +tags: klaviyo
     klaviyo_campaign:
       +tags: klaviyo
+
+flags:
+  send_anonymous_usage_stats: False
