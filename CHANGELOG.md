@@ -1,8 +1,34 @@
-# dbt_shopify_holistic_reporting version.version
+
+# dbt_shopify_holistic_reporting v0.8.0
+
+[PR #29](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/29) includes the following updates:
+
+## Breaking Change for dbt Core < 1.9.6
+
+> *Note: This is not relevant to Fivetran Quickstart users.*
+
+Migrated `freshness` from a top-level source property to a source `config` in alignment with [recent updates](https://github.com/dbt-labs/dbt-core/issues/11506) from dbt Core ([Klaviyo Source v0.8.0](https://github.com/fivetran/dbt_klaviyo_source/releases/tag/v0.8.0)). This will resolve the following deprecation warning that users running dbt >= 1.9.6 may have received:
+
+```
+[WARNING]: Deprecated functionality
+Found `freshness` as a top-level property of `klaviyo` in file
+`models/src_klaviyo.yml`. The `freshness` top-level property should be moved
+into the `config` of `klaviyo`.
+```
+
+**IMPORTANT:** Users running dbt Core < 1.9.6 will not be able to utilize freshness tests in this release or any subsequent releases, as older versions of dbt will not recognize freshness as a source `config` and therefore not run the tests.
+
+If you are using dbt Core < 1.9.6 and want to continue running Klaviyo freshness tests, please elect **one** of the following options:
+  1. (Recommended) Upgrade to dbt Core >= 1.9.6
+  2. Do not upgrade your installed version of the `klaviyo_source` package. Pin your dependency on v0.13.0 in your `packages.yml` file.
+  3. Utilize a dbt [override](https://docs.getdbt.com/reference/resource-properties/overrides) to overwrite the package's `klaviyo` source and apply freshness via the previous release top-level property route. This will require you to copy and paste the entirety of the previous release `src_klaviyo.yml` file and add an `overrides: klaviyo_source` property.
 
 ## Documentation
 - Added Quickstart model counts to README. ([#28](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/28))
 - Corrected references to connectors and connections in the README. ([#28](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/28))
+
+## Under the Hood
+- Updates to ensure integration tests use latest version of dbt.
 
 # dbt_shopify_holistic_reporting v0.7.0
 
