@@ -1,4 +1,6 @@
-<p align="center">
+# Shopify Holistic Reporting dbt Package ([Docs](https://fivetran.github.io/dbt_shopify_holistic_reporting/))
+
+<p align="left">
     <a alt="License"
         href="https://github.com/fivetran/dbt_shopify_holistic_reporting/blob/main/LICENSE">
         <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" /></a>
@@ -9,8 +11,6 @@
     <a alt="PRs">
         <img src="https://img.shields.io/badge/Contributions-welcome-blueviolet" /></a>
 </p>
-
-# Shopify Holistic Reporting dbt Package ([Docs](https://fivetran.github.io/dbt_shopify_holistic_reporting/))
 
 ## What does this dbt package do?
 This package builds off of the [Shopify dbt package](https://github.com/fivetran/dbt_shopify) to weave together your Shopify e-commerce data with insights from marketing connections. Currently, this package supports combining Shopify with email and SMS marketing data from Fivetran's [Klaviyo dbt package](https://github.com/fivetran/dbt_klaviyo).
