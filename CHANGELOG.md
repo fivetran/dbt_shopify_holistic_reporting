@@ -1,7 +1,6 @@
-
 # dbt_shopify_holistic_reporting v0.8.0
 
-[PR #29](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/29) includes the following updates:
+[PR #30](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/30) includes the following updates:
 
 ## Breaking Change for dbt Core < 1.9.6
 
