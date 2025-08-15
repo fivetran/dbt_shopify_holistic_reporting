@@ -62,7 +62,7 @@ packages:
     version: [">=0.9.0", "<0.10.0"] # we recommend using ranges to capture non-breaking changes automatically
 ```
 
-Do **NOT** include the `shopify` or `klaviyo` packages in this file. The combo package itself has a dependency on these and will install the transformation and source packages as well.
+Do **NOT** include the `shopify` or `klaviyo` packages in this file. The combo package itself has a dependency on these and will install upstream packages as well.
 
 #### Databricks dispatch configuration
 If you are using a Databricks destination with this package, you must add the following (or a variation of the following) dispatch configuration within your `dbt_project.yml`. This is required in order for the package to accurately search for macros within the `dbt-labs/spark_utils` then the `dbt-labs/dbt_utils` packages respectively.
