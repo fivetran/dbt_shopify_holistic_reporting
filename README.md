@@ -59,10 +59,10 @@ Include the following shopify_holistic_reporting package version in your `packag
 ```yml
 packages:
   - package: fivetran/shopify_holistic_reporting
-    version: [">=0.8.0", "<0.9.0"] # we recommend using ranges to capture non-breaking changes automatically
+    version: [">=0.9.0", "<0.10.0"] # we recommend using ranges to capture non-breaking changes automatically
 ```
 
-Do **NOT** include the `shopify`, `shopify_source`, `klaviyo`, or `klaviyo_source` packages in this file. The combo package itself has a dependency on these and will install the transformation and source packages as well.
+Do **NOT** include the `shopify` or `klaviyo` packages in this file. The combo package itself has a dependency on these and will install the transformation and source packages as well.
 
 #### Databricks dispatch configuration
 If you are using a Databricks destination with this package, you must add the following (or a variation of the following) dispatch configuration within your `dbt_project.yml`. This is required in order for the package to accurately search for macros within the `dbt-labs/spark_utils` then the `dbt-labs/dbt_utils` packages respectively.
@@ -139,16 +139,10 @@ This dbt package is dependent on the following dbt packages. These dependencies 
 ```yml
 packages:
     - package: fivetran/shopify
-      version: [">=0.11.0", "<0.14.0"]
-
-    - package: fivetran/shopify_source
-      version: [">=0.11.0", "<0.13.0"]
+      version: [">=0.21.0", "<0.22.0"]
 
     - package: fivetran/klaviyo
-      version: [">=0.9.0", "<0.10.0"]
-
-    - package: fivetran/klaviyo_source
-      version: [">=0.8.0", "<0.9.0"]
+      version: [">=1.0.0", "<1.1.0"]
 
     - package: fivetran/fivetran_utils
       version: [">=0.4.0", "<0.5.0"]
