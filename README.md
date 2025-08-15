@@ -109,7 +109,7 @@ See connector-specific configurations in their individual dbt package READMEs:
 
 #### Changing the Build Schema
 
-By default, this package will build the final models within a schema titled (`<target_schema>` + `_shopify_holistic`) and intermediate models in (`<target_schema>` + `_int_shopify_holistic`) in your target database. If this is not where you would like your modeled Shopify Holistic Reporting data to be written to, add the following configuration to your `dbt_project.yml` file:
+By default, this package will build the final models within a schema titled (`<target_schema>` + `_shopify_holistic`) and intermediate models in (`<target_schema>` + `_int_shopify_holistic`) in your target database. Additionally, the Shopify staging models will be built within a schema titled (`<target_schema>` + `_stg_shopify`) and the Shopify final models within a schema titled (`<target_schema>` + `_shopify`); similarly, the Klaviyo final models will be built within a schema titled (`<target_schema>` + `_klaviyo`), intermediate models in (`<target_schema>` + `_int_klaviyo`), and staging models within a schema titled (`<target_schema>` + `_stg_klaviyo`) in your target database. If this is not where you would like your modeled Shopify Holistic Reporting, Shopify, or Klaviyo data to be written to, add the following configuration to your `dbt_project.yml` file:
 
 ```yml
 # dbt_project.yml
@@ -119,6 +119,14 @@ models:
     +schema: my_new_schema_name # leave blank for just the target_schema
     intermediate:
       +schema: my_new_schema_name # leave blank for just the target_schema
+  shopify:
+    +schema: my_new_schema_name # leave blank for just the target_schema
+  shopify_source:
+    +schema: my_new_schema_name # leave blank for just the target_schema
+  klaviyo:
+    +schema: my_new_schema_name # Leave +schema: blank to use the default target_schema.
+    staging:
+      +schema: my_new_schema_name # Leave +schema: blank to use the default target_schema.
 ```
 
 > Note that if your profile does not have permissions to create schemas in your warehouse, you can set each `+schema` to blank. The package will then write all tables to your pre-existing target schema.
