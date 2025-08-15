@@ -30,6 +30,8 @@ dispatch:
     search_order: ['shopify_holistic_reporting', 'spark_utils', 'dbt_utils']
 
 seeds:
+  +docs:
+    show: False
   shopify_holistic_reporting_integration_tests:
   # shopify
     +quote_columns: "{{ true if target.type in ('redshift', 'postgres') else false }}"
@@ -183,3 +185,5 @@ seeds:
 
 flags:
   send_anonymous_usage_stats: False
+
+  use_colors: True

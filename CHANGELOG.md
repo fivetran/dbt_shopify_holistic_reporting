@@ -8,6 +8,10 @@
   - Removed all `accepted_values` tests.
   - Moved `loaded_at_field: _fivetran_synced` under the `config:` block in `src_shopify_holistic_reporting.yml`.
 
+## Under the Hood
+- Updated conditions in `.github/workflows/auto-release.yml`.
+- Added `.github/workflows/generate-docs.yml`.
+
 # dbt_shopify_holistic_reporting v0.8.0
 
 [PR #30](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/30) includes the following updates:
