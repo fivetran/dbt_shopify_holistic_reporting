@@ -10,6 +10,7 @@
 - Increased the `dbt_klaviyo` dependency from `[">=0.9.0", "<0.10.0"]` -> `[">=1.0.0", "<1.1.0"]`. Refer to the below Klaviyo releases to understand the full scope of changes.
   - [dbt_klaviyo v1.0.0](https://github.com/fivetran/dbt_klaviyo/releases/tag/v1.0.0)
 - Increased the `dbt_shopify` dependency from `[">=0.11.0", "<0.14.0"]` -> `[">=0.21.0", "<0.22.0"]`. Refer to the below Shopify releases to understand the full scope of changes.
+  - [dbt_shopify v0.14.0](https://github.com/fivetran/dbt_shopify/releases/tag/v0.14.0)
   - [dbt_shopify v0.15.0](https://github.com/fivetran/dbt_shopify/releases/tag/v0.15.0)
   - [dbt_shopify v0.16.0](https://github.com/fivetran/dbt_shopify/releases/tag/v0.16.0)
   - [dbt_shopify v0.16.1](https://github.com/fivetran/dbt_shopify/releases/tag/v0.16.1)
