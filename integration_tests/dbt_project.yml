@@ -483,7 +483,6 @@ seeds:
         phone_number: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
     klaviyo_flow:
       +tags: klaviyo
-      +enabled: "{{ true if target.type != 'snowflake' else false }}"
       +quote_columns: "{{ true if target.type == 'redshift' else false }}"
     klaviyo_event:
       +tags: klaviyo
