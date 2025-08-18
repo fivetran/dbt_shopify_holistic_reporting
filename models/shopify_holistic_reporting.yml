@@ -13,12 +13,6 @@ models:
       (not attributed to a campaign or flow).
 
       Columns that come _only_ from one source will be prefixed with that source name (ie klaviyo_)
-    tests:
-      - dbt_utils.unique_combination_of_columns:
-          combination_of_columns:
-            - email
-            - klaviyo_source_relation
-            - shopify_source_relation
     columns:
       - name: shopify_source_relation
         description: >
@@ -147,16 +141,6 @@ models:
       These columns will be prefixed with `count_` and `sum_revenue_`.
 
       Note that 0-activity days will not appear. 
-    tests:
-      - dbt_utils.unique_combination_of_columns:
-          combination_of_columns:
-            - date_day
-            - email
-            - klaviyo_source_relation
-            - shopify_source_relation
-            - campaign_id
-            - flow_id
-            - variation_id
     columns:
       - name: date_day
         description: Day on which the customer performed these activities. 
@@ -238,11 +222,6 @@ models:
       Refer to the Klaviyo package [README](https://github.com/fivetran/dbt_klaviyo#attribution-lookback-window) for more details.
 
       Materialized incrementally by default.
-    tests:
-      - dbt_utils.unique_combination_of_columns:
-          combination_of_columns:
-            - order_id
-            - shopify_source_relation
     columns:
       - name: app_id
         description: The ID of the app that created the order.

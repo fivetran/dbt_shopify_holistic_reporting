@@ -1,3 +1,30 @@
+# dbt_shopify_holistic_reporting v0.9.0
+[PR #33](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/33) includes the following updates:
+
+## dbt Fusion Compatibility Updates
+- Updated package to maintain compatibility with dbt-core versions both before and after v1.10.6, which introduced a breaking change to multi-argument test syntax (e.g., `unique_combination_of_columns`).
+- Temporarily removed unsupported tests to avoid errors and ensure smoother upgrades across different dbt-core versions. These tests will be reintroduced once a safe migration path is available.
+  - Removed all `dbt_utils.unique_combination_of_columns` tests.
+
+## Upstream Dependency Changes
+- Increased the `dbt_klaviyo` dependency from `[">=0.9.0", "<0.10.0"]` -> `[">=1.0.0", "<1.1.0"]`. Refer to the below Klaviyo releases to understand the full scope of changes.
+  - [dbt_klaviyo v1.0.0](https://github.com/fivetran/dbt_klaviyo/releases/tag/v1.0.0)
+- Increased the `dbt_shopify` dependency from `[">=0.11.0", "<0.14.0"]` -> `[">=0.21.0", "<0.22.0"]`. Refer to the below Shopify releases to understand the full scope of changes.
+  - [dbt_shopify v0.14.0](https://github.com/fivetran/dbt_shopify/releases/tag/v0.14.0)
+  - [dbt_shopify v0.15.0](https://github.com/fivetran/dbt_shopify/releases/tag/v0.15.0)
+  - [dbt_shopify v0.16.0](https://github.com/fivetran/dbt_shopify/releases/tag/v0.16.0)
+  - [dbt_shopify v0.16.1](https://github.com/fivetran/dbt_shopify/releases/tag/v0.16.1)
+  - [dbt_shopify v0.17.0](https://github.com/fivetran/dbt_shopify/releases/tag/v0.17.0)
+  - [dbt_shopify v0.18.0](https://github.com/fivetran/dbt_shopify/releases/tag/v0.18.0)
+  - [dbt_shopify v0.19.0](https://github.com/fivetran/dbt_shopify/releases/tag/v0.19.0)
+  - [dbt_shopify v0.19.1](https://github.com/fivetran/dbt_shopify/releases/tag/v0.19.1)
+  - [dbt_shopify v0.20.0](https://github.com/fivetran/dbt_shopify/releases/tag/v0.20.0)
+  - [dbt_shopify v0.21.0](https://github.com/fivetran/dbt_shopify/releases/tag/v0.21.0)
+
+## Under the Hood
+- Updated conditions in `.github/workflows/auto-release.yml`.
+- Added `.github/workflows/generate-docs.yml`.
+
 # dbt_shopify_holistic_reporting v0.8.0
 
 [PR #30](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/30) includes the following updates:

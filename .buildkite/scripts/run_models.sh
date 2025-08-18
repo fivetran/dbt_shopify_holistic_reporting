@@ -23,5 +23,6 @@ dbt run --target "$db"
 dbt test --target "$db"
 dbt run --vars '{shopify_timezone: "America/New_York", shopify_using_fulfillment_event: true, shopify_using_all_metafields: true}' --target "$db" --full-refresh
 dbt run --vars '{shopify_timezone: "America/New_York", shopify_using_fulfillment_event: true, shopify_using_all_metafields: true}' --target "$db"
+dbt run --vars '{shopify_timezone: "America/New_York", shopify_using_fulfillment_event: true, shopify_gql_using_fulfillment_event: true, shopify_using_all_metafields: true, shopify__calendar_start_date: '2020-01-01', shopify_using_abandoned_checkout: false, shopify_gql_using_abandoned_checkout: false, shopify_using_metafield: false, shopify_gql_using_metafield: false, shopify_using_discount_code_app: true, shopify_gql_using_discount_code_app: true, shopify_using_product_variant_media: true, shopify_gql_product_variant_media: true, shopify_gql_using_collection_rule: true, shopify_gql_using_customer_visit: false}' --target "$db" --full-refresh
 dbt test --target "$db"
 dbt run-operation fivetran_utils.drop_schemas_automation --target "$db"

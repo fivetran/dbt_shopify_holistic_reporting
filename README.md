@@ -5,11 +5,14 @@
         href="https://github.com/fivetran/dbt_shopify_holistic_reporting/blob/main/LICENSE">
         <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" /></a>
     <a alt="dbt-core">
-        <img src="https://img.shields.io/badge/dbt_Core™_version->=1.3.0_<2.0.0-orange.svg" /></a>
+        <img src="https://img.shields.io/badge/dbt_Core™_version->=1.3.0_,<2.0.0-orange.svg" /></a>
     <a alt="Maintained?">
         <img src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" /></a>
     <a alt="PRs">
         <img src="https://img.shields.io/badge/Contributions-welcome-blueviolet" /></a>
+    <a alt="Fivetran Quickstart Compatible"
+        href="https://fivetran.com/docs/transformations/dbt/quickstart">
+        <img src="https://img.shields.io/badge/Fivetran_Quickstart_Compatible%3F-yes-green.svg" /></a>
 </p>
 
 ## What does this dbt package do?
@@ -42,7 +45,6 @@ Each Quickstart transformation job run materializes 113 models if all components
 | [klaviyo](https://github.com/fivetran/dbt_klaviyo) | 18 |
 <!--section-end-->
 
-
 ## How do I use the dbt package?
 
 ### Step 1: Prerequisites
@@ -57,10 +59,10 @@ Include the following shopify_holistic_reporting package version in your `packag
 ```yml
 packages:
   - package: fivetran/shopify_holistic_reporting
-    version: [">=0.8.0", "<0.9.0"] # we recommend using ranges to capture non-breaking changes automatically
+    version: [">=0.9.0", "<0.10.0"] # we recommend using ranges to capture non-breaking changes automatically
 ```
 
-Do **NOT** include the `shopify`, `shopify_source`, `klaviyo`, or `klaviyo_source` packages in this file. The combo package itself has a dependency on these and will install the transformation and source packages as well.
+Do **NOT** include the `shopify` or `klaviyo` packages in this file. The combo package itself has a dependency on these and will install upstream packages as well.
 
 #### Databricks dispatch configuration
 If you are using a Databricks destination with this package, you must add the following (or a variation of the following) dispatch configuration within your `dbt_project.yml`. This is required in order for the package to accurately search for macros within the `dbt-labs/spark_utils` then the `dbt-labs/dbt_utils` packages respectively.
@@ -107,7 +109,7 @@ See connector-specific configurations in their individual dbt package READMEs:
 
 #### Changing the Build Schema
 
-By default, this package will build the final models within a schema titled (`<target_schema>` + `_shopify_holistic`) and intermediate models in (`<target_schema>` + `_int_shopify_holistic`) in your target database. If this is not where you would like your modeled Shopify Holistic Reporting data to be written to, add the following configuration to your `dbt_project.yml` file:
+By default, this package will build the final models within a schema titled (`<target_schema>` + `_shopify_holistic`) and intermediate models in (`<target_schema>` + `_int_shopify_holistic`) in your target database. Additionally, the Shopify staging models will be built within a schema titled (`<target_schema>` + `_stg_shopify`) and the Shopify final models within a schema titled (`<target_schema>` + `_shopify`); similarly, the Klaviyo final models will be built within a schema titled (`<target_schema>` + `_klaviyo`), intermediate models in (`<target_schema>` + `_int_klaviyo`), and staging models within a schema titled (`<target_schema>` + `_stg_klaviyo`) in your target database. If this is not where you would like your modeled Shopify Holistic Reporting, Shopify, or Klaviyo data to be written to, add the following configuration to your `dbt_project.yml` file:
 
 ```yml
 # dbt_project.yml
@@ -117,6 +119,14 @@ models:
     +schema: my_new_schema_name # leave blank for just the target_schema
     intermediate:
       +schema: my_new_schema_name # leave blank for just the target_schema
+  shopify:
+    +schema: my_new_schema_name # leave blank for just the target_schema
+  shopify_source:
+    +schema: my_new_schema_name # leave blank for just the target_schema
+  klaviyo:
+    +schema: my_new_schema_name # Leave +schema: blank to use the default target_schema.
+    staging:
+      +schema: my_new_schema_name # Leave +schema: blank to use the default target_schema.
 ```
 
 > Note that if your profile does not have permissions to create schemas in your warehouse, you can set each `+schema` to blank. The package will then write all tables to your pre-existing target schema.
@@ -127,10 +137,9 @@ Models from the individual [Shopify](https://github.com/fivetran/dbt_shopify/#ch
 ### (Optional) Step 6: Orchestrate your models with Fivetran Transformations for dbt Core™
 <details><summary>Expand for details</summary>
 <br>
-    
+
 Fivetran offers the ability for you to orchestrate your dbt project through [Fivetran Transformations for dbt Core™](https://fivetran.com/docs/transformations/dbt). Learn how to set up your project for orchestration through Fivetran in our [Transformations for dbt Core setup guides](https://fivetran.com/docs/transformations/dbt#setupguide).
 </details>
-
 
 ## Does this package have dependencies?
 This dbt package is dependent on the following dbt packages. These dependencies are installed by default within this package. For more information on the following packages, refer to the [dbt hub](https://hub.getdbt.com/) site.
@@ -138,16 +147,10 @@ This dbt package is dependent on the following dbt packages. These dependencies 
 ```yml
 packages:
     - package: fivetran/shopify
-      version: [">=0.11.0", "<0.14.0"]
-
-    - package: fivetran/shopify_source
-      version: [">=0.11.0", "<0.13.0"]
+      version: [">=0.21.0", "<0.22.0"]
 
     - package: fivetran/klaviyo
-      version: [">=0.9.0", "<0.10.0"]
-
-    - package: fivetran/klaviyo_source
-      version: [">=0.8.0", "<0.9.0"]
+      version: [">=1.0.0", "<1.1.0"]
 
     - package: fivetran/fivetran_utils
       version: [">=0.4.0", "<0.5.0"]
@@ -172,5 +175,5 @@ We highly encourage and welcome contributions to this package. Check out [this d
 
 ## Are there any resources available?
 - If you would like a deeper explanation of the logic used by default in the dbt package you may reference the [DECISIONLOG](https://github.com/fivetran/dbt_shopify_holistic_reporting/blob/main//DECISIONLOG.md).
-- If you have questions or want to reach out for help, see the [GitHub Issue](https://github.com/fivetran/dbt_shopify/issues/new/choose) section to find the right avenue of support for you.
+- If you have questions or want to reach out for help, see the [GitHub Issue](https://github.com/fivetran/dbt_shopify_holistic_reporting/issues/new/choose) section to find the right avenue of support for you.
 - If you would like to provide feedback to the dbt package team at Fivetran or would like to request a new dbt package, fill out our [Feedback Form](https://www.surveymonkey.com/r/DQ7K7WW).
