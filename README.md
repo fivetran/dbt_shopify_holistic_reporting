@@ -5,7 +5,7 @@
         href="https://github.com/fivetran/dbt_shopify_holistic_reporting/blob/main/LICENSE">
         <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" /></a>
     <a alt="dbt-core">
-        <img src="https://img.shields.io/badge/dbt_Core™_version->=1.3.0_,<2.0.0-orange.svg" /></a>
+        <img src="https://img.shields.io/badge/dbt_Core™_version->=1.3.0,_<3.0.0-orange.svg" /></a>
     <a alt="Maintained?">
         <img src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" /></a>
     <a alt="PRs">
@@ -59,7 +59,7 @@ Include the following shopify_holistic_reporting package version in your `packag
 ```yml
 packages:
   - package: fivetran/shopify_holistic_reporting
-    version: [">=0.9.0", "<0.10.0"] # we recommend using ranges to capture non-breaking changes automatically
+    version: [">=0.10.0", "<0.11.0"] # we recommend using ranges to capture non-breaking changes automatically
 ```
 
 Do **NOT** include the `shopify` or `klaviyo` packages in this file. The combo package itself has a dependency on these and will install upstream packages as well.

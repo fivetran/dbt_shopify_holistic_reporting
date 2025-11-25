@@ -1,3 +1,10 @@
+# dbt_shopify_holistic_reporting v0.10.0
+
+[PR #35](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/35) includes the following updates:
+
+## Features
+  - Increases the required dbt version upper limit to v3.0.0
+
 # dbt_shopify_holistic_reporting v0.9.0
 [PR #33](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/33) includes the following updates:
 
