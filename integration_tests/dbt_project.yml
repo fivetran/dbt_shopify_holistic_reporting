@@ -500,6 +500,15 @@ seeds:
         campaign_id: "{{ 'string' if target.type in  ('bigquery', 'spark', 'databricks') else 'varchar' }}"
         datetime: timestamp
         timestamp: timestamp
+        property_attribution: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar(65535)' }}"
+    klaviyo_event_norename:
+      +tags: klaviyo
+      +column_types:
+        flow_id: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
+        campaign_id: "{{ 'string' if target.type in  ('bigquery', 'spark', 'databricks') else 'varchar' }}"
+        datetime: timestamp
+        timestamp: timestamp
+        property_attribution: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar(65535)' }}"
     klaviyo_metric:
       +tags: klaviyo
     klaviyo_campaign:
