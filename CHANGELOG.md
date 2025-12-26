@@ -1,9 +1,20 @@
-# dbt_shopify_holistic_reporting v0.10.0
+# dbt_shopify_holistic_reporting v0.11.0
 
-[PR #35](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/35) includes the following updates:
+[PR #TBD](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/TBD) includes the following updates:
+
+## Breaking Changes
+- Updates upstream package dependencies with major version changes:
+  - `fivetran/shopify`: `[">=0.21.0", "<0.22.0"]` → `[">=1.4.0", "<1.5.0"]`
+  - `fivetran/klaviyo`: `[">=1.0.0", "<1.1.0"]` → `[">=1.2.0", "<1.3.0"]`
+  - Review the [Shopify](https://github.com/fivetran/dbt_shopify/blob/main/CHANGELOG.md) and [Klaviyo](https://github.com/fivetran/dbt_klaviyo/blob/main/CHANGELOG.md) package CHANGELOGs for full details on upstream changes.
 
 ## Features
-  - Increases the required dbt version upper limit to v3.0.0
+- Adds support for Shopify GraphQL API alongside existing REST API support. Models now dynamically reference the appropriate upstream tables based on the `shopify_api` [variable](https://github.com/fivetran/dbt_shopify?tab=readme-ov-file#step-3-define-rest-api-or-graphql-api-source), which is either `rest` (default) or `graphql`
+- Increases the required dbt version upper limit to v3.0.0
+
+## Under the Hood
+- Removes conditional compilation logic for `shopify__using_order_line_refund`, `shopify__using_refund`, and `shopify__using_order_adjustment` variables in `int__daily_shopify_customer_orders`. These columns are now always included in the aggregation.
+- Adds missing Shopify variables to the `quickstart.yml` file
 
 # dbt_shopify_holistic_reporting v0.9.0
 [PR #33](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/33) includes the following updates:

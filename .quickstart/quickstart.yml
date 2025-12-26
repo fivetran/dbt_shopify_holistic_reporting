@@ -9,8 +9,71 @@ multi_connector_config:
        union_schema_key: shopify_union_schemas
 
 table_variables:
+  shopify_using_metafield:
+    - metafield
   shopify_using_fulfillment_event:
     - fulfillment_event
+  shopify_using_abandoned_checkout:
+    - abandoned_checkout
+    - abandoned_checkout_discount_code
+    - abandoned_checkout_shipping_line
+  shopify_using_discount_code_app:
+    - discount_code_app
+  shopify_using_product_variant_media:
+    - product_variant_media
+
+  shopify_gql_using_abandoned_checkout:
+    - abandoned_checkout
+    - abandoned_checkout_discount_code
+  shopify_gql_using_customer_visit:
+    - customer_visit
+  shopify_gql_using_fulfillment_order_line_item:
+    - fulfillment_order_line_item
+  shopify_gql_using_metafield:
+    - metafield
+  shopify_gql_using_collection_rule:
+    - collection_rule
+  shopify_gql_using_discount_code_app:
+    - discount_code_app
+  shopify_gql_using_fulfillment_event:
+    - fulfillment_event
+  shopify_gql_using_fulfillment_tracking_info:
+    - fulfillment_tracking_info
+  shopify_gql_using_product_variant_media:
+    - product_variant_media
+  shopify_gql_using_order_custom_attribute:
+    - order_custom_attribute
+  shopify_gql_using_order_line_tax_line:
+    - order_line_tax_line
+  shopify_gql_using_refund_line_item:
+    - refund_line_item
+  
+  shopify_using_all_metafields:
+    - metafield
+    - collection
+    - customer
+    - order
+    - product
+    - product_variant
+    - shop
+  shopify_using_collection_metafields:
+    - metafield
+    - collection
+  shopify_using_customer_metafields:
+    - metafield
+    - customer
+  shopify_using_order_metafields:
+    - metafield
+    - order
+  shopify_using_product_metafields:
+    - metafield
+    - product
+  shopify_using_product_variant_metafields:
+    - metafield
+    - product_variant
+  shopify_using_shop_metafields:
+    - metafield
+    - shop
 
 destination_configurations:
   databricks:
