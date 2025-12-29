@@ -19,10 +19,11 @@ vars:
   # shopify_gql_using_fulfillment_tracking_info: true # @docs-include
   # shopify_gql_using_product_variant_media: true # @docs-include
   
-  shopify_schema: combo_integration_tests_12
-  shopify_api_override: rest
+  # Only run both shopify schemas when regenerating docs. For integration tests, use the shopify_api variable to run one at a time
+  # shopify_api_override: rest # @docs-include
 
   shopify:
+    shopify_schema: combo_integration_tests_12
     shopify_customer_identifier: "shopify_customer_data"
     shopify_order_line_refund_identifier: "shopify_order_line_refund_data"
     shopify_order_line_identifier: "shopify_order_line_data"
