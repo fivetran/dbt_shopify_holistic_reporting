@@ -3,10 +3,19 @@
 [PR #35](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/35) includes the following updates:
 
 ## Breaking Changes (--full-refresh required after upgrading)
-- Updates upstream package dependencies with major version changes:
-  - `fivetran/shopify`: `[">=0.21.0", "<0.22.0"]` [→](https://github.com/fivetran/dbt_shopify/compare/v0.21.1...v1.4.0) `[">=1.4.0", "<1.5.0"]`
-  - `fivetran/klaviyo`: `[">=1.0.0", "<1.1.0"]` [→](https://github.com/fivetran/dbt_klaviyo/compare/v1.0.0...v1.2.0) `[">=1.2.0", "<1.3.0"]`
-  - Review the [Shopify](https://github.com/fivetran/dbt_shopify/blob/main/CHANGELOG.md) and [Klaviyo](https://github.com/fivetran/dbt_klaviyo/blob/main/CHANGELOG.md) package CHANGELOGs for full details on upstream changes.
+- Increases the upstream `dbt_shopify` dependency from `[">=0.21.0", "<0.22.0"]` → `[">=1.4.0", "<1.5.0"]`. Refer to the below Shopify releases to understand the full scope of changes:
+  - [dbt_shopify v0.22.0](https://github.com/fivetran/dbt_shopify/releases/tag/v0.22.0)
+  - [dbt_shopify v1.0.0](https://github.com/fivetran/dbt_shopify/releases/tag/v1.0.0)
+  - [dbt_shopify v1.1.0](https://github.com/fivetran/dbt_shopify/releases/tag/v1.1.0)
+  - [dbt_shopify v1.2.0](https://github.com/fivetran/dbt_shopify/releases/tag/v1.2.0)
+  - [dbt_shopify v1.3.0](https://github.com/fivetran/dbt_shopify/releases/tag/v1.3.0)
+  - [dbt_shopify v1.3.1](https://github.com/fivetran/dbt_shopify/releases/tag/v1.3.1)
+  - [dbt_shopify v1.4.0](https://github.com/fivetran/dbt_shopify/releases/tag/v1.4.0) # TO BE RELEASED -- WAIT FOR THIS BEFORE MERGING
+- Increases the upstream `dbt_klaviyo` dependency from `[">=1.0.0", "<1.1.0"]` → `[">=1.2.0", "<1.3.0"]`. Refer to the below Klaviyo releases to understand the full scope of changes:
+  - [dbt_klaviyo v1.1.0](https://github.com/fivetran/dbt_klaviyo/releases/tag/v1.1.0)
+  - [dbt_klaviyo v1.1.1](https://github.com/fivetran/dbt_klaviyo/releases/tag/v1.1.1)
+  - [dbt_klaviyo v1.2.0](https://github.com/fivetran/dbt_klaviyo/releases/tag/v1.2.0)
+  - [dbt_klaviyo v1.2.1](https://github.com/fivetran/dbt_klaviyo/releases/tag/v1.2.1)
 
 ## Feature Update
 - Adds support for Shopify GraphQL API alongside existing REST API support. Models now dynamically reference the appropriate upstream tables based on the `shopify_api` [variable](https://github.com/fivetran/dbt_shopify?tab=readme-ov-file#step-3-define-rest-api-or-graphql-api-source), which is either `rest` (default) or `graphql`.
@@ -15,6 +24,7 @@
 - Increases the required dbt version upper limit to v3.0.0.
 - Removes conditional compilation logic for `shopify__using_order_line_refund`, `shopify__using_refund`, and `shopify__using_order_adjustment` variables in `int__daily_shopify_customer_orders`. These columns are now always included in the aggregation.
 - Adds missing Shopify variables to the `quickstart.yml` file.
+- Updates Buildkite steps to adequately test the GraphQL schema.
 
 # dbt_shopify_holistic_reporting v0.9.0
 [PR #33](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/33) includes the following updates:
