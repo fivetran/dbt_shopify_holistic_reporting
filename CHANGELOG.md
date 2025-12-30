@@ -1,4 +1,4 @@
-# dbt_shopify_holistic_reporting v0.11.0
+# dbt_shopify_holistic_reporting v0.10.0
 
 [PR #35](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/35) includes the following updates:
 
@@ -10,7 +10,7 @@
   - [dbt_shopify v1.2.0](https://github.com/fivetran/dbt_shopify/releases/tag/v1.2.0)
   - [dbt_shopify v1.3.0](https://github.com/fivetran/dbt_shopify/releases/tag/v1.3.0)
   - [dbt_shopify v1.3.1](https://github.com/fivetran/dbt_shopify/releases/tag/v1.3.1)
-  - [dbt_shopify v1.4.0](https://github.com/fivetran/dbt_shopify/releases/tag/v1.4.0) # TO BE RELEASED -- WAIT FOR THIS BEFORE MERGING
+  - [dbt_shopify v1.4.0](https://github.com/fivetran/dbt_shopify/releases/tag/v1.4.0)
 - Increases the upstream `dbt_klaviyo` dependency from `[">=1.0.0", "<1.1.0"]` → `[">=1.2.0", "<1.3.0"]`. Refer to the below Klaviyo releases to understand the full scope of changes:
   - [dbt_klaviyo v1.1.0](https://github.com/fivetran/dbt_klaviyo/releases/tag/v1.1.0)
   - [dbt_klaviyo v1.1.1](https://github.com/fivetran/dbt_klaviyo/releases/tag/v1.1.1)

@@ -1,5 +1,5 @@
 name: 'shopify_holistic_reporting_integration_tests'
-version: '0.11.0'
+version: '0.10.0'
 profile: 'integration_tests'
 config-version: 2
 
@@ -23,7 +23,7 @@ vars:
   # shopify_api_override: rest # @docs-include
 
   shopify:
-    shopify_schema: combo_integration_tests_12
+    shopify_schema: holistic_integration_tests
     shopify_customer_identifier: "shopify_customer_data"
     shopify_order_line_refund_identifier: "shopify_order_line_refund_data"
     shopify_order_line_identifier: "shopify_order_line_data"
@@ -119,7 +119,7 @@ vars:
     shopify_gql_refund_identifier: "shopify_gql_refund_data"
 
   klaviyo:
-    klaviyo_schema: 'combo_integration_tests_12'
+    klaviyo_schema: 'holistic_integration_tests'
     klaviyo_campaign_identifier: "klaviyo_campaign"
     klaviyo_event_identifier: "klaviyo_event"
     klaviyo_flow_identifier: "klaviyo_flow"

@@ -1,4 +1,4 @@
-{% set shopify_order_lines = ref('shopify__order_lines') if var('shopify_api', 'rest') == 'rest' else ref('shopify_gql__order_lines') %}
+{% set shopify_order_lines_model = ref('shopify__order_lines') if var('shopify_api', 'rest') == 'rest' else ref('shopify_gql__order_lines') %}
 
 with orders as (
 
@@ -8,7 +8,7 @@ with orders as (
 ), order_lines as (
 
     select *
-    from {{ shopify_order_lines }}
+    from {{ shopify_order_lines_model }}
 
 ), order_line_metrics as (
 
