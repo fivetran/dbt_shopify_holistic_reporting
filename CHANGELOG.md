@@ -1,4 +1,4 @@
-# dbt_shopify_holistic_reporting v0.10.0
+# dbt_shopify_holistic_reporting v1.0.0
 
 [PR #35](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/35) includes the following updates:
 
