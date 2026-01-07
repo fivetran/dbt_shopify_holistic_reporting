@@ -1,7 +1,9 @@
+{% set shopify_customer_emails_model = ref('shopify__customer_emails') if var('shopify_api', 'rest') == 'rest' else ref('shopify_gql__customer_emails') %}
+
 with shopify_customers as (
 
     select *
-    from {{ ref('shopify__customer_emails') }}
+    from {{ shopify_customer_emails_model }}
 
 ), klaviyo_persons as (
 
@@ -26,7 +28,7 @@ with shopify_customers as (
         shopify_customers.first_order_timestamp as shopify_first_order_at,
         shopify_customers.most_recent_order_timestamp as shopify_last_order_at,
 
-        {{ dbt_utils.star(from=ref('shopify__customer_emails'), relation_alias='shopify_customers', prefix='shopify_', quote_identifiers=false,
+        {{ dbt_utils.star(from=shopify_customer_emails_model, relation_alias='shopify_customers', prefix='shopify_', quote_identifiers=false,
                                 except=['source_relation', 'email', 'first_name', 'last_name', 'customer_ids', 'phone_numbers', 'first_account_created_at','last_account_created_at', 'last_updated_at',
                                         'is_verified_email', 'updated_timestamp', 'created_timestamp'] ) 
         }},

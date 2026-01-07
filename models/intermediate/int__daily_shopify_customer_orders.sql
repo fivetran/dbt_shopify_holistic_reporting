@@ -1,3 +1,5 @@
+{% set shopify_order_lines_model = ref('shopify__order_lines') if var('shopify_api', 'rest') == 'rest' else ref('shopify_gql__order_lines') %}
+
 with orders as (
 
     select *
@@ -6,7 +8,7 @@ with orders as (
 ), order_lines as (
 
     select *
-    from {{ ref('shopify__order_lines') }}
+    from {{ shopify_order_lines_model }}
 
 ), order_line_metrics as (
 
@@ -49,29 +51,28 @@ with orders as (
 
         count(distinct order_id) as total_orders,
         sum(order_adjusted_total) as total_price,
-
         sum(line_item_count) as count_line_items,
-        sum(total_line_items_price) as total_line_items_price,
-        
 
-        sum(total_discounts) as total_discounts,
-        sum(total_tax) as total_tax,
-        sum(shipping_cost) as total_shipping_cost,
-
-        {% if fivetran_utils.enabled_vars(vars=["shopify__using_order_line_refund", "shopify__using_refund"]) %}
-        sum(refund_subtotal) as total_refund_subtotal,
-        sum(refund_total_tax) as total_refund_tax,
+        {% if var('shopify_api', 'rest') == 'rest' %}
+            sum(total_line_items_price) as total_line_items_price,
+            sum(total_discounts) as total_discounts,
+            sum(total_tax) as total_tax,
+            sum(shipping_cost) as total_shipping_cost,
+        {% else %}
+            sum(total_line_items_price_shop_amount) as total_line_items_price,
+            sum(total_discounts_shop_amount) as total_discounts,
+            sum(total_tax_shop_amount) as total_tax,
+            sum(shipping_cost_shop_amount) as total_shipping_cost,
         {% endif %}
 
+        sum(refund_subtotal) as total_refund_subtotal,
+        sum(refund_total_tax) as total_refund_tax,
         sum(case when cancelled_timestamp is not null then 1 else 0 end) as count_cancelled_orders,
         sum(count_products) as count_products,
         sum(count_product_variants) as count_product_variants,
-        sum(sum_quantity) as sum_quantity
-
-        {% if var('shopify__using_order_adjustment', true) %}
-        , sum(order_adjustment_amount) as total_order_adjustment_amount
-        , sum(order_adjustment_tax_amount) as total_order_adjustment_tax_amount
-        {% endif %}
+        sum(sum_quantity) as sum_quantity,
+        sum(order_adjustment_amount) as total_order_adjustment_amount,
+        sum(order_adjustment_tax_amount) as total_order_adjustment_tax_amount
         
 
     from join_orders

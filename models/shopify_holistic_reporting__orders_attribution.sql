@@ -7,10 +7,12 @@
     )
 }}
 
+{% set shopify_orders_model = ref('shopify__orders') if var('shopify_api', 'rest') == 'rest' else ref('shopify_gql__orders') %}
+
 with orders as (
 
     select *
-    from {{ ref('shopify__orders') }}
+    from {{ shopify_orders_model }}
 
     -- just grab new + newly updated orders
     {% if is_incremental() %}
@@ -77,7 +79,7 @@ with orders as (
 ), last_touches as (
 
     select 
-        {{ dbt_utils.star(from=ref('shopify__orders'), except=['source_relation']) }},
+        {{ dbt_utils.star(from=shopify_orders_model, except=['source_relation']) }},
         last_touch_campaign_id is not null or last_touch_flow_id is not null as is_attributed,
         last_touch_campaign_id,
         last_touch_flow_id,

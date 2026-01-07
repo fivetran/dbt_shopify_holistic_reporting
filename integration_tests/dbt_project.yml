@@ -1,5 +1,5 @@
 name: 'shopify_holistic_reporting_integration_tests'
-version: '0.9.0'
+version: '1.0.0'
 profile: 'integration_tests'
 config-version: 2
 
@@ -19,10 +19,11 @@ vars:
   # shopify_gql_using_fulfillment_tracking_info: true # @docs-include
   # shopify_gql_using_product_variant_media: true # @docs-include
   
-  shopify_schema: combo_integration_tests_12
-  shopify_api_override: rest
+  # Only run both shopify schemas when regenerating docs. For integration tests, use the shopify_api variable to run one at a time
+  # shopify_api_override: rest # @docs-include
 
-  shopify_source:
+  shopify:
+    shopify_schema: holistic_integration_tests
     shopify_customer_identifier: "shopify_customer_data"
     shopify_order_line_refund_identifier: "shopify_order_line_refund_data"
     shopify_order_line_identifier: "shopify_order_line_data"
@@ -91,7 +92,9 @@ vars:
     shopify_gql_order_adjustment_identifier: "shopify_gql_order_adjustment_data"
     shopify_gql_order_line_identifier: "shopify_gql_order_line_data"
     shopify_gql_order_line_refund_identifier: "shopify_gql_order_line_refund_data"
+    shopify_gql_refund_line_item_identifier: "shopify_gql_refund_line_item_data"
     shopify_gql_order_note_attribute_identifier: "shopify_gql_order_note_attribute_data"
+    shopify_gql_order_custom_attribute_identifier: "shopify_gql_order_custom_attribute_data"
     shopify_gql_order_shipping_line_identifier: "shopify_gql_order_shipping_line_data"
     shopify_gql_order_shipping_tax_line_identifier: "shopify_gql_order_shipping_tax_line_data"
     shopify_gql_order_tag_identifier: "shopify_gql_order_tag_data"
@@ -107,16 +110,16 @@ vars:
     shopify_gql_order_discount_code_identifier: "shopify_gql_order_discount_code_data"
     shopify_gql_fulfillment_event_identifier: "shopify_gql_fulfillment_event_data"
     shopify_gql_tax_line_identifier: "shopify_gql_tax_line_data"
+    shopify_gql_order_line_tax_line_identifier: "shopify_gql_order_line_tax_line_data"
     shopify_gql_fulfillment_tracking_info_identifier: "shopify_gql_fulfillment_tracking_info_data"
     shopify_gql_fulfillment_order_line_item_identifier: "shopify_gql_fulfillment_order_line_item_data"
     shopify_gql_customer_visit_identifier: "shopify_gql_customer_visit_data"
     shopify_gql_customer_address_identifier: "shopify_gql_customer_address_data"
     shopify_gql_collection_rule_identifier: "shopify_gql_collection_rule_data"
-    shopify_gql_refund_line_item_identifier: "shopify_gql_refund_line_item_data"
     shopify_gql_refund_identifier: "shopify_gql_refund_data"
 
   klaviyo:
-    klaviyo_schema: 'combo_integration_tests_12'
+    klaviyo_schema: 'holistic_integration_tests'
     klaviyo_campaign_identifier: "klaviyo_campaign"
     klaviyo_event_identifier: "klaviyo_event"
     klaviyo_flow_identifier: "klaviyo_flow"
@@ -185,6 +188,9 @@ seeds:
         product_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         variant_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
     shopify_gql_order_line_refund_data:
+      +column_types:
+        quantity: float
+    shopify_gql_refund_line_item_data:
       +column_types:
         quantity: float
     shopify_order_line_refund_data:
@@ -476,6 +482,10 @@ seeds:
       +column_types:
         product_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
         media_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
+    shopify_collection_product_data:
+      +column_types:
+        collection_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
+        product_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
     # klaviyo
     klaviyo_person:
       +tags: klaviyo
@@ -491,6 +501,15 @@ seeds:
         campaign_id: "{{ 'string' if target.type in  ('bigquery', 'spark', 'databricks') else 'varchar' }}"
         datetime: timestamp
         timestamp: timestamp
+        property_attribution: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar(65535)' }}"
+    klaviyo_event_norename:
+      +tags: klaviyo
+      +column_types:
+        flow_id: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
+        campaign_id: "{{ 'string' if target.type in  ('bigquery', 'spark', 'databricks') else 'varchar' }}"
+        datetime: timestamp
+        timestamp: timestamp
+        property_attribution: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar(65535)' }}"
     klaviyo_metric:
       +tags: klaviyo
     klaviyo_campaign:
