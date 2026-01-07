@@ -24,7 +24,7 @@
 - Increases the required dbt version upper limit to v3.0.0.
 - Removes conditional compilation logic for `shopify__using_order_line_refund`, `shopify__using_refund`, and `shopify__using_order_adjustment` variables in `int__daily_shopify_customer_orders`. These columns are now always included in the aggregation.
 - Adds missing Shopify variables to the `quickstart.yml` file.
-- Updates Buildkite steps to adequately test the GraphQL schema.
+- Updates Buildkite steps and seed files to adequately test the GraphQL schema.
 
 # dbt_shopify_holistic_reporting v0.9.0
 [PR #33](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/33) includes the following updates:

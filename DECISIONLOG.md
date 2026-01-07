@@ -2,7 +2,9 @@
 
 In creating this package, which is meant for a wide range of use cases, we had to take opinionated stances on a few different questions we came across during development. We've consolidated significant choices we made here, and will continue to update as the package evolves.
 
-> [Shopify](https://github.com/fivetran/dbt_shopify/blob/main/DECISIONLOG.md)-specific decisions are logged here and [Klaviyo](https://github.com/fivetran/dbt_klaviyo/blob/main/DECISIONLOG.md)-specific decisions here.
+You can also refer to the package-specific `DECISIONLOG`s:
+- [Shopify-specific decisions](https://github.com/fivetran/dbt_shopify/blob/main/DECISIONLOG.md)
+- [Klaviyo-specific decisions](https://github.com/fivetran/dbt_klaviyo/blob/main/DECISIONLOG.md)
 
 ## Using the Campaign and Flow IDs From the Klaviyo package's attribution model
 We chose to build off of the layer of attribution occurring in the Klaviyo-only dbt package. This means that we refer to `last_touch_campaign_id` and `last_touch_flow_id` (a coalescing of the Klaviyo-provided `campaign_id`/`flow_id` and those attributed by the package itself) when attributing Shopify orders to Klaviyo campaigns and flows.
