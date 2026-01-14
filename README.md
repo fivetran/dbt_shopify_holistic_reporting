@@ -1,4 +1,5 @@
-# Shopify Holistic Reporting dbt Package ([Docs](https://fivetran.github.io/dbt_shopify_holistic_reporting/))
+<!--section="shopify-holistic-reporting_transformation_model"-->
+# Shopify Holistic Reporting dbt Package
 
 <p align="left">
     <a alt="License"
@@ -15,26 +16,46 @@
         <img src="https://img.shields.io/badge/Fivetran_Quickstart_Compatible%3F-yes-green.svg" /></a>
 </p>
 
-## What does this dbt package do?
-This package builds off of the [Shopify dbt package](https://github.com/fivetran/dbt_shopify) to weave together your Shopify e-commerce data with insights from marketing connections. Currently, this package supports combining Shopify with email and SMS marketing data from Fivetran's [Klaviyo dbt package](https://github.com/fivetran/dbt_klaviyo).
-> Wanna see Shopify combined with another connector? Please make create a [Feature Request](https://github.com/fivetran/dbt_shopify_holistic_reporting/issues/new?assignees=&labels=enhancement&template=feature-request.yml&title=%5BFeature%5D+%3Ctitle%3E).
+This dbt package transforms data from Fivetran's Shopify Holistic Reporting connector into analytics-ready tables.
 
-This dbt package enables you to:
-- Tie e-commerce revenue to your email and SMS marketing via last-touch attribution.
-- Consolidate customers, their information, and activity across platforms.
-- Create a rich portrait of customer personas based on how customers are engaging with and responding to specific marketing efforts.
+## Resources
+
+- Number of materialized models¹: 113
+- Connector documentation
+  - [Shopify Holistic Reporting connector documentation](https://fivetran.com/docs/connectors/applications/shopify-holistic-reporting)
+  - [Shopify Holistic Reporting ERD](https://fivetran.com/docs/connectors/applications/shopify-holistic-reporting#schemainformation)
+- dbt package documentation
+  - [GitHub repository](https://github.com/fivetran/dbt_shopify_holistic_reporting)
+  - [dbt Docs](https://fivetran.github.io/dbt_shopify_holistic_reporting/#!/overview)
+  - [DAG](https://fivetran.github.io/dbt_shopify_holistic_reporting/#!/overview?g_v=1)
+  - [Changelog](https://github.com/fivetran/dbt_shopify_holistic_reporting/blob/main/CHANGELOG.md)
+
+## What does this dbt package do?
+This package enables you to tie e-commerce revenue to your email and SMS marketing via last-touch attribution, consolidate customers and their activity across platforms, and create rich customer personas based on marketing engagement. It creates enriched models with metrics focused on order attribution, daily customer activity, and enhanced customer profiles.
+
+> Wanna see Shopify combined with another connector? Please make create a [Feature Request](https://github.com/fivetran/dbt_shopify_holistic_reporting/issues/new?assignees=&labels=enhancement&template=feature-request.yml&title=%5BFeature%5D+%3Ctitle%3E).
 
 Check out our [blog post](https://www.fivetran.com/blog/gain-faster-insights-from-shopify-and-klaviyo-data) for further discussion on how the package can accelerate your business analysis.
 
-<!--section="shopify_holistic_reporting_transformation_model"-->
-The following table provides a detailed list of all tables materialized within this package (see [Shopify](https://github.com/fivetran/dbt_shopify#-what-does-this-dbt-package-do) and [Klaviyo](https://github.com/fivetran/dbt_klaviyo#-what-does-this-dbt-package-do) for the upstream tables these are built off of).
-> TIP: See more details about these tables in the package's [dbt docs site](https://fivetran.github.io/dbt_shopify/#!/overview/shopify_holistic_reporting).
+### Output schema
+Final output tables are generated in the following target schema:
 
-| **Table**                | **Description**                                                                                                                                |
-| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| [shopify_holistic_reporting__orders_attribution](https://fivetran.github.io/dbt_shopify_holistic_reporting/#!/model/model.shopify_holistic_reporting.shopify_holistic_reporting__orders_attribution)             | Each record represents a unique Shopify order, enhanced with a customizable last-touch attribution model associating orders with Klaviyo flows and campaigns that customers interacted with. Includes dimensions like whether it is a new or repeat purchase in Shopify. See available customizations [here](https://github.com/fivetran/dbt_klaviyo#attribution-lookback-window). Materialized incrementally by default. |
-| [shopify_holistic_reporting__daily_customer_metrics](https://fivetran.github.io/dbt_shopify_holistic_reporting/#!/model/model.shopify_holistic_reporting.shopify_holistic_reporting__daily_customer_metrics)             | Each record represent a unique customer's daily activity attributed to a campaign or flow in Klaviyo. The grain is set at the customer-day-flow/campaign level. This table is enriched with both Shopify and Klaviyo metrics, such as the net revenue, taxes paid, discounts applied, and the counts of each type of interaction between the user and the campaign/flow. |
-| [shopify_holistic_reporting__customer_enhanced](https://fivetran.github.io/dbt_shopify_holistic_reporting/#!/model/model.shopify_holistic_reporting.shopify_holistic_reporting__customer_enhanced)             | Each record represents a unique individual (based on email) that may exist in Shopify, Klaviyo, or both platforms. Enhanced with information coalesced across platforms, lifetime order metrics, and all-time interactions with email marketing campaigns and flows. |
+```
+<your_database>.<connector/schema_name>_shopify_holistic_reporting
+```
+
+### Final output tables
+
+By default, this package materializes the following final tables:
+
+| Table | Description |
+| :---- | :---- |
+| [shopify_holistic_reporting__orders_attribution](https://fivetran.github.io/dbt_shopify_holistic_reporting/#!/model/model.shopify_holistic_reporting.shopify_holistic_reporting__orders_attribution) | Connects Shopify orders to the Klaviyo email campaigns and flows that influenced purchases using a customizable last-touch attribution model (see [attribution lookback window options](https://github.com/fivetran/dbt_klaviyo#attribution-lookback-window)) to measure marketing effectiveness and understand which emails drive revenue for new versus repeat customers. <br></br>**Example Analytics Questions:**<ul><li>Which Klaviyo campaigns or flows generate the most attributed revenue?</li><li>What is the conversion rate from email interactions to completed purchases?</li><li>How do new customer orders compare to repeat purchases in terms of revenue attribution?</li></ul>|
+| [shopify_holistic_reporting__daily_customer_metrics](https://fivetran.github.io/dbt_shopify_holistic_reporting/#!/model/model.shopify_holistic_reporting.shopify_holistic_reporting__daily_customer_metrics) | Tracks daily customer engagement with Klaviyo email campaigns alongside their Shopify purchase behavior including revenue, taxes, discounts, and interaction counts to connect marketing touches with revenue outcomes at the customer level. <br></br>**Example Analytics Questions:**<ul><li>How much daily net revenue is driven by each campaign or flow?</li><li>Which customers generate the highest revenue and have the most email interactions?</li><li>What is the average discount rate and order value for customers engaged with specific campaigns?</li></ul>|
+| [shopify_holistic_reporting__customer_enhanced](https://fivetran.github.io/dbt_shopify_holistic_reporting/#!/model/model.shopify_holistic_reporting.shopify_holistic_reporting__customer_enhanced) | Unifies customer profiles across Shopify and Klaviyo to provide a complete view of purchase history, lifetime order metrics, and all-time email campaign engagement for every customer based on email address. <br></br>**Example Analytics Questions:**<ul><li>What is the lifetime value and total order count for each customer across platforms?</li><li>Which customers are most engaged with email marketing campaigns and flows?</li><li>How do customer segments differ in purchasing behavior and email responsiveness?</li></ul>|
+
+¹ Each Quickstart transformation job run materializes these models if all components of this data model are enabled. This count includes all staging, intermediate, and final models materialized as `view`, `table`, or `incremental`.
+---
 
 ### Materialized Models
 Each Quickstart transformation job run materializes 113 models if all components of this data model are enabled. This count includes all staging, intermediate, and final models materialized as `view`, `table`, or `incremental`:
@@ -43,23 +64,28 @@ Each Quickstart transformation job run materializes 113 models if all components
 | Shopify Holistic Reporting | 6 |
 | [Shopify](https://github.com/fivetran/dbt_shopify) | 89 |
 | [klaviyo](https://github.com/fivetran/dbt_klaviyo) | 18 |
-<!--section-end-->
 
-## How do I use the dbt package?
-
-### Step 1: Prerequisites
+## Prerequisites
 To use this dbt package, you must have the following:
 
-- At least one Fivetran Shopify connection syncing data into your destination.
+- At least one Fivetran Shopify Holistic Reporting connection syncing data into your destination.
 - A **BigQuery**, **Snowflake**, **Redshift**, **Databricks**, or **PostgreSQL** destination.
 
-### Step 2: Install the package
+## How do I use the dbt package?
+You can either add this dbt package in the Fivetran dashboard or import it into your dbt project:
+
+- To add the package in the Fivetran dashboard, follow our [Quickstart guide](https://fivetran.com/docs/transformations/dbt).
+- To add the package to your dbt project, follow the setup instructions in the dbt package's [README file](https://github.com/fivetran/dbt_shopify_holistic_reporting/blob/main/README.md#how-do-i-use-the-dbt-package) to use this package.
+
+<!--section-end-->
+
+### Install the package
 Include the following shopify_holistic_reporting package version in your `packages.yml` file:
 > TIP: Check [dbt Hub](https://hub.getdbt.com/) for the latest installation instructions or [read the dbt docs](https://docs.getdbt.com/docs/package-management) for more information on installing packages.
 ```yml
 packages:
   - package: fivetran/shopify_holistic_reporting
-    version: [">=1.0.0", "<1.1.0"] # we recommend using ranges to capture non-breaking changes automatically
+    version: [">=1.1.0", "<1.2.0"] # we recommend using ranges to capture non-breaking changes automatically
 ```
 
 Do **NOT** include the `shopify` or `klaviyo` packages in this file. The combo package itself has a dependency on these and will install upstream packages as well.
@@ -72,7 +98,7 @@ dispatch:
     search_order: ['spark_utils', 'dbt_utils']
 ```
 
-### Step 3: Define database and schema variables
+### Define database and schema variables
 #### Single Shopify and/or Klaviyo connection
 By default, this package runs using your target destination and the `shopify` and `klaviyo` schemas. If this is not where your Shopify and Klaviyo source data is, respectively (for example, they might be `shopify_fivetran` and `klaviyo_fivetran`), add the following configuration to your root `dbt_project.yml` file:
 
@@ -99,12 +125,12 @@ vars:
     klaviyo_union_databases: ['klaviyo_usa','klaviyo_canada'] # use this if the data is in different databases/projects but uses the same schema name
 ```
 
-### Step 4: Set Shopify- and Klaviyo-specific configurations
+### Set Shopify- and Klaviyo-specific configurations
 See connector-specific configurations in their individual dbt package READMEs:
 - [Shopify](https://github.com/fivetran/dbt_shopify)
 - [Klaviyo](https://github.com/fivetran/dbt_klaviyo)
 
-### (Optional) Step 5: Additional configurations
+### (Optional) Additional configurations
 <details open><summary>Expand/Collapse details</summary>
 
 #### Changing the Build Schema
@@ -134,7 +160,7 @@ models:
 Models from the individual [Shopify](https://github.com/fivetran/dbt_shopify/#changing-the-build-schema) and [Klaviyo](https://github.com/fivetran/dbt_klaviyo/#changing-the-build-schema) packages will be written their respective schemas.
 </details>
 
-### (Optional) Step 6: Orchestrate your models with Fivetran Transformations for dbt Core™
+### (Optional) Orchestrate your models with Fivetran Transformations for dbt Core™
 <details><summary>Expand for details</summary>
 <br>
 
@@ -162,16 +188,20 @@ packages:
       version: [">=0.3.0", "<0.4.0"]
 ```
 
+<!--section="shopify-holistic-reporting_maintenance"-->
 ## How is this package maintained and can I contribute?
+
 ### Package Maintenance
-The Fivetran team maintaining this package _only_ maintains the latest version of the package. We highly recommend you stay consistent with the [latest version](https://hub.getdbt.com/fivetran/shopify_holistic_reporting/latest/) of the package and refer to the [CHANGELOG](https://github.com/fivetran/dbt_shopify_holistic_reporting/blob/main/CHANGELOG.md) and release notes for more information on changes across versions.
+The Fivetran team maintaining this package only maintains the [latest version](https://hub.getdbt.com/fivetran/shopify_holistic_reporting/latest/) of the package. We highly recommend you stay consistent with the latest version of the package and refer to the [CHANGELOG](https://github.com/fivetran/dbt_shopify_holistic_reporting/blob/main/CHANGELOG.md) and release notes for more information on changes across versions.
 
 The Fivetran team also maintains the upstream [Klaviyo](https://hub.getdbt.com/fivetran/klaviyo/latest/) and [Shopify](https://hub.getdbt.com/fivetran/shopify/latest/) packages on which the Shopify Holistic Reporting package is built off of. Refer to the [Klaviyo](https://github.com/fivetran/dbt_klaviyo/blob/main/CHANGELOG.md) and [Shopify](https://github.com/fivetran/dbt_shopify/blob/main/CHANGELOG.md) CHANGELOGs and release notes for more information on changes across versions.
 
 ### Contributions
 A small team of analytics engineers at Fivetran develops these dbt packages. However, the packages are made better by community contributions.
 
-We highly encourage and welcome contributions to this package. Check out [this dbt Discourse article](https://discourse.getdbt.com/t/contributing-to-a-dbt-package/657) on the best workflow for contributing to a package.
+We highly encourage and welcome contributions to this package. Learn how to contribute to a package in dbt's [Contributing to an external dbt package article](https://discourse.getdbt.com/t/contributing-to-a-dbt-package/657).
+
+<!--section-end-->
 
 ## Are there any resources available?
 - If you would like a deeper explanation of the logic used by default in the dbt package you may reference the [DECISIONLOG](https://github.com/fivetran/dbt_shopify_holistic_reporting/blob/main//DECISIONLOG.md).

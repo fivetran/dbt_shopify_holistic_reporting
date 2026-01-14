@@ -1,3 +1,15 @@
+# dbt_shopify_holistic_reporting v1.1.0
+
+[PR #37](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/37) includes the following updates:
+
+## Documentation
+- Updates README with standardized Fivetran formatting
+
+## Under the Hood
+- In the `.quickstart.yml` file:
+  - Adds `table_variables` for relevant sources to prevent missing sources from blocking downstream Quickstart models.
+  - Adds `supported_vars` for Quickstart UI customization,
+
 # dbt_shopify_holistic_reporting v1.0.0
 
 [PR #35](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/35) includes the following updates:
