@@ -3,12 +3,11 @@
 [PR #37](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/37) includes the following updates:
 
 ## Documentation
-- Updates README with standardized Fivetran formatting
-
-## Under the Hood
-- In the `quickstart.yml` file:
-  - Adds `table_variables` for relevant sources to prevent missing sources from blocking downstream Quickstart models.
-  - Adds `supported_vars` for Quickstart UI customization,
+- Updates README with standardized Fivetran formatting.
+ 
+## Upstream Dependency Changes
+- Increases the required Shopify package to version [1.5.0](https://github.com/fivetran/dbt_shopify/releases/tag/v1.5.0).
+- Increases the required Klaviyo package to version [1.3.0](https://github.com/fivetran/dbt_klaviyo/releases/tag/v1.3.0).
 
 # dbt_shopify_holistic_reporting v1.0.0
 
