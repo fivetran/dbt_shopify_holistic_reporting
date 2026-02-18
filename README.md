@@ -20,10 +20,10 @@ This dbt package transforms data from Fivetran's Shopify Holistic Reporting conn
 
 ## Resources
 
-- Number of materialized models¹: 113
+- Number of materialized models¹: 131 (Shopify REST API) / 141 (Shopify GraphQL API)
 - Connector documentation
-  - [Shopify Holistic Reporting connector documentation](https://fivetran.com/docs/connectors/applications/shopify-holistic-reporting)
-  - [Shopify Holistic Reporting ERD](https://fivetran.com/docs/connectors/applications/shopify-holistic-reporting#schemainformation)
+  - [Shopify](https://fivetran.com/docs/connectors/applications/shopify)
+  - [Klaviyo](https://fivetran.com/docs/connectors/applications/klaviyo)
 - dbt package documentation
   - [GitHub repository](https://github.com/fivetran/dbt_shopify_holistic_reporting)
   - [dbt Docs](https://fivetran.github.io/dbt_shopify_holistic_reporting/#!/overview)
@@ -55,6 +55,7 @@ By default, this package materializes the following final tables:
 | [shopify_holistic_reporting__customer_enhanced](https://fivetran.github.io/dbt_shopify_holistic_reporting/#!/model/model.shopify_holistic_reporting.shopify_holistic_reporting__customer_enhanced) | Unifies customer profiles across Shopify and Klaviyo to provide a complete view of purchase history, lifetime order metrics, and all-time email campaign engagement for every customer based on email address. <br></br>**Example Analytics Questions:**<ul><li>What is the lifetime value and total order count for each customer across platforms?</li><li>Which customers are most engaged with email marketing campaigns and flows?</li><li>How do customer segments differ in purchasing behavior and email responsiveness?</li></ul>|
 
 ¹ Each Quickstart transformation job run materializes these models if all components of this data model are enabled. This count includes all staging, intermediate, and final models materialized as `view`, `table`, or `incremental`.
+
 ---
 
 ### Materialized Models
@@ -62,7 +63,7 @@ Each Quickstart transformation job run materializes 113 models if all components
 | **Connector** | **Model Count** |
 | ------------- | --------------- |
 | Shopify Holistic Reporting | 6 |
-| [Shopify](https://github.com/fivetran/dbt_shopify) | 89 |
+| [Shopify](https://github.com/fivetran/dbt_shopify) | 107 (REST API) / 117 (GraphQL API) |
 | [klaviyo](https://github.com/fivetran/dbt_klaviyo) | 18 |
 
 ## Prerequisites
