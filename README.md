@@ -20,7 +20,7 @@ This dbt package transforms data from Fivetran's Shopify Holistic Reporting conn
 
 ## Resources
 
-- Number of materialized models¹: 113
+- Number of materialized models¹: 131 (Shopify REST API) / 141 (Shopify GraphQL API)
 - Connector documentation
   - [Shopify](https://fivetran.com/docs/connectors/applications/shopify)
   - [Klaviyo](https://fivetran.com/docs/connectors/applications/klaviyo)
@@ -63,7 +63,7 @@ Each Quickstart transformation job run materializes 113 models if all components
 | **Connector** | **Model Count** |
 | ------------- | --------------- |
 | Shopify Holistic Reporting | 6 |
-| [Shopify](https://github.com/fivetran/dbt_shopify) | 89 |
+| [Shopify](https://github.com/fivetran/dbt_shopify) | 107 (REST API) / 117 (GraphQL API) |
 | [klaviyo](https://github.com/fivetran/dbt_klaviyo) | 18 |
 
 ## Prerequisites
