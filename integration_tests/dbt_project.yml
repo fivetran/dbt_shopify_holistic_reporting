@@ -127,6 +127,9 @@ vars:
     klaviyo_metric_identifier: "klaviyo_metric"
 
 models:
+  +persist_docs:
+    relation: true
+    columns: "{{ false if target.type in ('databricks') else true }}"
   +schema: "combo_reporting_{{ var('directed_schema','dev') }}"
 
 dispatch:
