@@ -47,6 +47,10 @@ table_variables:
     - order_line_tax_line
   shopify_gql_using_refund_line_item:
     - refund_line_item
+  shopify_gql_using_return:
+    - return
+    - return_line_item
+    - return_shipping_fee
   
   shopify_using_all_metafields:
     - metafield

@@ -65,6 +65,10 @@ with orders as (
             sum(shipping_cost_shop_amount) as total_shipping_cost,
         {% endif %}
 
+        sum(gross_sales) as total_gross_sales,
+        sum(discounts) as total_finance_discounts,
+        sum(returns) as total_returns,
+        sum(net_sales) as total_net_sales,
         sum(refund_subtotal) as total_refund_subtotal,
         sum(refund_total_tax) as total_refund_tax,
         sum(case when cancelled_timestamp is not null then 1 else 0 end) as count_cancelled_orders,

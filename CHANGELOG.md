@@ -1,3 +1,26 @@
+# dbt_shopify_holistic_reporting v1.2.0
+
+[PR #38](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/38) includes the following updates:
+
+## Schema/Data Changes
+
+| Data Model(s) | Change type | Old | New | Notes |
+| ------------- | ----------- | --- | --- | ----- |
+| [shopify_holistic_reporting__orders_attribution](https://fivetran.github.io/dbt_shopify_holistic_reporting/#!/model/model.shopify_holistic_reporting.shopify_holistic_reporting__orders_attribution) | New columns | | `gross_sales`, `discounts`, `returns`, `net_sales` | New finance metrics surfaced from the upstream `shopify__orders` model. |
+| [shopify_holistic_reporting__daily_customer_metrics](https://fivetran.github.io/dbt_shopify_holistic_reporting/#!/model/model.shopify_holistic_reporting.shopify_holistic_reporting__daily_customer_metrics) | New columns | | `shopify_total_gross_sales`, `shopify_total_finance_discounts`, `shopify_total_returns`, `shopify_total_net_sales` | New daily finance metric aggregates. |
+| [shopify_holistic_reporting__customer_enhanced](https://fivetran.github.io/dbt_shopify_holistic_reporting/#!/model/model.shopify_holistic_reporting.shopify_holistic_reporting__customer_enhanced) | Data change | `shopify_lifetime_total_discount` and `shopify_avg_discount_per_order` sourced from `order_line.total_discount` | Now sourced from `discount_allocation` | **Possible breaking change:** Values for these fields are likely to change. `discount_allocation` is the more reliable source for order line discount values. |
+
+## Upstream Dependency Changes
+- Increases the required Shopify package to version [1.6.0](https://github.com/fivetran/dbt_shopify/releases/tag/v1.6.0). Refer to the [dbt_shopify v1.6.0 CHANGELOG](https://github.com/fivetran/dbt_shopify/blob/main/CHANGELOG.md) for the full scope of upstream changes, including new refund and return models.
+
+## Feature Updates
+- Adds opt-in support for Shopify GraphQL return source tables (`return`, `return_line_item`, `return_shipping_fee`) via the `shopify_gql_using_return` variable. When enabled in the upstream `dbt_shopify` package, `shopify_gql__refund_lines` is enriched with return lifecycle detail and `shopify_gql__refunds` is enriched with return shipping fee context.
+
+## Under the Hood
+- Adds seed data and identifier variables for the three new GraphQL return source tables.
+- Updates `shopify_gql_order_line_refund_data` seed to include new `price_set_pres_amount`, `price_set_pres_currency_code`, `price_set_shop_amount`, `price_set_shop_currency_code`, and `restocked` columns.
+- Adds YAML documentation for all new columns.
+
 # dbt_shopify_holistic_reporting v1.1.0
 
 [PR #37](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/37) includes the following updates:
