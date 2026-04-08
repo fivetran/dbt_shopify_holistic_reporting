@@ -23,8 +23,14 @@ vars:
   # Only run both shopify schemas when regenerating docs. For integration tests, use the shopify_api variable to run one at a time
   # shopify_api_override: rest # @docs-include
 
+  # consistency_test_exclude_metrics: ['gross_sales', 'net_sales', 'discounts', 'returns', 'shopify_total_gross_sales', 'shopify_total_net_sales', 'shopify_total_discounts', 'shopify_total_returns']
+
+
   shopify:
-    shopify_schema: zz_dbt_avinash_seed
+    shopify_schema: holistic_integration_tests
+
+
+   
     shopify_customer_identifier: "shopify_customer_data"
     shopify_order_line_refund_identifier: "shopify_order_line_refund_data"
     shopify_order_line_identifier: "shopify_order_line_data"
@@ -123,7 +129,7 @@ vars:
     shopify_gql_return_shipping_fee_identifier: "shopify_gql_return_shipping_fee_data"
 
   klaviyo:
-    klaviyo_schema: 'zz_dbt_avinash_seed'
+    klaviyo_schema: 'holistic_integration_tests'
     klaviyo_campaign_identifier: "klaviyo_campaign"
     klaviyo_event_identifier: "klaviyo_event"
     klaviyo_flow_identifier: "klaviyo_flow"

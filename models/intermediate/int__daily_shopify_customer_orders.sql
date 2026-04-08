@@ -66,7 +66,7 @@ with orders as (
         {% endif %}
 
         sum(gross_sales) as total_gross_sales,
-        sum(discounts) as total_finance_discounts,
+        sum(discounts) as total_discounts,
         sum(returns) as total_returns,
         sum(net_sales) as total_net_sales,
         sum(refund_subtotal) as total_refund_subtotal,
