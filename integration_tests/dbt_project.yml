@@ -24,7 +24,7 @@ vars:
   # shopify_api_override: rest # @docs-include
 
   shopify:
-    shopify_schema: holistic_integration_tests
+    shopify_schema: zz_dbt_avinash_seed
     shopify_customer_identifier: "shopify_customer_data"
     shopify_order_line_refund_identifier: "shopify_order_line_refund_data"
     shopify_order_line_identifier: "shopify_order_line_data"
@@ -123,7 +123,7 @@ vars:
     shopify_gql_return_shipping_fee_identifier: "shopify_gql_return_shipping_fee_data"
 
   klaviyo:
-    klaviyo_schema: 'holistic_integration_tests'
+    klaviyo_schema: 'zz_dbt_avinash_seed'
     klaviyo_campaign_identifier: "klaviyo_campaign"
     klaviyo_event_identifier: "klaviyo_event"
     klaviyo_flow_identifier: "klaviyo_flow"
