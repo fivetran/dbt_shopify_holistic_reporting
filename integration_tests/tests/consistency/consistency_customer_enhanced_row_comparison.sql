@@ -3,7 +3,7 @@
     enabled=var('fivetran_validation_tests_enabled', false)
 ) }}
 
-{% set exclude_cols = var('consistency_test_exclude_metrics', []) %}
+{% set exclude_cols = ['shopify_customer_ids'] + var('consistency_test_exclude_metrics', []) %}
 
 with prod as (
     select

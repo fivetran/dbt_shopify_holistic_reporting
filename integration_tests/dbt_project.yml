@@ -23,7 +23,7 @@ vars:
   # Only run both shopify schemas when regenerating docs. For integration tests, use the shopify_api variable to run one at a time
   # shopify_api_override: rest # @docs-include
 
-  # consistency_test_exclude_metrics: []
+  # consistency_test_exclude_metrics: [] # @docs-include
 
   shopify:
     shopify_schema: holistic_integration_tests
