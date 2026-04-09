@@ -67,11 +67,11 @@ with orders as (
 
     select
         *,
-        row_number() over (partition by order_id, source_relation order by last_touch_event_occurred_at desc) as event_index,
+        row_number() over (partition by order_id {{ shopify_holistic_reporting.partition_by_source_relation() }} order by last_touch_event_occurred_at desc) as event_index,
 
         -- the order was made after X interactions with campaign/flow
-        count(last_touch_event_id) over (partition by order_id, source_relation, last_touch_campaign_id) as count_interactions_with_campaign,
-        count(last_touch_event_id) over (partition by order_id, source_relation, last_touch_flow_id) as count_interactions_with_flow
+        count(last_touch_event_id) over (partition by order_id {{ shopify_holistic_reporting.partition_by_source_relation() }}, last_touch_campaign_id) as count_interactions_with_campaign,
+        count(last_touch_event_id) over (partition by order_id {{ shopify_holistic_reporting.partition_by_source_relation() }}, last_touch_flow_id) as count_interactions_with_flow
 
 
     from join_orders_w_events
