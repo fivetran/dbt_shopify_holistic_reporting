@@ -2,15 +2,15 @@
 
 [PR #38](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/38) includes the following updates:
 
-## Schema/Data Changes
+## Schema/Data Changes (--full-refresh required after upgrading)
 **4 total changes • 2 possible breaking changes**
 
 | Data Model(s) | Change type | Old | New | Notes |
 | ------------- | ----------- | --- | --- | ----- |
 | [shopify_holistic_reporting__customer_enhanced](https://fivetran.github.io/dbt_shopify_holistic_reporting/#!/model/model.shopify_holistic_reporting.shopify_holistic_reporting__customer_enhanced) | Data change **Breaking change** | `shopify_lifetime_total_discount` and `shopify_avg_discount_per_order` sourced from `order_line.total_discount` | Now sourced from `discount_allocation` | Values for these fields are likely to change. `discount_allocation` is the more reliable source for order line discount values. |
-| [shopify_holistic_reporting__daily_customer_metrics](https://fivetran.github.io/dbt_shopify_holistic_reporting/#!/model/model.shopify_holistic_reporting.shopify_holistic_reporting__daily_customer_metrics) | Renamed column **Breaking change** | `shopify_total_discounts` | `shopify_total_order_discounts` | Renamed to distinguish the Shopify API `total_discounts` field from the more reliable discount allocation-sourced `shopify_total_discounts`. |
+| [shopify_holistic_reporting__daily_customer_metrics](https://fivetran.github.io/dbt_shopify_holistic_reporting/#!/model/model.shopify_holistic_reporting.shopify_holistic_reporting__daily_customer_metrics) | Data change **Breaking change** | `shopify_total_discounts` sourced from Shopify API `total_discounts` field | Now sourced from discount allocations | Values for this field are likely to change. The upstream Shopify package replaced the API-level `total_discounts` field with discount allocation logic, which is more reliable for finance reporting. |
 | [shopify_holistic_reporting__orders_attribution](https://fivetran.github.io/dbt_shopify_holistic_reporting/#!/model/model.shopify_holistic_reporting.shopify_holistic_reporting__orders_attribution) | New columns | | `gross_sales`, `discounts`, `returns`, `net_sales` | New finance metrics surfaced from the upstream `shopify__orders` model. |
-| [shopify_holistic_reporting__daily_customer_metrics](https://fivetran.github.io/dbt_shopify_holistic_reporting/#!/model/model.shopify_holistic_reporting.shopify_holistic_reporting__daily_customer_metrics) | New columns | | `shopify_total_gross_sales`, `shopify_total_discounts`, `shopify_total_returns`, `shopify_total_net_sales` | New daily finance metric aggregates. `shopify_total_discounts` is sourced from discount allocations and is more reliable than the Shopify API-level `shopify_total_order_discounts`. |
+| [shopify_holistic_reporting__daily_customer_metrics](https://fivetran.github.io/dbt_shopify_holistic_reporting/#!/model/model.shopify_holistic_reporting.shopify_holistic_reporting__daily_customer_metrics) | New columns | | `shopify_total_gross_sales`, `shopify_total_returns`, `shopify_total_net_sales` | New daily finance metric aggregates. |
 
 ## Upstream Dependency Changes
 - Increases the required Shopify package to version [1.7.0](https://github.com/fivetran/dbt_shopify/releases/tag/v1.7.0). Refer to the [dbt_shopify CHANGELOG](https://github.com/fivetran/dbt_shopify/blob/main/CHANGELOG.md) for the full scope of upstream changes, including new refund and return models from version [1.6.0](https://github.com/fivetran/dbt_shopify/releases/tag/v1.6.0).

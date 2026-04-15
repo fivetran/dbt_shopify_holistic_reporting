@@ -55,12 +55,10 @@ with orders as (
 
         {% if var('shopify_api', 'rest') == 'rest' %}
             sum(total_line_items_price) as total_line_items_price,
-            sum(total_discounts) as total_order_discounts,
             sum(total_tax) as total_tax,
             sum(shipping_cost) as total_shipping_cost,
         {% else %}
             sum(total_line_items_price_shop_amount) as total_line_items_price,
-            sum(total_discounts_shop_amount) as total_order_discounts,
             sum(total_tax_shop_amount) as total_tax,
             sum(shipping_cost_shop_amount) as total_shipping_cost,
         {% endif %}

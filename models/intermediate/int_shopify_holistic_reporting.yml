@@ -68,8 +68,6 @@ models:
         description: The count of order line items the customer placed.
       - name: total_line_items_price
         description: The sum of all line item prices in the shop currency.
-      - name: total_order_discounts
-        description: The sum of discounts applied to the customer's orders, sourced from the Shopify `total_discounts` API field. Less reliable than `total_discounts` for finance reporting.
       - name: total_tax
         description: The sum of taxes paid by the customer.
       - name: total_shipping_cost
@@ -77,7 +75,7 @@ models:
       - name: total_gross_sales
         description: The sum of gross sales (pre-discount, pre-return line item prices) for the customer's orders on this day.
       - name: total_discounts
-        description: The sum of discount amounts applied to the customer's orders, sourced from discount allocations. More reliable than `total_order_discounts` for finance reporting.
+        description: The sum of discount amounts applied to the customer's orders, sourced from discount allocations.
       - name: total_returns
         description: The sum of refunded line item amounts for the customer's orders on this day.
       - name: total_net_sales
