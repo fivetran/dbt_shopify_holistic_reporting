@@ -55,16 +55,18 @@ with orders as (
 
         {% if var('shopify_api', 'rest') == 'rest' %}
             sum(total_line_items_price) as total_line_items_price,
-            sum(total_discounts) as total_discounts,
             sum(total_tax) as total_tax,
             sum(shipping_cost) as total_shipping_cost,
         {% else %}
             sum(total_line_items_price_shop_amount) as total_line_items_price,
-            sum(total_discounts_shop_amount) as total_discounts,
             sum(total_tax_shop_amount) as total_tax,
             sum(shipping_cost_shop_amount) as total_shipping_cost,
         {% endif %}
 
+        sum(gross_sales) as total_gross_sales,
+        sum(discounts) as total_discounts,
+        sum(returns) as total_returns,
+        sum(net_sales) as total_net_sales,
         sum(refund_subtotal) as total_refund_subtotal,
         sum(refund_total_tax) as total_refund_tax,
         sum(case when cancelled_timestamp is not null then 1 else 0 end) as count_cancelled_orders,

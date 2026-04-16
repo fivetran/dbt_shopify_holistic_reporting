@@ -2,6 +2,9 @@ with persons as (
 
     select
         *,
+        -- Intentionally partitioning by email only (not source_relation) so that duplicate person records
+        -- are deduplicated globally across all Klaviyo sources. This ensures a single canonical record
+        -- per email, which is necessary for correct cross-platform joins downstream.
         row_number() over (partition by email order by created_at desc) as person_index
     
     from {{ ref('klaviyo__persons') }}

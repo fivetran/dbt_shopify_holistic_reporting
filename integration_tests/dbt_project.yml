@@ -1,5 +1,5 @@
 name: 'shopify_holistic_reporting_integration_tests'
-version: '1.1.0'
+version: '1.2.0'
 profile: 'integration_tests'
 config-version: 2
 
@@ -18,12 +18,14 @@ vars:
   # shopify_gql_using_fulfillment_event: true # @docs-include
   # shopify_gql_using_fulfillment_tracking_info: true # @docs-include
   # shopify_gql_using_product_variant_media: true # @docs-include
+  # shopify_gql_using_return: true # @docs-include
   
   # Only run both shopify schemas when regenerating docs. For integration tests, use the shopify_api variable to run one at a time
   # shopify_api_override: rest # @docs-include
 
   shopify:
     shopify_schema: holistic_integration_tests
+    
     shopify_customer_identifier: "shopify_customer_data"
     shopify_order_line_refund_identifier: "shopify_order_line_refund_data"
     shopify_order_line_identifier: "shopify_order_line_data"
@@ -117,6 +119,9 @@ vars:
     shopify_gql_customer_address_identifier: "shopify_gql_customer_address_data"
     shopify_gql_collection_rule_identifier: "shopify_gql_collection_rule_data"
     shopify_gql_refund_identifier: "shopify_gql_refund_data"
+    shopify_gql_return_identifier: "shopify_gql_return_data"
+    shopify_gql_return_line_item_identifier: "shopify_gql_return_line_item_data"
+    shopify_gql_return_shipping_fee_identifier: "shopify_gql_return_shipping_fee_data"
 
   klaviyo:
     klaviyo_schema: 'holistic_integration_tests'
@@ -193,6 +198,31 @@ seeds:
     shopify_gql_order_line_refund_data:
       +column_types:
         quantity: float
+        price_set_pres_amount: float
+        price_set_shop_amount: float
+        restocked: boolean
+    shopify_gql_return_data:
+      +column_types:
+        _fivetran_synced: timestamp
+        id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
+        order_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
+        total_quantity: integer
+    shopify_gql_return_line_item_data:
+      +column_types:
+        _fivetran_synced: timestamp
+        id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
+        return_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
+        order_line_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
+        quantity: integer
+        refundable_quantity: integer
+        refunded_quantity: integer
+    shopify_gql_return_shipping_fee_data:
+      +column_types:
+        _fivetran_synced: timestamp
+        id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
+        return_id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
+        amount_set_presentment_money_amount: float
+        amount_set_shop_money_amount: float
     shopify_gql_refund_line_item_data:
       +column_types:
         quantity: float

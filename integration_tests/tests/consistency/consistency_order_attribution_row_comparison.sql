@@ -3,13 +3,23 @@
     enabled=var('fivetran_validation_tests_enabled', false)
 ) }}
 
+{% set exclude_cols = var('consistency_test_exclude_metrics', []) %}
+
 with prod as (
-    select *
+    select
+        {{ dbt_utils.star(
+            from=ref('shopify_holistic_reporting__orders_attribution'),
+            except=exclude_cols)
+        }}
     from {{ target.schema }}_combo_reporting_prod.shopify_holistic_reporting__orders_attribution
 ),
 
 dev as (
-    select *
+    select
+        {{ dbt_utils.star(
+            from=ref('shopify_holistic_reporting__orders_attribution'),
+            except=exclude_cols)
+        }}
     from {{ target.schema }}_combo_reporting_dev.shopify_holistic_reporting__orders_attribution
 ),
 

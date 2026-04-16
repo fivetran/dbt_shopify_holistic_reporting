@@ -73,7 +73,7 @@ Include the following shopify_holistic_reporting package version in your `packag
 ```yml
 packages:
   - package: fivetran/shopify_holistic_reporting
-    version: [">=1.1.0", "<1.2.0"] # we recommend using ranges to capture non-breaking changes automatically
+    version: [">=1.2.0", "<1.3.0"] # we recommend using ranges to capture non-breaking changes automatically
 ```
 
 Do **NOT** include the `shopify` or `klaviyo` packages in this file. The combo package itself has a dependency on these and will install upstream packages as well.
@@ -161,7 +161,7 @@ This dbt package is dependent on the following dbt packages. These dependencies 
 ```yml
 packages:
     - package: fivetran/shopify
-      version: [">=1.5.0", "<1.6.0"]
+      version: [">=1.7.0", "<1.8.0"]
 
     - package: fivetran/klaviyo
       version: [">=1.3.0", "<1.4.0"]

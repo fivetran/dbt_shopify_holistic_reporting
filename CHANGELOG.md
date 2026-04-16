@@ -1,3 +1,27 @@
+# dbt_shopify_holistic_reporting v1.2.0
+
+[PR #40](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/40) includes the following updates:
+
+## Schema/Data Changes (--full-refresh required after upgrading)
+**4 total changes • 2 possible breaking changes**
+
+| Data Model(s) | Change type | Old | New | Notes |
+| ------------- | ----------- | --- | --- | ----- |
+| [shopify_holistic_reporting__customer_enhanced](https://fivetran.github.io/dbt_shopify_holistic_reporting/#!/model/model.shopify_holistic_reporting.shopify_holistic_reporting__customer_enhanced) | Data change (**Breaking Change**) | `shopify_lifetime_total_discount` and `shopify_avg_discount_per_order` sourced from `order_line.total_discount` | Now sourced from `discount_allocation` | Values for these fields are likely to change. `discount_allocation` is the more reliable source for order line discount values. |
+| [shopify_holistic_reporting__daily_customer_metrics](https://fivetran.github.io/dbt_shopify_holistic_reporting/#!/model/model.shopify_holistic_reporting.shopify_holistic_reporting__daily_customer_metrics) | Data change (**Breaking Change**) | `shopify_total_discounts` sourced from Shopify API `total_discounts` field | Now sourced from `discount_allocation` | Values for this field are likely to change. The upstream Shopify package replaced the API-level `total_discounts` field with discount allocation logic, which is more reliable for finance reporting. |
+| [shopify_holistic_reporting__orders_attribution](https://fivetran.github.io/dbt_shopify_holistic_reporting/#!/model/model.shopify_holistic_reporting.shopify_holistic_reporting__orders_attribution) | New columns | | `gross_sales`, `discounts`, `returns`, `net_sales` | New finance metrics surfaced from the upstream `shopify__orders` model. |
+| [shopify_holistic_reporting__daily_customer_metrics](https://fivetran.github.io/dbt_shopify_holistic_reporting/#!/model/model.shopify_holistic_reporting.shopify_holistic_reporting__daily_customer_metrics) | New columns | | `shopify_total_gross_sales`, `shopify_total_returns`, `shopify_total_net_sales` | New daily finance metric aggregates. |
+
+## Upstream Dependency Changes
+- Increases the required Shopify package to version [1.7.0](https://github.com/fivetran/dbt_shopify/releases/tag/v1.7.0). Refer to the [dbt_shopify CHANGELOG](https://github.com/fivetran/dbt_shopify/blob/main/CHANGELOG.md) for the full scope of upstream changes, including new refund and return models from version [1.6.0](https://github.com/fivetran/dbt_shopify/releases/tag/v1.6.0).
+
+## Bug Fixes
+- Updated window functions in `shopify_holistic_reporting__orders_attribution` to partition by `order_id` and `source_relation`. Previously, in multi-source union setups, orders from different Shopify sources sharing the same `order_id` could be incorrectly grouped, resulting in wrong last-touch event selection and inflated campaign/flow interaction counts.
+
+## Under the Hood
+- Added the `partition_by_source_relation` macro, which conditionally appends `source_relation` to a window function's `PARTITION BY` clause when multiple Shopify or Klaviyo sources are unioned. This centralizes multi-source partitioning logic and avoids repeating the union variable check across models.
+- Added a [DECISIONLOG](https://github.com/fivetran/dbt_shopify_holistic_reporting/blob/main/DECISIONLOG.md) entry documenting the `source_relation` partitioning behavior and the intentional omission of `source_relation` from the deduplication window in `int__klaviyo_person_rollup`.
+
 # dbt_shopify_holistic_reporting v1.1.0
 
 [PR #37](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/37) includes the following updates:
