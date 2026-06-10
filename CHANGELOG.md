@@ -1,3 +1,11 @@
+# dbt_shopify_holistic_reporting v1.3.0
+
+[PR #41](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/41) includes the following updates:
+
+## Upstream Dependency Changes
+- Increases the required [Shopify](https://github.com/fivetran/dbt_shopify) package to version [v1.8.0](https://github.com/fivetran/dbt_shopify/releases/tag/v1.8.0).
+- Increases the required [Klaviyo](https://github.com/fivetran/dbt_klaviyo) package to version [v1.4.0](https://github.com/fivetran/dbt_klaviyo/releases/tag/v1.4.0).
+
 # dbt_shopify_holistic_reporting v1.2.0
 
 [PR #40](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/40) includes the following updates:
