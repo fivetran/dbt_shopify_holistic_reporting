@@ -10,7 +10,7 @@
 | All models | `source_relation` column (when not using the union connections of the same type feature) | Empty string (`''`) | `<database>.<schema>` |  |
 
 ## Feature Updates
-- Introduces the new (recommended) `{connector_name}_sources` variables for more robust union data configuration. The old `{connector_name}_union_schemas` and `{connector_name}_union_databases` variables will still be supported. See the [README](https://github.com/fivetran/dbt_social_media_reporting/tree/main#define-database-and-schema-variables) for specific details.
+- Introduces the new (recommended) `{connector_name}_sources` variables for more robust union data configuration. The old `{connector_name}_union_schemas` and `{connector_name}_union_databases` variables will still be supported. See the [README](https://github.com/fivetran/dbt_shopify_holistic_reporting/tree/main#define-database-and-schema-variables) for specific details.
 
 ## Upstream Dependency Changes
 - Increases the required [Shopify](https://github.com/fivetran/dbt_shopify) package to version [v1.8.0](https://github.com/fivetran/dbt_shopify/releases/tag/v1.8.0).
