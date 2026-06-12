@@ -144,9 +144,9 @@ dispatch:
 seeds:
   +docs:
     show: False
+  +quote_columns: "{{ target.type in ('redshift', 'postgres') or var('fivetran_using_source_casing', false) }}"
   shopify_holistic_reporting_integration_tests:
   # shopify
-    +quote_columns: "{{ true if target.type in ('redshift', 'postgres') else false }}"
     shopify_customer_data:
       +column_types:
         created_at: timestamp
@@ -526,7 +526,6 @@ seeds:
         phone_number: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
     klaviyo_flow:
       +tags: klaviyo
-      +quote_columns: "{{ true if target.type == 'redshift' else false }}"
     klaviyo_event:
       +tags: klaviyo
       +column_types:
