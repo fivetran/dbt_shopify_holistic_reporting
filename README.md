@@ -98,7 +98,7 @@ vars:
 
     ##Klaviyo schema and database variables
     klaviyo_schema: klaviyo_schema
-    klaviyo_business_database: klaviyo_database
+    klaviyo_database: klaviyo_database
 ```
 
 #### Option B: Union multiple connections
