@@ -13,7 +13,7 @@
 - Introduces the new (recommended) `{connector_name}_sources` variables for more robust union data configuration. The old `{connector_name}_union_schemas` and `{connector_name}_union_databases` variables will still be supported. See the [README](https://github.com/fivetran/dbt_shopify_holistic_reporting/tree/main#define-database-and-schema-variables) for specific details.
 
 ## Upstream Dependency Changes
-- Increases the required [Shopify](https://github.com/fivetran/dbt_shopify) package to version [v1.8.0](https://github.com/fivetran/dbt_shopify/releases/tag/v1.8.0).
+- Increases the required [Shopify](https://github.com/fivetran/dbt_shopify) package to version [v1.9.0](https://github.com/fivetran/dbt_shopify/releases/tag/v1.9.0).
 - Increases the required [Klaviyo](https://github.com/fivetran/dbt_klaviyo) package to version [v1.4.0](https://github.com/fivetran/dbt_klaviyo/releases/tag/v1.4.0).
 
 # dbt_shopify_holistic_reporting v1.2.0
