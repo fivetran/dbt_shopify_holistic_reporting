@@ -40,3 +40,9 @@ test_scenarios:
       shopify_gql_using_fulfillment_tracking_info: true
       shopify_gql_using_product_variant_media: true
     include_incremental: true
+
+  - name: "MDLS"
+    vars:
+      fivetran_using_source_casing: true
+    include_incremental: false
+    include_dbt_seed: true

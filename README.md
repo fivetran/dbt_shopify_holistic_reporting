@@ -73,7 +73,7 @@ Include the following shopify_holistic_reporting package version in your `packag
 ```yml
 packages:
   - package: fivetran/shopify_holistic_reporting
-    version: [">=1.2.0", "<1.3.0"] # we recommend using ranges to capture non-breaking changes automatically
+    version: [">=1.3.0", "<1.4.0"] # we recommend using ranges to capture non-breaking changes automatically
 ```
 
 Do **NOT** include the `shopify` or `klaviyo` packages in this file. The combo package itself has a dependency on these and will install upstream packages as well.
@@ -87,33 +87,54 @@ dispatch:
 ```
 
 ### Define database and schema variables
-#### Single Shopify and/or Klaviyo connection
-By default, this package runs using your target destination and the `shopify` and `klaviyo` schemas. If this is not where your Shopify and Klaviyo source data is, respectively (for example, they might be `shopify_fivetran` and `klaviyo_fivetran`), add the following configuration to your root `dbt_project.yml` file:
+#### Option A: Single connection(s)
+By default, this package looks for your shopify and klaviyo data in your target database. If this is not where your shopify and klaviyo data is stored, add the relevant `<connector>_database` variables to your `dbt_project.yml` file (see below).
 
+```yml
+vars:
+    ##Shopify schema and database variables
+    shopify_schema: shopify_schema
+    shopify_database: shopify_database
+
+    ##Klaviyo schema and database variables
+    klaviyo_schema: klaviyo_schema
+    klaviyo_database: klaviyo_database
+```
+
+#### Option B: Union multiple connections
+If you have multiple shopify and klaviyo connections of the same type in Fivetran and would like to use this package on all of them simultaneously, we have provided functionality to do so. For each source table, the package will union all of the data together and pass the unioned table into the transformations. The `source_relation` column in each model indicates the origin of each record.
+
+To use this functionality, you will need to set the below variables in your root `dbt_project.yml` file:
 ```yml
 # dbt_project.yml
 
 vars:
-    klaviyo_database: your_database_name
-    klaviyo_schema: your_schema_name 
-    shopify_database: your_database_name
-    shopify_schema: your_schema_name
+  shopify_sources:
+    - database: connection_1_destination_name # Required
+      schema: connection_1_schema_name # Required
+      name: connection_1_source_name # Required only if following the step in the following subsection
+
+    - database: connection_2_destination_name
+      schema: connection_2_schema_name
+      name: connection_2_source_name
+
+  klaviyo_sources:
+    - database: connection_1_destination_name # Required
+      schema: connection_1_schema_name # Required
+      name: connection_1_source_name # Required only if following the step in the following subsection
+
+    - database: connection_2_destination_name
+      schema: connection_2_schema_name
+      name: connection_2_source_name
 ```
-#### Union multiple Shopify and/or Klaviyo connections
-If you have multiple Shopify and/or Klaviyo connections in Fivetran and would like to use this package on all of them simultaneously, we have provided functionality to do so. The package will union all of the data together and pass the unioned table into the transformations. You will be able to see which source it came from in the `source_relation` column of each model. To use this functionality, you will need to set either the `shopify_union_schemas`/`klaviyo_union_schemas` OR `shopify_union_databases`/`klaviyo_union_databases` variables (cannot do both) in your root `dbt_project.yml` file:
 
-```yml
-# dbt_project.yml
+> Previous versions of this package employed two separate, mutually exclusive variables for unioning for each platform: (eg. `shopify_union_schemas` and `shopify_union_databases`). While these variables are still supported, the new approach shared above are the recommended variables to configure.
 
-vars:
-    shopify_union_schemas: ['shopify_usa','shopify_canada'] # use this if the data is in different schemas/datasets of the same database/project
-    shopify_union_databases: ['shopify_usa','shopify_canada'] # use this if the data is in different databases/projects but uses the same schema name
+#### Optional: Incorporate unioned sources into DAG
 
-    klaviyo_union_schemas: ['klaviyo_usa','klaviyo_canada'] # use this if the data is in different schemas/datasets of the same database/project
-    klaviyo_union_databases: ['klaviyo_usa','klaviyo_canada'] # use this if the data is in different databases/projects but uses the same schema name
-```
+If you use [Fivetran Transformations for dbt Core™](https://fivetran.com/docs/transformations/dbt#transformationsfordbtcore) and are unioning multiple shopify and klaviyo connections of the same type, you can define your sources in a property `.yml` file. Set the variable `has_defined_sources: true` in your `dbt_project.yml`. Otherwise, your connections won't appear in your DAG. See the `union_connections` macro [documentation](https://github.com/fivetran/dbt_fivetran_utils/tree/releases/v0.4.latest#optional-union-connections-defined-sources-configuration) for full configuration details.
 
-### Set Shopify- and Klaviyo-specific configurations
+### Set Shopify--specific and Klaviyo-specific configurations
 See connector-specific configurations in their individual dbt package READMEs:
 - [Shopify](https://github.com/fivetran/dbt_shopify)
 - [Klaviyo](https://github.com/fivetran/dbt_klaviyo)
@@ -146,6 +167,15 @@ models:
 > Note that if your profile does not have permissions to create schemas in your warehouse, you can set each `+schema` to blank. The package will then write all tables to your pre-existing target schema.
 
 Models from the individual [Shopify](https://github.com/fivetran/dbt_shopify/#changing-the-build-schema) and [Klaviyo](https://github.com/fivetran/dbt_klaviyo/#changing-the-build-schema) packages will be written their respective schemas.
+
+#### Source casing for case-sensitive destinations
+By default, the package applies case-insensitive comparisons when resolving `source_relation` values. If your destination is case-sensitive and you want downstream transformations to respect the exact casing of your source database and schema names, set the following variable:
+
+```yml
+vars:
+    fivetran_using_source_casing: true
+```
+
 </details>
 
 ### (Optional) Orchestrate your models with Fivetran Transformations for dbt Core™
@@ -161,10 +191,10 @@ This dbt package is dependent on the following dbt packages. These dependencies 
 ```yml
 packages:
     - package: fivetran/shopify
-      version: [">=1.7.0", "<1.8.0"]
+      version: [">=1.9.0", "<1.10.0"]
 
     - package: fivetran/klaviyo
-      version: [">=1.3.0", "<1.4.0"]
+      version: [">=1.4.0", "<1.5.0"]
 
     - package: fivetran/fivetran_utils
       version: [">=0.4.0", "<0.5.0"]
