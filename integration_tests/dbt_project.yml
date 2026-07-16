@@ -178,7 +178,7 @@ seeds:
       +column_types:
         billing_address_phone: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
         shipping_address_phone: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
-        cancelled_at: varchar
+        cancelled_at: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
         total_shipping_price_set_pres_amount: float
         total_shipping_price_set_shop_amount: float
         total_tax_set_pres_amount: float
@@ -527,7 +527,7 @@ seeds:
       +tags: klaviyo
       +column_types:
         phone_number: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
-        custom_first_purchase_date_: varchar
+        custom_first_purchase_date_: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
     klaviyo_flow:
       +tags: klaviyo
     klaviyo_event:
