@@ -5,7 +5,6 @@
 ## Feature Updates
 - Adds DuckDB as a supported destination.
 
-
 # dbt_shopify_holistic_reporting v1.3.0
 
 [PR #42](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/42) includes the following updates:
