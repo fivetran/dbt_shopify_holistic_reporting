@@ -1,5 +1,5 @@
 name: 'shopify_holistic_reporting_integration_tests'
-version: '1.3.0'
+version: '1.3.1'
 profile: 'integration_tests'
 config-version: 2
 
@@ -140,11 +140,13 @@ models:
 dispatch:
   - macro_namespace: dbt_utils
     search_order: ['shopify_holistic_reporting', 'spark_utils', 'dbt_utils']
+  - macro_namespace: shopify
+    search_order: ['shopify_holistic_reporting', 'shopify']
 
 seeds:
   +docs:
     show: False
-  +quote_columns: "{{ target.type in ('redshift', 'postgres') or var('fivetran_using_source_casing', false) }}"
+  +quote_columns: "{{ target.type in ('redshift', 'postgres', 'duckdb') or var('fivetran_using_source_casing', false) }}"
   shopify_holistic_reporting_integration_tests:
   # shopify
     shopify_customer_data:
@@ -176,6 +178,7 @@ seeds:
       +column_types:
         billing_address_phone: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
         shipping_address_phone: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
+        cancelled_at: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
         total_shipping_price_set_pres_amount: float
         total_shipping_price_set_shop_amount: float
         total_tax_set_pres_amount: float
@@ -524,6 +527,7 @@ seeds:
       +tags: klaviyo
       +column_types:
         phone_number: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
+        custom_first_purchase_date_: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
     klaviyo_flow:
       +tags: klaviyo
     klaviyo_event:
@@ -534,8 +538,6 @@ seeds:
         datetime: timestamp
         timestamp: timestamp
         property_attribution: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar(65535)' }}"
-    klaviyo_event_norename:
-      +tags: klaviyo
     klaviyo_metric:
       +tags: klaviyo
     klaviyo_campaign:
