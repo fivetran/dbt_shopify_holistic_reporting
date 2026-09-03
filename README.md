@@ -194,7 +194,7 @@ packages:
       version: [">=1.9.0", "<1.10.0"]
 
     - package: fivetran/klaviyo
-      version: [">=1.4.0", "<1.5.0"]
+      version: [">=1.5.0", "<1.6.0"]
 
     - package: fivetran/fivetran_utils
       version: [">=0.4.0", "<0.5.0"]
