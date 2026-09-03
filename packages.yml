@@ -2,5 +2,6 @@ packages:
   - package: fivetran/shopify
     version: [">=1.9.0", "<1.10.0"]
 
-  - package: fivetran/klaviyo
-    version: [">=1.4.0", "<1.5.0"]
+  - git: https://github.com/fivetran/dbt_klaviyo.git
+    revision: fix/redshift-revenue-cast-ga-1035294
+    warn-unpinned: false

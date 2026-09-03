@@ -1,3 +1,17 @@
+# dbt_shopify_holistic_reporting v1.4.0-a1
+
+[PR #45](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/45) includes the following updates:
+
+## Schema/Data Change
+**1 total change • 1 possible breaking change**
+
+| Data Model(s) | Change type | Old | New | Notes |
+| ---------- | ----------- | -------- | -------- | ----- |
+| `int__daily_klaviyo_user_metrics` | Fixed value | `sum_revenue_*` columns return `0` for decimal revenue values on Redshift/Postgres, or round them to whole numbers on Snowflake/Databricks | `sum_revenue_*` columns return the correct decimal amount on all supported destinations | Re-run (`dbt run`) required to refresh existing data with correct revenue totals |
+
+- After upgrading and re-running the models, Redshift and Postgres customers will see affected `sum_revenue_*` values corrected from `0` to their actual nonzero amounts. Snowflake and Databricks customers will see previously rounded values restored to include decimal cents.
+- Replaces the local `fivetran_utils.try_cast` call with `klaviyo.safe_numeric_cast`, the same fix shipped in [dbt_klaviyo v1.5.0](https://github.com/fivetran/dbt_klaviyo/releases). BigQuery is unaffected because its `numeric` type already retains decimals by default.
+
 # dbt_shopify_holistic_reporting v1.3.1
 
 [PR #44](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/44) includes the following updates:
