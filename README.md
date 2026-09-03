@@ -73,7 +73,7 @@ Include the following shopify_holistic_reporting package version in your `packag
 ```yml
 packages:
   - package: fivetran/shopify_holistic_reporting
-    version: [">=1.3.0", "<1.4.0"] # we recommend using ranges to capture non-breaking changes automatically
+    version: [">=1.4.0", "<1.5.0"] # we recommend using ranges to capture non-breaking changes automatically
 ```
 
 Do **NOT** include the `shopify` or `klaviyo` packages in this file. The combo package itself has a dependency on these and will install upstream packages as well.
@@ -194,7 +194,7 @@ packages:
       version: [">=1.9.0", "<1.10.0"]
 
     - package: fivetran/klaviyo
-      version: [">=1.4.0", "<1.5.0"]
+      version: [">=1.5.0", "<1.6.0"]
 
     - package: fivetran/fivetran_utils
       version: [">=0.4.0", "<0.5.0"]
