@@ -330,6 +330,7 @@ seeds:
         updated_at: timestamp
     shopify_metafield_data:
       +column_types:
+        value: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar(65535)' }}"
         value_type: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
         type: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar' }}"
         id: "{%- if target.type == 'bigquery' -%} INT64 {%- else -%} bigint {%- endif -%}"
@@ -538,6 +539,7 @@ seeds:
         datetime: timestamp
         timestamp: timestamp
         property_attribution: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar(65535)' }}"
+        property_total_discounts: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar(65535)' }}"
     klaviyo_metric:
       +tags: klaviyo
     klaviyo_campaign:
