@@ -1,6 +1,12 @@
 packages:
-  - package: fivetran/shopify
-    version: [">=1.11.0", "<1.12.0"]
+  # TEMPORARY for testing GA-1044236: points at the unreleased fix branch instead of
+  # the hub version below so CI runs against the real code. Revert to the version
+  # pin once dbt_shopify v1.11.0 is released and this package merges.
+  - git: https://github.com/fivetran/dbt_shopify.git
+    revision: fix/databricks-cohort-delta-format
+    warn-unpinned: false
+  # - package: fivetran/shopify
+  #   version: [">=1.11.0", "<1.12.0"]
 
   - package: fivetran/klaviyo
     version: [">=1.5.0", "<1.6.0"]
