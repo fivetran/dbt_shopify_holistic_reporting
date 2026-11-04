@@ -1,3 +1,14 @@
+# dbt_shopify_holistic_reporting v1.5.0
+
+[PR #PENDING](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/PENDING) includes the following updates:
+
+## Schema/Data Change (--full-refresh required after upgrading)
+**1 total change • 1 possible breaking change**
+
+| Data Model(s) | Change type | Old | New | Notes |
+| ---------- | ----------- | -------- | -------- | ----- |
+| `shopify__customer_cohorts`, `shopify__customer_email_cohorts`, `shopify_gql__customer_cohorts`, `shopify_gql__customer_email_cohorts` | File format | `parquet` on Databricks all-purpose clusters, `delta` on SQL warehouses | `delta` everywhere | Bumps the `fivetran/shopify` dependency to `v1.11.0`, which fixes these models failing on the incremental run on Databricks all-purpose clusters with `[DELTA_ONLY_OPERATION] INSERT REPLACE ON is only supported for Delta tables`. Requires a `--full-refresh` to convert existing tables from `parquet` to `delta`. |
+
 # dbt_shopify_holistic_reporting v1.4.0
 
 [PR #45](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/45) includes the following updates:
