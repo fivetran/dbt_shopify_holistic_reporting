@@ -1,6 +1,6 @@
 # dbt_shopify_holistic_reporting v1.5.0
 
-[PR #PENDING](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/PENDING) includes the following updates:
+[PR #49](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/49) includes the following updates:
 
 ## Schema/Data Change (--full-refresh required after upgrading)
 **1 total change • 1 possible breaking change**
