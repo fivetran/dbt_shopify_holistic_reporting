@@ -1,14 +1,3 @@
-# dbt_shopify_holistic_reporting v1.5.0
-
-[PR #49](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/49) includes the following updates:
-
-## Schema/Data Change (--full-refresh required after upgrading)
-**1 total change • 1 possible breaking change**
-
-| Data Model(s) | Change type | Old | New | Notes |
-| ---------- | ----------- | -------- | -------- | ----- |
-| `shopify__customer_cohorts`, `shopify__customer_email_cohorts`, `shopify_gql__customer_cohorts`, `shopify_gql__customer_email_cohorts` | File format | `parquet` on Databricks all-purpose clusters, `delta` on SQL warehouses | `delta` everywhere | Fixes incremental run errors on newer Databricks versions. Requires a `--full-refresh` after upgrading to convert existing tables to Delta format. |
-
 # dbt_shopify_holistic_reporting v1.4.0
 
 [PR #45](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/45) includes the following updates:
