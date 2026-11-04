@@ -7,7 +7,7 @@
 
 | Data Model(s) | Change type | Old | New | Notes |
 | ---------- | ----------- | -------- | -------- | ----- |
-| `shopify__customer_cohorts`, `shopify__customer_email_cohorts`, `shopify_gql__customer_cohorts`, `shopify_gql__customer_email_cohorts` | File format | `parquet` on Databricks all-purpose clusters, `delta` on SQL warehouses | `delta` everywhere | Bumps the `fivetran/shopify` dependency to `v1.11.0`, which fixes these models failing on the incremental run on Databricks all-purpose clusters with `[DELTA_ONLY_OPERATION] INSERT REPLACE ON is only supported for Delta tables`. Requires a `--full-refresh` to convert existing tables from `parquet` to `delta`. |
+| `shopify__customer_cohorts`, `shopify__customer_email_cohorts`, `shopify_gql__customer_cohorts`, `shopify_gql__customer_email_cohorts` | File format | `parquet` on Databricks all-purpose clusters, `delta` on SQL warehouses | `delta` everywhere | Fixes incremental run errors on newer Databricks versions. Requires a `--full-refresh` after upgrading to convert existing tables to Delta format. |
 
 # dbt_shopify_holistic_reporting v1.4.0
 
