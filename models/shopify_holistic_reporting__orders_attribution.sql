@@ -59,7 +59,7 @@ with orders as (
     left join events on 
         lower(orders.email) = lower(events.person_email)
         and {{ dbt.datediff('events.occurred_at', 'orders.created_timestamp', 'hour') }} <= (
-            case when events.type like '%sms%' then {{ var('klaviyo__sms_attribution_lookback') }}
+            case when lower(events.type) like '%sms%' then {{ var('klaviyo__sms_attribution_lookback') }}
             else {{ var('klaviyo__email_attribution_lookback') }} end)
         and orders.created_timestamp > events.occurred_at
 
