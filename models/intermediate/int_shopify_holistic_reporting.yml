@@ -159,3 +159,5 @@ models:
         description: Timezone they are situated in.
       - name: title
         description: Title at their business or organization.
+      - name: last_event_date
+        description: Date and time of the most recent event that triggered an update to the Klaviyo profile, in ISO 8601 format.
