@@ -15,7 +15,7 @@ This dbt package transforms data from Fivetran's Shopify Holistic Reporting conn
   - [DAG](https://fivetran.github.io/dbt_shopify_holistic_reporting/#!/overview?g_v=1)
   - [Changelog](https://github.com/fivetran/dbt_shopify_holistic_reporting/blob/main/CHANGELOG.md)
 - dbt Core™ supported versions
-  - `>=1.3.0, <3.0.0`
+  - `>=1.10.0, <3.0.0`
 
 ## What does this dbt package do?
 This package enables you to tie e-commerce revenue to your email and SMS marketing via last-touch attribution, consolidate customers and their activity across platforms, and create rich customer personas based on marketing engagement. It creates enriched models with metrics focused on order attribution, daily customer activity, and enhanced customer profiles.
@@ -73,7 +73,7 @@ Include the following shopify_holistic_reporting package version in your `packag
 ```yml
 packages:
   - package: fivetran/shopify_holistic_reporting
-    version: [">=1.5.0", "<1.6.0"] # we recommend using ranges to capture non-breaking changes automatically
+    version: [">=1.6.0", "<1.7.0"] # we recommend using ranges to capture non-breaking changes automatically
 ```
 
 Do **NOT** include the `shopify` or `klaviyo` packages in this file. The combo package itself has a dependency on these and will install upstream packages as well.
