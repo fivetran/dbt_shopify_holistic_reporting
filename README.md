@@ -217,7 +217,7 @@ The Fivetran team also maintains the upstream [Klaviyo](https://hub.getdbt.com/f
 ### Contributions
 A small team of analytics engineers at Fivetran develops these dbt packages. However, the packages are made better by community contributions.
 
-We highly encourage and welcome contributions to this package. Learn how to contribute to a package in dbt's [Contributing to an external dbt package article](https://discourse.getdbt.com/t/contributing-to-a-dbt-package/657).
+We highly encourage and welcome contributions to this package. Learn how to contribute to a package by reading the guidelines in our [CONTRIBUTING.md](https://github.com/fivetran/dbt_shopify_holistic_reporting/blob/main/CONTRIBUTING.md) document.
 
 <!--section-end-->
 
