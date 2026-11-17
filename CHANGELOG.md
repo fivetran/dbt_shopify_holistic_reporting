@@ -1,3 +1,15 @@
+# dbt_shopify_holistic_reporting v1.5.1
+
+[PR #52](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/52) includes the following updates:
+
+## Under the Hood
+- Aligns the column documentation in the package yml files with the columns the models actually output. No model output changed.
+  - Documents 18 fields in `shopify_holistic_reporting__orders_attribution` and 26 fields in `shopify_holistic_reporting__customer_enhanced` that the models inherit from the upstream Shopify models but that were never documented downstream.
+  - Documents the `last_event_date` field in `int__klaviyo_person_rollup`.
+  - Removes documentation for the `index`, `pre_tax_price`, and `processing_method` fields in `shopify_holistic_reporting__orders_attribution`, as these models no longer output them.
+  - Corrects 13 field names in `shopify_holistic_reporting__customer_enhanced` that were documented under names the model no longer outputs, such as `currency`, which the model emits as `shopify_currency`.
+  - Only fields present in both the REST and GraphQL Shopify API modes were updated, since the package shares one set of yml docs across both.
+
 # dbt_shopify_holistic_reporting v1.5.0
 
 [PR #49](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/49) includes the following updates:

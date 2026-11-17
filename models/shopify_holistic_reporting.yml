@@ -24,8 +24,6 @@ models:
           The source where this Klaviyo data was pulled from. If you are making use of the `union_schemas` variable, this will be the source schema.
           If you are making use of the `union_databases` variable, this will be the source database. If you are not unioning together multiple
           sources, this will be an empty string.
-      - name: shopify_has_accepted_marketing
-        description: Whether the customer has consented to receive marketing material via email.
       - name: shopify_customer_first_created_at
         description: The date and time when the customer account first associated with this email was created.
       - name: shopify_customer_last_created_at
@@ -36,8 +34,6 @@ models:
         description: Timestamp of when the person's profile was last created.
       - name: shopify_customer_last_updated_at
         description: Timestamp of when the shopify customer was last updated.
-      - name: last_updated_at
-        description: Timestamp of when the person profile was last updated.
       - name: shopify_default_address_id
         description: The default address for the customer. 
       - name: email
@@ -54,38 +50,16 @@ models:
         description: The state of the customer's account with a shop.
       - name: shopify_is_tax_exempt
         description: Whether the customer is exempt from paying taxes on their order. If true, then taxes won't be applied to an order at checkout. If false, then taxes will be applied at checkout.
-      - name: shopify_last_updated_at
-        description: The date and time when the customer information was last updated.
       - name: is_shopify_email_verified
         description: Whether the customer has verified their email address.
       - name: shopify_first_order_at
         description: The timestamp the customer completed their first order.
       - name: shopify_last_order_at
         description: The timestamp the customer completed their most recent order.
-      - name: customer_tags
-        description: A string aggregated list of all tags associated with a customer.
-      - name: note
-        description: A note about the customer.
-      - name: currency
-        description: The three-letter code for the shop currency.
-      - name: marketing_consent_state
-        description: >
-          Field indicating if the customer has consented to receive marketing material via email. Coalescing of the new `email_marketing_consent_state`
-          field and the deprecated `accepts_marketing` field. Records with the old field will be marked with '(legacy)'.
-      - name: marketing_consent_updated_at
-        description: The date and time when the customer consented to receive marketing material by email. If no date is provided, then the date and time when the consent information was sent is used.
-      - name: shopify_average_order_value
-        description: The average order value for the customer.
       - name: shopify_lifetime_total_spent
         description: The total amount of money that the customer has spent on orders across their order history.
       - name: shopify_lifetime_total_refunded
         description: The total amount of money that the customer has been refunded on orders across their order history.
-      - name: shopify_lifetime_total_amount
-        description: The total amount of money (minus refunds) that the customer has spent across their order history.
-      - name: klaviyo_persons_id
-        description: >
-          Unique ID of the user if you use your own unique identifier. Otherwise, Klaviyo 
-          recommends using the email as the primary key. 
       - name: klaviyo_address_1
         description: First line of the person's address.
       - name: klaviyo_address_2
@@ -96,8 +70,6 @@ models:
         description: Country they live in.
       - name: klaviyo_zip
         description: Postal code where they live.
-      - name: klaviyo_person_created_at
-        description: Timestamp of when the person's profile was created in Klaviyo.
       - name: klaviyo_latitude
         description: Latitude of the person's location. 
       - name: klaviyo_longitude
@@ -110,8 +82,6 @@ models:
         description: Timezone they are situated in.
       - name: klaviyo_title
         description: Title at their business or organization.
-      - name: klaviyo_person_updated_at
-        description: Timestamp of when the person profile was last updated. 
       - name: klaviyo_count_total_campaigns
         description: Count of the number of campaigns this person has interacted with.
       - name: klaviyo_count_total_flows
@@ -128,6 +98,62 @@ models:
         description: Timestamp of when the user first interacted with a flow.
       - name: klaviyo_last_flow_touch_at
         description: Timestamp of when the user last interacted with a flow.
+      - name: klaviyo_person_ids
+        description: A comma-separated aggregated list of Klaviyo IDs for the person.
+      - name: klaviyo_person_last_updated_at
+        description: Timestamp of when the person's Klaviyo profile was last updated.
+      - name: klaviyo_last_event_date
+        description: Date and time of the most recent event that triggered an update to the Klaviyo profile, in ISO 8601 format.
+      - name: shopify_last_fivetran_synced
+        description: The timestamp when the customer record was last synced by Fivetran.
+      - name: shopify_currency
+        description: >
+          The three-letter code (ISO 4217 format) for the currency that the customer used when they paid for their last order.
+          Defaults to the shop currency. Returns the shop currency for test orders.
+      - name: shopify_customer_tags
+        description: A string aggregated list of all tags associated with a customer.
+      - name: shopify_note
+        description: A note about the customer.
+      - name: shopify_marketing_consent_state
+        description: >
+          Field indicating if the customer has consented to receive marketing material via email. Coalescing of the new `email_marketing_consent_state`
+          field and the deprecated `accepts_marketing` field. Records with the old field will be marked with '(legacy)'.
+      - name: shopify_marketing_consent_updated_at
+        description: The date and time when the customer consented to receive marketing material by email. If no date is provided, then the date and time when the consent information was sent is used.
+      - name: shopify_marketing_opt_in_level
+        description: The marketing subscription opt-in level, as described in the M3AAWG Sender Best Common Practices, that the customer gave when they consented to receive marketing material by email.
+      - name: shopify_first_order_timestamp
+        description: The timestamp the customer completed their first order.
+      - name: shopify_most_recent_order_timestamp
+        description: The timestamp the customer completed their most recent order.
+      - name: shopify_avg_order_value
+        description: The average order value for the customer.
+      - name: shopify_avg_discount_per_order
+        description: Average discount per order attributed to the customer.
+      - name: shopify_avg_quantity_per_order
+        description: Average quantity of items per order customer orders.
+      - name: shopify_avg_shipping_per_order
+        description: Average shipping cost per order attributed to the customer.
+      - name: shopify_avg_shipping_tax_per_order
+        description: Average shipping tax per order attributed to the customer.
+      - name: shopify_avg_shipping_with_discounts_per_order
+        description: Average shipping costs after discounts per order attributed to the customer.
+      - name: shopify_avg_tax_per_order
+        description: Average tax per order attributed to the customer.
+      - name: shopify_lifetime_abandoned_checkouts
+        description: Total number of abandoned checkouts abandoned by the customer.
+      - name: shopify_lifetime_total_discount
+        description: Total discounts attributed to the customer.
+      - name: shopify_lifetime_total_net
+        description: The total amount of money (minus refunds) that the customer has spent across their order history.
+      - name: shopify_lifetime_total_shipping
+        description: Total shipping costs attributed to the customer.
+      - name: shopify_lifetime_total_shipping_tax
+        description: Total shipping tax attributed to the customer.
+      - name: shopify_lifetime_total_shipping_with_discounts
+        description: Total shipping costs after discounts attributed to the customer.
+      - name: shopify_lifetime_total_tax
+        description: Total amount of tax attributed to the customer.
 
   - name: shopify_holistic_reporting__daily_customer_metrics
     description: >
@@ -301,8 +327,6 @@ models:
         description: The order 's position in the shop's count of orders starting at 1001. Order numbers are sequential and start at 1001.
       - name: processed_timestamp
         description: The date and time when an order was processed. This value is the date that appears on your orders and that's used in the analytic reports.
-      - name: processing_method
-        description: How the payment was processed.
       - name: referring_site
         description: The website where the customer clicked a link to the shop.
       - name: shipping_address_address_1
@@ -388,10 +412,6 @@ models:
           Order total adjusted for refunds and other adjustments. The calculation used for this field is as follows:
           total price listed on the original order (including shipping costs and discounts) + adjustments + adjustments tax - total refunds - refunds tax
           The order_adjusted_total will equate to the total sales - refunds listed within the transactions table for the order (after currency exchange).
-      - name: index
-        description: Field representing the index of the order line in relation to the order.
-      - name: pre_tax_price
-        description: The pre tax price of the order line.
       - name: checkout_token
         description: The checkout token applied to the order.
       - name: total_shipping_price_set
@@ -434,6 +454,42 @@ models:
           The source where Klaviyo campaign/flow data was pulled from. If you are making use of the `union_schemas` variable, this will be the source schema.
           If you are making use of the `union_databases` variable, this will be the source database. If you are not unioning together multiple
           sources, this will be an empty string.
+      - name: unique_order_key
+        description: Unique key representing an order. Hashed on 'order_id' and 'source_relation'.
+      - name: _fivetran_synced
+        description: The timestamp when the order record was last synced by Fivetran.
+      - name: is_deleted
+        description: Whether the order has been deleted from the source.
+      - name: is_attributed
+        description: Whether the order was attributed to a Klaviyo campaign or flow, based on the last touch before the order was placed.
+      - name: is_confirmed
+        description: Whether the order is confirmed.
+      - name: customer_locale
+        description: The two or three-letter language code, optionally followed by a region modifier. Example values - en, en-CA.
+      - name: presentment_currency
+        description: The three-letter code (ISO 4217 format) of the currency that the customer used at checkout. For the shop's default currency, see `currency`.
+      - name: order_status_url
+        description: The URL pointing to the order status web page, if applicable.
+      - name: order_tags
+        description: List of tags associated with the order.
+      - name: fulfillment_services
+        description: List of fulfillment services for the order.
+      - name: number_of_fulfillments
+        description: Total fulfillments for the order.
+      - name: tracking_companies
+        description: List of tracking companies for the order.
+      - name: tracking_numbers
+        description: List of tracking numbers for the order.
+      - name: order_total_shipping_tax
+        description: Total shipping tax attributed to the order.
+      - name: count_discount_codes_applied
+        description: Distinct discount codes applied on the order.
+      - name: fixed_amount_discount_amount
+        description: The total amount of discount (in shop currency) allocated via a fixed-amount discount.
+      - name: percentage_calc_discount_amount
+        description: The total amount of discount (in shop currency) allocated via a percentage-based discount.
+      - name: shipping_discount_amount
+        description: The total amount of discount (in shop currency) allocated toward shipping.
       - name: count_interactions_with_campaign
         description: The count of distinct attributable events the customer had with the campaign throughout the attribution window.
       - name: count_interactions_with_flow
