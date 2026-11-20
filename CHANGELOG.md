@@ -1,3 +1,15 @@
+# dbt_shopify_holistic_reporting v1.6.0
+
+[PR #51](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/51) includes the following updates:
+
+## Feature Update
+- **Breaking change**: Raises the minimum dbt version to 1.10.0.
+- Adds `dbt_utils.unique_combination_of_columns` tests to staging and end models. If a test fails, please [open an issue](https://github.com/fivetran/dbt_shopify_holistic_reporting/issues/new/choose).
+
+## Dependency Updates
+- Bumps `fivetran/shopify` from [">=1.11.0", "<1.12.0"] to [">=1.12.0", "<1.13.0"] — Adds support for the latest upstream release.
+- Bumps `fivetran/klaviyo` from [">=1.5.0", "<1.6.0"] to [">=1.6.0", "<1.7.0"] — Adds support for the latest upstream release.
+
 # dbt_shopify_holistic_reporting v1.5.0
 
 [PR #49](https://github.com/fivetran/dbt_shopify_holistic_reporting/pull/49) includes the following updates:
