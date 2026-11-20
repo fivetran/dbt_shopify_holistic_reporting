@@ -191,10 +191,10 @@ This dbt package is dependent on the following dbt packages. These dependencies 
 ```yml
 packages:
     - package: fivetran/shopify
-      version: [">=1.11.0", "<1.12.0"]
+      version: [">=1.12.0", "<1.13.0"]
 
     - package: fivetran/klaviyo
-      version: [">=1.5.0", "<1.6.0"]
+      version: [">=1.6.0", "<1.7.0"]
 
     - package: fivetran/fivetran_utils
       version: [">=0.4.0", "<0.5.0"]
