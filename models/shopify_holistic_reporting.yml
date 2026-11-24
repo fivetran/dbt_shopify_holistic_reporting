@@ -319,8 +319,6 @@ models:
         description: The reason why the order was canceled.
       - name: cancelled_timestamp
         description: The date and time when the order was canceled.
-      - name: cart_token
-        description: The ID of the cart that's associated with the order.
       - name: closed_timestamp
         description: The date and time when the order was closed.
       - name: created_timestamp
@@ -347,8 +345,6 @@ models:
         description: An optional note that a shop owner can attach to the order.
       - name: number
         description: The order's position in the shop's count of orders. Numbers are sequential and start at 1.
-      - name: order_number
-        description: The order 's position in the shop's count of orders starting at 1001. Order numbers are sequential and start at 1001.
       - name: processed_timestamp
         description: The date and time when an order was processed. This value is the date that appears on your orders and that's used in the analytic reports.
       - name: referring_site
@@ -385,22 +381,10 @@ models:
         description: The postal code (zip, postcode, Eircode, …) of the shipping address.
       - name: source_name
         description: Where the order originated. Can be set only during order creation, and is not writeable afterwards.
-      - name: subtotal_price
-        description: The price of the order in the shop currency after discounts but before shipping, taxes, and tips.
       - name: has_taxes_included
         description: Whether taxes are included in the order subtotal.
       - name: is_test_order
         description: Whether this is a test order.
-      - name: token
-        description: A unique token for the order.
-      - name: total_discounts
-        description: The total discounts applied to the price of the order in the shop currency.
-      - name: total_line_items_price
-        description: The sum of all line item prices in the shop currency.
-      - name: total_price
-        description: The sum of all line item prices, discounts, shipping, taxes, and tips in the shop currency. Must be positive.
-      - name: total_tax
-        description: The sum of all the taxes applied to the order in th shop currency. Must be positive).
       - name: total_weight
         description: The sum of all line item weights in grams.
       - name: updated_timestamp
@@ -413,8 +397,6 @@ models:
         description: The sequential number of the order as it relates to the customer
       - name: new_vs_repeat
         description: Whether the order was a new or repeat order for the customer.
-      - name: shipping_cost
-        description: The shipping cost of the order.
       - name: order_adjustment_amount
         description: Total adjustment amount applied to the order.
       - name: order_adjustment_tax_amount
@@ -436,10 +418,6 @@ models:
           Order total adjusted for refunds and other adjustments. The calculation used for this field is as follows:
           total price listed on the original order (including shipping costs and discounts) + adjustments + adjustments tax - total refunds - refunds tax
           The order_adjusted_total will equate to the total sales - refunds listed within the transactions table for the order (after currency exchange).
-      - name: checkout_token
-        description: The checkout token applied to the order.
-      - name: total_shipping_price_set
-        description: The total shipping price set to the order.
       - name: last_touch_campaign_id
         description: The Klaviyo campaign that the order has been attributed to by the package. 
       - name: last_touch_flow_id
