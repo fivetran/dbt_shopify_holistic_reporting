@@ -14,4 +14,6 @@ dependencies:
   old_version: '[">=1.5.0", "<1.6.0"]'
   new_version: '[">=1.6.0", "<1.7.0"]'
   description: Adds support for the latest upstream release.
+under_the_hood:
+- description: Updates yml column documentation to match model output.
 date: '2026-11-18'
